@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Compliance Binder - Ross Tax Prep</title>
+    <style>
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .no-print { display: none; }
+            @page { margin: 0.5in; }
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff;
+            color: #0A2540;
+            line-height: 1.6;
+            padding: 40px;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #0A2540;
+            padding-bottom: 20px;
+        }
+        .logo { width: 110px; height: 110px; margin-bottom: 15px; }
+        h1 { font-size: 28px; color: #0A2540; margin-bottom: 10px; }
+        .subtitle { font-size: 14px; color: #666; }
+        .binder-badge {
+            background: linear-gradient(135deg, #0A2540, #1a3a5c);
+            color: #D4A574;
+            padding: 10px 30px;
+            display: inline-block;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 12px;
+            letter-spacing: 2px;
+            margin: 15px 0;
+        }
+        .section { margin-bottom: 25px; page-break-inside: avoid; }
+        .section h2 {
+            font-size: 16px;
+            color: #0A2540;
+            border-left: 4px solid #D4A574;
+            padding-left: 12px;
+            margin-bottom: 10px;
+        }
+        .section p { font-size: 12px; color: #333; padding-left: 16px; }
+        .document-list {
+            background: #F4F6F8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .document-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        .document-item:last-child { border-bottom: none; }
+        .doc-icon {
+            width: 40px;
+            height: 40px;
+            background: #0A2540;
+            color: #D4A574;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            margin-right: 15px;
+            font-size: 18px;
+        }
+        .doc-info h3 { font-size: 14px; color: #0A2540; margin-bottom: 3px; }
+        .doc-info p { font-size: 11px; color: #666; margin: 0; padding: 0; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 11px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th { background: #0A2540; color: #fff; }
+        .footer {
+            margin-top: 40px;
+            padding: 15px;
+            background: #F4F6F8;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            border-radius: 4px;
+        }
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #0A2540;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+        .print-btn:hover { background: #1a3a5c; }
+    </style>
+</head>
+<body>
+    <button class="print-btn no-print" onclick="window.print()">📄 Save as PDF</button>
+
+    <div class="header">
+        <img src="../assets/ross-logo.png" alt="Ross Tax Prep" class="logo" onerror="this.style.display='none'">
+        <h1>Master Compliance Binder</h1>
+        <p class="subtitle"><strong>Ross Tax Prep & Bookkeeping LLC</strong></p>
+        <div class="binder-badge">CONFIDENTIAL • INTERNAL USE ONLY</div>
+    </div>
+
+    <div class="section">
+        <h2>Purpose</h2>
+        <p>This binder serves as the authoritative compliance and operations reference for the firm. It consolidates all critical policies, procedures, and compliance documentation required for IRS audits, banking relationships, and legal due diligence.</p>
+    </div>
+
+    <div class="section">
+        <h2>Included Documents</h2>
+        <div class="document-list">
+            <div class="document-item">
+                <div class="doc-icon">📋</div>
+                <div class="doc-info">
+                    <h3>IRS Audit Defense Playbook</h3>
+                    <p>Mandatory procedures for responding to IRS notices, audits, and inquiries</p>
+                </div>
+            </div>
+            <div class="document-item">
+                <div class="doc-icon">📊</div>
+                <div class="doc-info">
+                    <h3>Q1 Revenue Forecast</h3>
+                    <p>Financial projections, capacity planning, and risk assessment for tax season</p>
+                </div>
+            </div>
+            <div class="document-item">
+                <div class="doc-icon">📈</div>
+                <div class="doc-info">
+                    <h3>KPI Definitions & Operating SOP</h3>
+                    <p>Key performance indicators, thresholds, and standard operating procedures</p>
+                </div>
+            </div>
+            <div class="document-item">
+                <div class="doc-icon">📉</div>
+                <div class="doc-info">
+                    <h3>Weekly Executive Dashboard</h3>
+                    <p>Owner/Board single-page snapshot of firm health and metrics</p>
+                </div>
+            </div>
+            <div class="document-item">
+                <div class="doc-icon">🔒</div>
+                <div class="doc-info">
+                    <h3>Tax Season Freeze & Escalation Policy</h3>
+                    <p>Change management restrictions during peak filing season (Feb 1 – Apr 15)</p>
+                </div>
+            </div>
+            <div class="document-item">
+                <div class="doc-icon">👥</div>
+                <div class="doc-info">
+                    <h3>Staff Training & Compliance Guide</h3>
+                    <p>Employee expectations, data handling, and IRS communication protocols</p>
+                </div>
+            </div>
+            <div class="document-item">
+                <div class="doc-icon">🔄</div>
+                <div class="doc-info">
+                    <h3>CRM Workflow Mapping</h3>
+                    <p>Integration between compliance documentation and client management system</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Governance & Review Schedule</h2>
+        <table>
+            <tr>
+                <th>Review Type</th>
+                <th>Frequency</th>
+                <th>Responsible Party</th>
+            </tr>
+            <tr>
+                <td>Annual Compliance Review</td>
+                <td>January (pre-season)</td>
+                <td>Owner</td>
+            </tr>
+            <tr>
+                <td>IRS Audit Preparation</td>
+                <td>As needed</td>
+                <td>Owner + Legal</td>
+            </tr>
+            <tr>
+                <td>Banking Due Diligence</td>
+                <td>Upon request</td>
+                <td>Owner</td>
+            </tr>
+            <tr>
+                <td>Post-Season Debrief</td>
+                <td>May</td>
+                <td>Owner + Admin</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Version Control</h2>
+        <p>Current Version: <strong>2026.1</strong><br>
+        Last Updated: <strong>January 28, 2026</strong><br>
+        Approved By: <strong>Andreaa Chan'nel, Owner</strong></p>
+    </div>
+
+    <div class="footer">
+        <span>Ross Tax Prep & Bookkeeping LLC</span>
+        <span>EIN: 33-4891499</span>
+        <span>Confidential</span>
+    </div>
+</body>
+</html>

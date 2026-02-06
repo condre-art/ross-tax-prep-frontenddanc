@@ -1,0 +1,91 @@
+<div style="text-align:center;margin:32px 0;">
+  <button id="ai-marketing-btn" style="background:linear-gradient(90deg,#C9A24D 60%,#ffe9a0 100%);color:#0F2A44;font-family:'Montserrat',sans-serif;font-weight:700;border:none;border-radius:8px;padding:18px 38px;font-size:1.2em;box-shadow:0 2px 8px #c9a24d33;cursor:pointer;transition:background 0.2s,color 0.2s,box-shadow 0.2s;">Post AI Marketing Now</button>
+  <div style="font-size:0.98em;color:#0F2A44;margin-top:8px;">(Posts a random AI-generated marketing message, poll, or image to your linked social media.)</div>
+  <div id="ai-marketing-analytics" style="margin-top:18px;padding:16px 0 0 0;font-size:1.05em;"></div>
+</div>
+<script src="scripts/ai-marketing-widget.js"></script>
+<script src="scripts/ai-marketing-analytics.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Refund Status – Client Portal</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .refund-table { width:100%; border-collapse:collapse; margin-top:2em; }
+    .refund-table th, .refund-table td { border:1px solid #e5e7eb; padding:8px 12px; }
+    .refund-table th { background:#f3f4f6; }
+    .status-badge { padding:2px 8px; border-radius:4px; font-size:0.95em; }
+    .status-pending { background:#fffbe6; color:#b59f3b; }
+    .status-disbursed { background:#e6ffed; color:#1a7f37; }
+    .status-rejected { background:#ffe6e6; color:#b53b3b; }
+    .status-sent { background:#e6f0ff; color:#2a4fb3; }
+  </style>
+</head>
+<body>
+    <div class="dc-watermark">D&amp;C TAXATION LLC</div>
+  <header style="background:#0F2A44;color:#fff;padding:18px 0;text-align:center;">
+      <img src="/public/dc-taxation-logo.png" alt="D&amp;C Taxation LLC Logo" style="width:100px;vertical-align:middle;" />
+    <span style="font-size:1.5em;margin-left:18px;">Client Portal – Refund Status</span>
+  </header>
+  <main style="max-width:700px;margin:2em auto;">
+    <h2>Your Refund Status</h2>
+    <div id="userInfo" style="margin-bottom:1em;">Loading...</div>
+    <table class="refund-table" id="refundTable">
+      <thead>
+        <tr>
+          <th>Return</th>
+          <th>Status</th>
+          <th>Method</th>
+          <th>Amount</th>
+          <th>Disbursed</th>
+          <th>Trace ID</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody id="refundTableBody">
+        <tr><td colspan="7">Loading...</td></tr>
+      </tbody>
+    </table>
+  </main>
+  <footer style="background:#0F2A44;color:#fff;text-align:center;padding:18px 0;">© 2026 Ross Tax & Bookkeeping. All Rights Reserved.</footer>
+  <script>
+    async function loadMe() {
+      const res = await fetch("/api/me");
+      const el = document.getElementById("userInfo");
+      if (!res.ok) {
+        el.textContent = "Not signed in or unauthorized.";
+        return null;
+      }
+      const data = await res.json();
+      el.textContent = `Signed in as ${data.user.name}`;
+      return data.user;
+    }
+    async function loadRefunds() {
+      const user = await loadMe();
+      if (!user) return;
+      const res = await fetch('/api/client/refunds');
+      const data = await res.json();
+      const tbody = document.getElementById('refundTableBody');
+      tbody.innerHTML = '';
+      if (!data.length) {
+        tbody.innerHTML = '<tr><td colspan="7">No refund records found.</td></tr>';
+        return;
+      }
+      for (const r of data) {
+        tbody.innerHTML += `<tr>
+          <td>${r.return_id || ''}</td>
+          <td><span class="status-badge status-${(r.irs_refund_status||'pending').replace(/\s/g,'-').toLowerCase()}">${r.irs_refund_status||'pending'}</span></td>
+          <td>${r.refund_method||''}</td>
+          <td>${r.refund_amount!=null?('$'+r.refund_amount.toFixed(2)):'—'}</td>
+          <td>${r.refund_disbursed_at||'—'}</td>
+          <td>${r.refund_trace_id||'—'}</td>
+          <td>${r.refund_notes||''}</td>
+        </tr>`;
+      }
+    }
+    loadRefunds();
+  </script>
+</body>
+</html>

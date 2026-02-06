@@ -1,0 +1,82 @@
+<div style="text-align:center;margin:32px 0;">
+  <button id="ai-marketing-btn" style="background:linear-gradient(90deg,#C9A24D 60%,#ffe9a0 100%);color:#0F2A44;font-family:'Montserrat',sans-serif;font-weight:700;border:none;border-radius:8px;padding:18px 38px;font-size:1.2em;box-shadow:0 2px 8px #c9a24d33;cursor:pointer;transition:background 0.2s,color 0.2s,box-shadow 0.2s;">Post AI Marketing Now</button>
+  <div style="font-size:0.98em;color:#0F2A44;margin-top:8px;">(Posts a random AI-generated marketing message, poll, or image to your linked social media.)</div>
+  <div id="ai-marketing-analytics" style="margin-top:18px;padding:16px 0 0 0;font-size:1.05em;"></div>
+</div>
+<script src="../scripts/ai-marketing-widget.js"></script>
+<script src="../scripts/ai-marketing-analytics.js"></script>
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/webp" href="../assets/ross-logo.webp" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Clients | Ross Tax & Bookkeeping</title>
+  <link rel="stylesheet" href="../styles/main.css?v=1" />
+</head>
+<body>
+<div class="site-wrapper">
+  <header>
+    <div class="header-inner">
+      <img src="../assets/ross-logo.webp" class="header-logo" alt="Logo" />
+      <div>
+        <h1 class="header-title">Admin Dashboard</h1>
+        <p class="header-subtitle">Clients</p>
+      </div>
+      <nav>
+        <a href="../index.html">Public Site</a>
+        <a href="index.html">Dashboard</a>
+        <a href="tasks.html">Tasks</a>
+        <a href="clients.html">Clients</a>
+        <a href="returns.html">Returns</a>
+        <a href="efile.html">E-File</a>
+        <a href="register-staff.html">Register Staff</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="section-inner">
+      <h2>Clients</h2>
+      <div id="clients">Loading...</div>
+      <div style="margin-top:2em;">
+        <a href="returns.html" class="btn">View Returns</a>
+        <a href="efile.html" class="btn">Transmit E-File</a>
+        <a href="index.html" class="btn">Back to Dashboard</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>© 2026 Ross Tax & Bookkeeping. Internal Use Only.<br>
+    <a href="../privacy.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Privacy Policy</a> |
+    <a href="../terms.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Terms of Service</a> |
+    <a href="../breach-notification.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Breach Notification Policy</a>
+  </footer>
+</div>
+
+<script>
+async function loadClients() {
+  const res = await fetch("/api/clients");
+  const el = document.getElementById("clients");
+  if (!res.ok) {
+    el.textContent = "Unauthorized or error loading clients.";
+    return;
+  }
+  const data = await res.json();
+  if (!data.length) {
+    el.textContent = "No clients yet.";
+    return;
+  }
+  el.innerHTML = data.map(c => `
+    <div class="service-card">
+      <strong>${c.name}</strong><br>
+      Email: ${c.email || "-"}<br>
+      Phone: ${c.phone || "-"}
+    </div>
+  `).join("");
+}
+loadClients();
+</script>
+</body>
+</html>

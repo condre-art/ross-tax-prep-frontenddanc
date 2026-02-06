@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM Workflow Mapping - Ross Tax Prep</title>
+    <style>
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .no-print { display: none; }
+            @page { margin: 0.5in; }
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff;
+            color: #0A2540;
+            line-height: 1.6;
+            padding: 40px;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #0A2540;
+            padding-bottom: 20px;
+        }
+        .logo { width: 110px; height: 110px; margin-bottom: 15px; }
+        h1 { font-size: 26px; color: #0A2540; margin-bottom: 10px; }
+        .subtitle { font-size: 14px; color: #666; }
+        .section { margin-bottom: 30px; page-break-inside: avoid; }
+        .section h2 {
+            font-size: 16px;
+            color: #0A2540;
+            border-left: 4px solid #D4A574;
+            padding-left: 12px;
+            margin-bottom: 15px;
+        }
+        .section p { font-size: 12px; color: #333; padding-left: 16px; }
+        .workflow-stage {
+            display: flex;
+            align-items: flex-start;
+            margin: 20px 0;
+            position: relative;
+        }
+        .stage-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0A2540, #1a3a5c);
+            color: #D4A574;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 20px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        .stage-content {
+            margin-left: 20px;
+            flex: 1;
+        }
+        .stage-content h3 {
+            font-size: 14px;
+            color: #0A2540;
+            margin-bottom: 8px;
+        }
+        .stage-content p {
+            font-size: 11px;
+            color: #555;
+            padding: 0;
+        }
+        .connector {
+            position: absolute;
+            left: 25px;
+            top: 55px;
+            width: 2px;
+            height: 30px;
+            background: #D4A574;
+        }
+        .data-flow {
+            background: #F4F6F8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .flow-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #ddd;
+        }
+        .flow-item:last-child { border-bottom: none; }
+        .flow-arrow {
+            color: #D4A574;
+            font-size: 20px;
+            margin: 0 15px;
+        }
+        .flow-box {
+            background: #fff;
+            border: 1px solid #e5e7eb;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-size: 11px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 11px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th { background: #0A2540; color: #fff; }
+        .system-tag {
+            background: #D4A574;
+            color: #0A2540;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+        .footer {
+            margin-top: 40px;
+            padding: 15px;
+            background: #F4F6F8;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            border-radius: 4px;
+        }
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #0A2540;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn no-print" onclick="window.print()">📄 Save as PDF</button>
+
+    <div class="header">
+        <img src="../assets/ross-logo.png" alt="Ross Tax Prep" class="logo" onerror="this.style.display='none'">
+        <h1>Compliance & CRM Workflow Mapping</h1>
+        <p class="subtitle"><strong>Ross Tax Prep & Bookkeeping LLC</strong><br>System Integration Documentation</p>
+    </div>
+
+    <div class="section">
+        <h2>Overview</h2>
+        <p>This document maps the integration between client relationship management (CRM) activities and compliance documentation. Every client touchpoint is logged, tracked, and linked to our compliance systems to ensure audit readiness and regulatory adherence.</p>
+    </div>
+
+    <div class="section">
+        <h2>Client Lifecycle Workflow</h2>
+        
+        <div class="workflow-stage">
+            <div class="stage-number">1</div>
+            <div class="stage-content">
+                <h3>Intake Stage</h3>
+                <p>Client submits intake form → CRM creates record → Compliance logging begins → Engagement letter generated via DocuSign → Audit trail initiated</p>
+            </div>
+            <div class="connector"></div>
+        </div>
+
+        <div class="workflow-stage">
+            <div class="stage-number">2</div>
+            <div class="stage-content">
+                <h3>Document Collection</h3>
+                <p>Client uploads documents → Secure storage with encryption → Document checklist tracked in CRM → Preparer assigned → Status updated automatically</p>
+            </div>
+            <div class="connector"></div>
+        </div>
+
+        <div class="workflow-stage">
+            <div class="stage-number">3</div>
+            <div class="stage-content">
+                <h3>Preparation Stage</h3>
+                <p>Return prepared in system → Review queue → Quality check completed → Client approval requested → All actions logged with timestamps</p>
+            </div>
+            <div class="connector"></div>
+        </div>
+
+        <div class="workflow-stage">
+            <div class="stage-number">4</div>
+            <div class="stage-content">
+                <h3>Filing Stage</h3>
+                <p>E-file transmitted to IRS → Submission ID captured → Acknowledgment received → Status updated in CRM → Client notified automatically</p>
+            </div>
+            <div class="connector"></div>
+        </div>
+
+        <div class="workflow-stage">
+            <div class="stage-number">5</div>
+            <div class="stage-content">
+                <h3>Post-Filing</h3>
+                <p>Records archived → Retention policy applied (7 years) → Available for IRS audit → Client portal access maintained → Compliance report generated</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>System Data Flow</h2>
+        <div class="data-flow">
+            <div class="flow-item">
+                <span class="flow-box">Client Portal</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-box">CRM Database</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-box">Audit Log</span>
+            </div>
+            <div class="flow-item">
+                <span class="flow-box">DocuSign</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-box">Document Storage</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-box">Compliance Archive</span>
+            </div>
+            <div class="flow-item">
+                <span class="flow-box">E-File System</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-box">IRS Gateway</span>
+                <span class="flow-arrow">→</span>
+                <span class="flow-box">Acknowledgment Log</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Compliance Touchpoints</h2>
+        <table>
+            <tr>
+                <th>CRM Event</th>
+                <th>Compliance Action</th>
+                <th>System</th>
+            </tr>
+            <tr>
+                <td>New intake created</td>
+                <td>Audit log entry + engagement letter</td>
+                <td><span class="system-tag">CRM</span> <span class="system-tag">DocuSign</span></td>
+            </tr>
+            <tr>
+                <td>Document uploaded</td>
+                <td>Encryption + access log</td>
+                <td><span class="system-tag">Storage</span></td>
+            </tr>
+            <tr>
+                <td>Return completed</td>
+                <td>Quality checklist + preparer sign-off</td>
+                <td><span class="system-tag">CRM</span></td>
+            </tr>
+            <tr>
+                <td>E-file transmitted</td>
+                <td>Submission ID + timestamp log</td>
+                <td><span class="system-tag">E-File</span></td>
+            </tr>
+            <tr>
+                <td>IRS acknowledgment</td>
+                <td>Acceptance record + client notification</td>
+                <td><span class="system-tag">E-File</span> <span class="system-tag">CRM</span></td>
+            </tr>
+            <tr>
+                <td>Client record closed</td>
+                <td>Archive + retention schedule</td>
+                <td><span class="system-tag">Compliance</span></td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Audit Retrieval</h2>
+        <p>In the event of an IRS audit or internal review, the following can be retrieved from the integrated system:</p>
+        <p style="margin-top:10px;">
+        • Complete client communication history<br>
+        • All uploaded and generated documents<br>
+        • Engagement letter with signature timestamps<br>
+        • E-file submission and acknowledgment records<br>
+        • Preparer assignment and review trail<br>
+        • Payment and refund tracking data
+        </p>
+    </div>
+
+    <div class="footer">
+        <span>Ross Tax Prep & Bookkeeping LLC</span>
+        <span>EIN: 33-4891499</span>
+        <span>Technical Documentation v2026.1</span>
+    </div>
+</body>
+</html>

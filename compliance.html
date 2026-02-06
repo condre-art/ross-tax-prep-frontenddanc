@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compliance Dashboard | Ross Tax Prep & Bookkeeping</title>
+  <meta name="description" content="Compliance status and certificate management for Ross Tax Prep & Bookkeeping LLC" />
+  <link rel="icon" type="image/webp" href="assets/ross-logo.webp" />
+
+  <style>
+    :root {
+      --navy: #0F2A44;
+      --gold: #C9A24D;
+      --green: #28a745;
+      --yellow: #ffc107;
+      --red: #dc3545;
+      --off-white: #F4F6F8;
+      --text-dark: #1B1B1B;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #0b1628 0%, #0F2A44 100%);
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    header {
+      background: linear-gradient(90deg, #0F2A44 80%, #1e3a5c 100%);
+      padding: 20px 0;
+      text-align: center;
+      border-bottom: 3px solid var(--gold);
+    }
+
+    header img {
+      width: 120px;
+      filter: drop-shadow(0 2px 8px rgba(201, 162, 77, 0.5));
+    }
+
+    header h1 {
+      margin: 8px 0 0;
+      font-size: 1.5rem;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 24px 20px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 16px;
+      color: var(--gold);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back-link:hover { text-decoration: underline; }
+
+    /* Login Form */
+    .login-card {
+      max-width: 400px;
+      margin: 60px auto;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(201, 162, 77, 0.3);
+      border-radius: 16px;
+      padding: 32px;
+    }
+
+    .login-card h2 {
+      margin: 0 0 24px;
+      text-align: center;
+      color: var(--gold);
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      color: rgba(255,255,255,0.8);
+      font-size: 14px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      font-size: 16px;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--gold), #d4af37);
+      color: var(--navy);
+      width: 100%;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(201, 162, 77, 0.4);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .btn-success {
+      background: var(--green);
+      color: #fff;
+    }
+
+    /* Dashboard */
+    .dashboard { display: none; }
+    .dashboard.active { display: block; }
+
+    .score-card {
+      background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03));
+      border: 2px solid var(--gold);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .score-card h2 {
+      margin: 0 0 16px;
+      color: var(--gold);
+      font-size: 1.5rem;
+    }
+
+    .score-circle {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      margin: 0 auto 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      font-weight: 700;
+    }
+
+    .score-circle.compliant {
+      background: linear-gradient(135deg, rgba(40, 167, 69, 0.3), rgba(40, 167, 69, 0.1));
+      border: 4px solid var(--green);
+      color: var(--green);
+    }
+
+    .score-circle.partial {
+      background: linear-gradient(135deg, rgba(255, 193, 7, 0.3), rgba(255, 193, 7, 0.1));
+      border: 4px solid var(--yellow);
+      color: var(--yellow);
+    }
+
+    .score-circle.non-compliant {
+      background: linear-gradient(135deg, rgba(220, 53, 69, 0.3), rgba(220, 53, 69, 0.1));
+      border: 4px solid var(--red);
+      color: var(--red);
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    .status-badge.compliant {
+      background: rgba(40, 167, 69, 0.2);
+      color: var(--green);
+      border: 1px solid var(--green);
+    }
+
+    .status-badge.partial {
+      background: rgba(255, 193, 7, 0.2);
+      color: var(--yellow);
+      border: 1px solid var(--yellow);
+    }
+
+    .status-badge.non-compliant {
+      background: rgba(220, 53, 69, 0.2);
+      color: var(--red);
+      border: 1px solid var(--red);
+    }
+
+    /* Grid */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    .section-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 24px;
+    }
+
+    .section-card h3 {
+      margin: 0 0 16px;
+      color: var(--gold);
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Certificates Table */
+    .cert-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .cert-table th,
+    .cert-table td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .cert-table th {
+      color: var(--gold);
+      font-weight: 600;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .cert-table td {
+      font-size: 14px;
+    }
+
+    .cert-status {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .cert-status.active {
+      background: rgba(40, 167, 69, 0.2);
+      color: var(--green);
+    }
+
+    .cert-status.expired {
+      background: rgba(255, 193, 7, 0.2);
+      color: var(--yellow);
+    }
+
+    .cert-status.missing {
+      background: rgba(220, 53, 69, 0.2);
+      color: var(--red);
+    }
+
+    .cert-status.revoked {
+      background: rgba(108, 117, 125, 0.2);
+      color: #6c757d;
+    }
+
+    /* Recommendations */
+    .recommendation {
+      padding: 12px 16px;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .recommendation.critical {
+      background: rgba(220, 53, 69, 0.15);
+      border-left: 4px solid var(--red);
+    }
+
+    .recommendation.warning {
+      background: rgba(255, 193, 7, 0.15);
+      border-left: 4px solid var(--yellow);
+    }
+
+    .recommendation.info {
+      background: rgba(40, 167, 69, 0.15);
+      border-left: 4px solid var(--green);
+    }
+
+    /* Requirements Checklist */
+    .checklist-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .checklist-icon {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .checklist-icon.pass {
+      background: var(--green);
+      color: #fff;
+    }
+
+    .checklist-icon.fail {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .checklist-icon.warning {
+      background: var(--yellow);
+      color: var(--navy);
+    }
+
+    .checklist-icon.not-checked {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+
+    .checklist-text {
+      flex: 1;
+    }
+
+    .checklist-text strong {
+      display: block;
+      color: #fff;
+    }
+
+    .checklist-text small {
+      color: rgba(255,255,255,0.6);
+      font-size: 12px;
+    }
+
+    /* Actions */
+    .actions-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    /* Loading */
+    .loading {
+      text-align: center;
+      padding: 40px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 16px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 20px;
+      border-top: 1px solid rgba(201, 162, 77, 0.3);
+      margin-top: 40px;
+    }
+
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    .error-msg {
+      background: rgba(220, 53, 69, 0.2);
+      border: 1px solid var(--red);
+      color: var(--red);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .success-msg {
+      background: rgba(40, 167, 69, 0.2);
+      border: 1px solid var(--green);
+      color: var(--green);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <img src="assets/ross-logo.webp" alt="Ross Tax Prep & Bookkeeping Logo" />
+    <h1>Compliance Dashboard</h1>
+  </header>
+
+  <div class="container">
+    <a href="admin/index.html" class="back-link">← Back to Admin</a>
+
+    <!-- Login Form -->
+    <div id="login-section">
+      <div class="login-card">
+        <h2>🔐 Admin Login</h2>
+        <div id="login-error" class="error-msg" style="display:none;"></div>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="admin@rosstaxprep.com" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="••••••••" required />
+          </div>
+          <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Dashboard (hidden until logged in) -->
+    <div id="dashboard" class="dashboard">
+      <div id="loading" class="loading">
+        <div class="spinner"></div>
+        <p>Running compliance check...</p>
+      </div>
+
+      <div id="dashboard-content" style="display:none;">
+        <!-- Score Card -->
+        <div class="score-card">
+          <h2>📊 Compliance Score</h2>
+          <div id="score-circle" class="score-circle compliant">
+            <span id="score-percentage">--</span>%
+          </div>
+          <div id="overall-status" class="status-badge compliant">Loading...</div>
+          <p style="margin-top:16px;color:rgba(255,255,255,0.7);font-size:14px;">
+            Last checked: <span id="last-checked">--</span>
+          </p>
+        </div>
+
+        <!-- Actions -->
+        <div class="actions-bar">
+          <button id="refresh-btn" class="btn btn-secondary">🔄 Refresh</button>
+          <button id="issue-all-btn" class="btn btn-success">📜 Issue All Certificates</button>
+          <button id="download-report-btn" class="btn btn-secondary">📥 Download Report</button>
+        </div>
+
+        <div id="action-result" style="display:none;"></div>
+
+        <!-- Recommendations -->
+        <div id="recommendations-section" class="section-card">
+          <h3>⚠️ Recommendations</h3>
+          <div id="recommendations-list"></div>
+        </div>
+
+        <div class="grid-2">
+          <!-- Certificates -->
+          <div class="section-card">
+            <h3>📜 Certificates & Licenses</h3>
+            <table class="cert-table">
+              <thead>
+                <tr>
+                  <th>Certificate</th>
+                  <th>Status</th>
+                  <th>Expires</th>
+                </tr>
+              </thead>
+              <tbody id="certificates-table"></tbody>
+            </table>
+          </div>
+
+          <!-- Requirements Checklist -->
+          <div>
+            <div class="section-card">
+              <h3>🏛️ IRS Requirements</h3>
+              <div id="irs-checklist"></div>
+            </div>
+
+            <div class="section-card">
+              <h3>🔒 Security Requirements</h3>
+              <div id="security-checklist"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- State & Operational -->
+        <div class="grid-2">
+          <div class="section-card">
+            <h3>🏠 State Requirements</h3>
+            <div id="state-checklist"></div>
+          </div>
+
+          <div class="section-card">
+            <h3>📋 Operational Requirements</h3>
+            <div id="operational-checklist"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© <span id="year"></span> Ross Tax Prep & Bookkeeping LLC. All rights reserved.</p>
+    <p><a href="index.html">Home</a> • <a href="admin/index.html">Admin Portal</a></p>
+  </footer>
+
+  <script>
+    const API_BASE = "https://ross-tax-prep-worker1.condre.workers.dev";
+    let authToken = localStorage.getItem("auth_token") || "";
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Check if already logged in
+    if (authToken) {
+      showDashboard();
+    }
+
+    // Login form
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+      const errorDiv = document.getElementById("login-error");
+
+      try {
+        const res = await fetch(`${API_BASE}/api/auth/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          errorDiv.textContent = data.error || "Login failed";
+          errorDiv.style.display = "block";
+          return;
+        }
+
+        authToken = data.token;
+        localStorage.setItem("auth_token", authToken);
+        showDashboard();
+
+      } catch (err) {
+        errorDiv.textContent = "Network error. Please try again.";
+        errorDiv.style.display = "block";
+      }
+    });
+
+    function showDashboard() {
+      document.getElementById("login-section").style.display = "none";
+      document.getElementById("dashboard").classList.add("active");
+      loadComplianceData();
+    }
+
+    async function loadComplianceData() {
+      document.getElementById("loading").style.display = "block";
+      document.getElementById("dashboard-content").style.display = "none";
+
+      try {
+        const res = await fetch(`${API_BASE}/api/compliance/check`, {
+          headers: { Authorization: `Bearer ${authToken}` }
+        });
+
+        if (res.status === 401) {
+          localStorage.removeItem("auth_token");
+          location.reload();
+          return;
+        }
+
+        const data = await res.json();
+        renderDashboard(data);
+
+      } catch (err) {
+        console.error("Failed to load compliance data:", err);
+        document.getElementById("loading").innerHTML = `
+          <p style="color:var(--red);">Failed to load compliance data. Please try again.</p>
+          <button class="btn btn-secondary" onclick="loadComplianceData()">Retry</button>
+        `;
+      }
+    }
+
+    function renderDashboard(data) {
+      document.getElementById("loading").style.display = "none";
+      document.getElementById("dashboard-content").style.display = "block";
+
+      // Score
+      document.getElementById("score-percentage").textContent = data.percentage;
+      const scoreCircle = document.getElementById("score-circle");
+      scoreCircle.className = `score-circle ${data.overall}`;
+
+      const statusBadge = document.getElementById("overall-status");
+      statusBadge.textContent = data.overall.replace("-", " ").toUpperCase();
+      statusBadge.className = `status-badge ${data.overall}`;
+
+      document.getElementById("last-checked").textContent = new Date(data.lastChecked).toLocaleString();
+
+      // Certificates
+      const certTable = document.getElementById("certificates-table");
+      certTable.innerHTML = data.certificates.map(cert => `
+        <tr>
+          <td>
+            <strong>${cert.title}</strong><br>
+            <small style="color:rgba(255,255,255,0.5)">${cert.type}</small>
+          </td>
+          <td><span class="cert-status ${cert.status}">${cert.status.toUpperCase()}</span></td>
+          <td>${cert.expiresAt ? new Date(cert.expiresAt).toLocaleDateString() : "—"}</td>
+        </tr>
+      `).join("");
+
+      // Recommendations
+      const recList = document.getElementById("recommendations-list");
+      if (data.recommendations.length === 0) {
+        recList.innerHTML = '<p style="color:var(--green);">✅ All compliance checks passed!</p>';
+      } else {
+        recList.innerHTML = data.recommendations.map(rec => {
+          let type = "info";
+          if (rec.includes("CRITICAL")) type = "critical";
+          else if (rec.includes("RENEW") || rec.includes("EXPIRING")) type = "warning";
+          return `<div class="recommendation ${type}">${rec}</div>`;
+        }).join("");
+      }
+
+      // Requirements checklists
+      data.requirements.forEach(category => {
+        const container = document.getElementById(`${category.category}-checklist`);
+        if (container) {
+          container.innerHTML = category.items.map(item => `
+            <div class="checklist-item">
+              <div class="checklist-icon ${item.status}">
+                ${item.status === "pass" ? "✓" : item.status === "fail" ? "✗" : item.status === "warning" ? "!" : "?"}
+              </div>
+              <div class="checklist-text">
+                <strong>${item.name}</strong>
+                <small>${item.description}</small>
+              </div>
+            </div>
+          `).join("");
+        }
+      });
+    }
+
+    // Refresh button
+    document.getElementById("refresh-btn").addEventListener("click", loadComplianceData);
+
+    // Issue all certificates
+    document.getElementById("issue-all-btn").addEventListener("click", async () => {
+      const resultDiv = document.getElementById("action-result");
+      resultDiv.className = "";
+      resultDiv.style.display = "block";
+      resultDiv.innerHTML = '<div class="spinner" style="margin:0 auto;"></div> Issuing certificates...';
+
+      try {
+        const res = await fetch(`${API_BASE}/api/compliance/issue-all`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${authToken}`
+          },
+          body: JSON.stringify({
+            issuedTo: "Ross Tax Prep & Bookkeeping LLC / Andreaa Chan'nel"
+          })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          resultDiv.className = "success-msg";
+          resultDiv.innerHTML = `
+            ✅ Certificates issued successfully!<br>
+            <small>New: ${data.summary.newlyIssued} | Already Existed: ${data.summary.alreadyExists} | Failed: ${data.summary.failed}</small>
+          `;
+          setTimeout(loadComplianceData, 2000);
+        } else {
+          resultDiv.className = "error-msg";
+          resultDiv.textContent = data.error || "Failed to issue certificates";
+        }
+
+      } catch (err) {
+        resultDiv.className = "error-msg";
+        resultDiv.textContent = "Network error. Please try again.";
+      }
+    });
+
+    // Download report
+    document.getElementById("download-report-btn").addEventListener("click", async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/compliance/report`, {
+          headers: { Authorization: `Bearer ${authToken}` }
+        });
+
+        if (res.ok) {
+          const blob = await res.blob();
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `compliance-report-${new Date().toISOString().split('T')[0]}.json`;
+          a.click();
+          URL.revokeObjectURL(url);
+        }
+      } catch (err) {
+        console.error("Download failed:", err);
+      }
+    });
+  </script>
+</body>
+</html>

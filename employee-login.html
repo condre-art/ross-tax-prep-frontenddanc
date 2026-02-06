@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Login - Ross Tax Prep ERO Software</title>
+    <link rel="icon" type="image/webp" href="/assets/ross-logo.webp" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0F2A44 0%, #1e3a5c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 450px;
+            overflow: hidden;
+        }
+
+        .login-header {
+            background: linear-gradient(90deg, #C9A24D 0%, #ffe9a0 100%);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .login-header img {
+            width: 120px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+
+        .login-header h1 {
+            color: #0F2A44;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .login-header p {
+            color: #0F2A44;
+            font-size: 14px;
+        }
+
+        .login-body {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #0F2A44;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #C9A24D;
+        }
+
+        .alert {
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            border: 1px solid #f5c2c7;
+            color: #842029;
+        }
+
+        .alert-success {
+            background: #d1e7dd;
+            border: 1px solid #badbcc;
+            color: #0f5132;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(90deg, #C9A24D 0%, #ffe9a0 100%);
+            color: #0F2A44;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(201, 162, 77, 0.4);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .login-footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #e0e0e0;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .login-footer a {
+            color: #C9A24D;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-footer a:hover {
+            text-decoration: underline;
+        }
+
+        #passwordChangeForm {
+            display: none;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #C9A24D;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .employee-badge {
+            display: inline-block;
+            background: #0F2A44;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <img src="/assets/ross-logo.webp" alt="Ross Tax Prep Logo">
+            <h1>Employee Login</h1>
+            <p>ERO Tax Preparation Software</p>
+            <span class="employee-badge">🔐 Authorized Personnel Only</span>
+        </div>
+
+        <div class="login-body">
+            <!-- Initial Login Form -->
+            <form id="loginForm">
+                <div id="tempPasswordAlert" class="alert alert-warning" style="display: none;">
+                    <strong>⚠️ Temporary Password Detected</strong><br>
+                    You must change your password after logging in.
+                </div>
+
+                <div id="errorAlert" class="alert alert-error" style="display: none;"></div>
+
+                <div class="form-group">
+                    <label for="email">Employee Email</label>
+                    <input type="email" id="email" name="email" required placeholder="your-email@rosstaxprepandbookkeeping.com" autocomplete="username">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password" autocomplete="current-password">
+                </div>
+
+                <button type="submit" class="btn-login" id="loginBtn">
+                    Sign In
+                </button>
+            </form>
+
+            <!-- Password Change Form (shown after login with temp password) -->
+            <form id="passwordChangeForm">
+                <a href="#" class="back-link" onclick="logout(); return false;">← Back to Login</a>
+
+                <div class="alert alert-warning">
+                    <strong>Password Change Required</strong><br>
+                    Your temporary password must be changed before you can access the system.
+                </div>
+
+                <div id="changeErrorAlert" class="alert alert-error" style="display: none;"></div>
+                <div id="changeSuccessAlert" class="alert alert-success" style="display: none;"></div>
+
+                <div class="form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" required placeholder="Your temporary password">
+                </div>
+
+                <div class="form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" required placeholder="At least 8 characters">
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm New Password</label>
+                    <input type="password" id="confirmPassword" required placeholder="Re-enter new password">
+                </div>
+
+                <button type="submit" class="btn-login" id="changePasswordBtn">
+                    Change Password
+                </button>
+            </form>
+        </div>
+
+        <div class="login-footer">
+            <p><strong>Initial Employee Credentials:</strong></p>
+            <p style="margin-top: 8px;">
+                <strong>Condre Ross (Owner):</strong> condre@rosstaxprepandbookkeeping.com<br>
+                <strong>Darien Lee (Manager):</strong> 1040x@rosstaxprepandbookkeeping.com<br>
+                <strong>Paul C Okpulor (Data Entry):</strong> paul@rosstaxprepandbookkeeping.com
+            </p>
+            <p style="margin-top: 12px; font-size: 12px;">
+                Contact IT support if you need password assistance<br>
+                <a href="/">← Back to Home</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let authToken = null;
+        let requiresPasswordChange = false;
+
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const loginBtn = document.getElementById('loginBtn');
+            const errorAlert = document.getElementById('errorAlert');
+
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Signing in...';
+            errorAlert.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    authToken = data.token;
+                    
+                    // Store token
+                    localStorage.setItem('authToken', authToken);
+                    localStorage.setItem('user', JSON.stringify(data.user));
+
+                    // Check if password change is required
+                    if (data.requiresPasswordChange || data.mustChangePassword || data.tempPassword) {
+                        requiresPasswordChange = true;
+                        document.getElementById('loginForm').style.display = 'none';
+                        document.getElementById('passwordChangeForm').style.display = 'block';
+                        document.getElementById('currentPassword').value = password;
+                    } else {
+                        // Redirect to appropriate dashboard based on role
+                        if (data.user.role === 'admin') {
+                            window.location.href = '/admin/index.html';
+                        } else {
+                            window.location.href = '/dashboard';
+                        }
+                    }
+                } else {
+                    errorAlert.textContent = data.error || 'Login failed. Please check your credentials.';
+                    errorAlert.style.display = 'block';
+                }
+            } catch (error) {
+                errorAlert.textContent = 'Network error. Please try again.';
+                errorAlert.style.display = 'block';
+            } finally {
+                loginBtn.disabled = false;
+                loginBtn.textContent = 'Sign In';
+            }
+        });
+
+        // Handle password change form submission
+        document.getElementById('passwordChangeForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const changeBtn = document.getElementById('changePasswordBtn');
+            const errorAlert = document.getElementById('changeErrorAlert');
+            const successAlert = document.getElementById('changeSuccessAlert');
+
+            errorAlert.style.display = 'none';
+            successAlert.style.display = 'none';
+
+            // Validate passwords match
+            if (newPassword !== confirmPassword) {
+                errorAlert.textContent = 'New passwords do not match.';
+                errorAlert.style.display = 'block';
+                return;
+            }
+
+            // Validate password strength
+            if (newPassword.length < 8) {
+                errorAlert.textContent = 'Password must be at least 8 characters long.';
+                errorAlert.style.display = 'block';
+                return;
+            }
+
+            changeBtn.disabled = true;
+            changeBtn.textContent = 'Changing Password...';
+
+            try {
+                const response = await fetch('/api/auth/change-password', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({
+                        currentPassword,
+                        newPassword
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    successAlert.textContent = 'Password changed successfully! Redirecting...';
+                    successAlert.style.display = 'block';
+
+                    // Redirect after 2 seconds
+                    setTimeout(() => {
+                        const user = JSON.parse(localStorage.getItem('user'));
+                        if (user && user.role === 'admin') {
+                            window.location.href = '/admin/index.html';
+                        } else {
+                            window.location.href = '/dashboard';
+                        }
+                    }, 2000);
+                } else {
+                    errorAlert.textContent = data.error || 'Password change failed. Please try again.';
+                    errorAlert.style.display = 'block';
+                }
+            } catch (error) {
+                errorAlert.textContent = 'Network error. Please try again.';
+                errorAlert.style.display = 'block';
+            } finally {
+                changeBtn.disabled = false;
+                changeBtn.textContent = 'Change Password';
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+            authToken = null;
+            requiresPasswordChange = false;
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('passwordChangeForm').style.display = 'none';
+            document.getElementById('loginForm').reset();
+            document.getElementById('passwordChangeForm').reset();
+        }
+
+        // Check if already logged in
+        window.addEventListener('load', () => {
+            const token = localStorage.getItem('authToken');
+            const user = localStorage.getItem('user');
+            
+            if (token && user) {
+                const userData = JSON.parse(user);
+                // Could verify token here, but for now just redirect
+                if (userData.role === 'admin') {
+                    window.location.href = '/admin/index.html';
+                } else {
+                    window.location.href = '/dashboard';
+                }
+            }
+        });
+    </script>
+</body>
+</html>

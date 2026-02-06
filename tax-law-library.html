@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ROSS TAX PREP | Tax Law Library & Education</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="icon" href="/favicon.ico" />
+  <meta name="description" content="Comprehensive IRS Tax Law Library, Education, and Research Portal for Ross Tax Prep & Bookkeeping." />
+  <style>
+    body { font-family: 'Segoe UI', Arial, sans-serif; background: #f7f9fa; margin: 0; }
+    .header { background: #1a237e; color: #fff; padding: 2rem 1rem 1rem 1rem; text-align: center; }
+    .header img { height: 60px; margin-bottom: 1rem; }
+    .nav { background: #283593; color: #fff; display: flex; justify-content: center; gap: 2rem; padding: 0.5rem 0; }
+    .nav a { color: #fff; text-decoration: none; font-weight: 600; letter-spacing: 1px; }
+    .nav a:hover { text-decoration: underline; }
+    .container { max-width: 900px; margin: 2rem auto; background: #fff; border-radius: 12px; box-shadow: 0 2px 12px #0001; padding: 2rem; }
+    h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    h2 { color: #1a237e; margin-top: 2rem; }
+    .law-list { margin: 1.5rem 0; }
+    .law-list li { margin-bottom: 0.75rem; }
+    .search-bar { margin: 2rem 0; display: flex; gap: 0.5rem; }
+    .search-bar input { flex: 1; padding: 0.75rem; border-radius: 6px; border: 1px solid #ccc; font-size: 1rem; }
+    .search-bar button { background: #1a237e; color: #fff; border: none; border-radius: 6px; padding: 0.75rem 1.5rem; font-size: 1rem; cursor: pointer; }
+    .search-bar button:hover { background: #3949ab; }
+    .edu-section { background: #e8eaf6; border-radius: 8px; padding: 1.5rem; margin-top: 2rem; }
+    .edu-section h3 { margin-top: 0; }
+    .footer { text-align: center; color: #888; font-size: 0.95rem; margin: 2rem 0 1rem 0; }
+    @media (max-width: 600px) { .container { padding: 1rem; } }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="/logo.png" alt="ROSS TAX PREP Logo" />
+    <h1>ROSS TAX PREP<br>Tax Law Library & Education</h1>
+    <p>Your trusted resource for IRS tax law, research, and continuing education.</p>
+  </div>
+  <nav class="nav">
+    <a href="/index.html">Home</a>
+    <a href="/client-portal.html">Client Portal</a>
+    <a href="/admin-console.html">Admin Console</a>
+    <a href="/help.html">Help</a>
+    <a href="/training.html">Training</a>
+    <a href="/status.html">Status</a>
+    <a href="/tax-law-library.html" style="text-decoration:underline;">Tax Law Library</a>
+  </nav>
+  <div class="container">
+    <h2>IRS Tax Law Library</h2>
+    <form class="search-bar" onsubmit="return false;">
+      <input type="text" id="searchInput" placeholder="Search IRS code, topic, or keyword..." />
+      <button onclick="searchLaw()">Search</button>
+    </form>
+    <ul class="law-list" id="lawList">
+      <li><a href="https://www.irs.gov/pub/irs-pdf/p17.pdf" target="_blank">Publication 17: Your Federal Income Tax</a></li>
+      <li><a href="https://www.irs.gov/forms-pubs/about-publication-334" target="_blank">Publication 334: Tax Guide for Small Business</a></li>
+      <li><a href="https://www.irs.gov/pub/irs-pdf/p463.pdf" target="_blank">Publication 463: Travel, Gift, and Car Expenses</a></li>
+      <li><a href="https://www.irs.gov/pub/irs-pdf/p501.pdf" target="_blank">Publication 501: Dependents, Standard Deduction, and Filing Information</a></li>
+      <li><a href="https://www.irs.gov/pub/irs-pdf/p502.pdf" target="_blank">Publication 502: Medical and Dental Expenses</a></li>
+      <li><a href="https://www.irs.gov/pub/irs-pdf/p503.pdf" target="_blank">Publication 503: Child and Dependent Care Expenses</a></li>
+      <li><a href="https://www.irs.gov/pub/irs-pdf/p505.pdf" target="_blank">Publication 505: Tax Withholding and Estimated Tax</a></li>
+      <li><a href="https://www.irs.gov/pub/irs-pdf/p529.pdf" target="_blank">Publication 529: Miscellaneous Deductions</a></li>
+      <li><a href="https://www.irs.gov/pub/irs-pdf/p530.pdf" target="_blank">Publication 530: Tax Information for Homeowners</a></li>
+      <li><a href="https://www.irs.gov/pub/irs-pdf/p535.pdf" target="_blank">Publication 535: Business Expenses</a></li>
+      <li><a href="https://www.irs.gov/pub/irs-pdf/p936.pdf" target="_blank">Publication 936: Home Mortgage Interest Deduction</a></li>
+      <li><a href="https://www.irs.gov/pub/irs-pdf/p946.pdf" target="_blank">Publication 946: How to Depreciate Property</a></li>
+      <li><a href="https://www.irs.gov/forms-instructions" target="_blank">All IRS Forms & Instructions</a></li>
+      <li><a href="https://www.irs.gov/tax-professionals/enrolled-agent-information" target="_blank">Enrolled Agent (EA) Information</a></li>
+      <li><a href="https://www.irs.gov/tax-professionals/continuing-education-provider-information" target="_blank">IRS Continuing Education Provider Info</a></li>
+    </ul>
+    <div class="edu-section">
+      <h3>Tax Education & Research</h3>
+      <ul>
+        <li><a href="https://www.irs.gov/taxtopics" target="_blank">IRS Tax Topics Index</a></li>
+        <li><a href="https://www.irs.gov/newsroom" target="_blank">IRS Newsroom & Updates</a></li>
+        <li><a href="https://www.irs.gov/instructions" target="_blank">IRS Instructions Library</a></li>
+        <li><a href="https://www.irs.gov/pub/irs-pdf/p4012.pdf" target="_blank">Publication 4012: Volunteer Resource Guide</a></li>
+        <li><a href="https://www.irs.gov/pub/irs-pdf/p4491.pdf" target="_blank">Publication 4491: VITA/TCE Training Guide</a></li>
+        <li><a href="https://www.irs.gov/pub/irs-pdf/p594.pdf" target="_blank">Publication 594: The IRS Collection Process</a></li>
+        <li><a href="https://www.irs.gov/pub/irs-pdf/p971.pdf" target="_blank">Publication 971: Innocent Spouse Relief</a></li>
+        <li><a href="https://www.irs.gov/pub/irs-pdf/p970.pdf" target="_blank">Publication 970: Education Credits</a></li>
+        <li><a href="https://www.irs.gov/pub/irs-pdf/p590a.pdf" target="_blank">Publication 590-A: Contributions to IRAs</a></li>
+        <li><a href="https://www.irs.gov/pub/irs-pdf/p590b.pdf" target="_blank">Publication 590-B: Distributions from IRAs</a></li>
+      </ul>
+      <p>For advanced research, see the <a href="https://www.law.cornell.edu/uscode/text/26" target="_blank">U.S. Internal Revenue Code (Title 26)</a> and <a href="https://www.irs.gov/pub/irs-pdf/p555.pdf" target="_blank">Publication 555: Community Property</a>.</p>
+    </div>
+    <div class="edu-section">
+      <h3>Continuing Education & Certification</h3>
+      <ul>
+        <li><a href="/training.html">ROSS TAX PREP Staff Training Portal</a></li>
+        <li><a href="https://www.irs.gov/tax-professionals/continuing-education-provider-information" target="_blank">IRS CE Provider Info</a></li>
+        <li><a href="https://www.irs.gov/tax-professionals/enrolled-agent-information" target="_blank">Enrolled Agent (EA) Program</a></li>
+        <li><a href="https://www.irs.gov/tax-professionals/annual-filing-season-program" target="_blank">Annual Filing Season Program (AFSP)</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer">
+    &copy; 2026 ROSS TAX PREP & BOOKKEEPING | IRS Authorized E-File Provider | <a href="/privacy.html">Privacy Policy</a> | <a href="/terms.html">Terms of Service</a>
+  </div>
+  <script>
+    function searchLaw() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const list = document.getElementById('lawList').getElementsByTagName('li');
+      for (let i = 0; i < list.length; i++) {
+        const text = list[i].innerText.toLowerCase();
+        list[i].style.display = text.includes(input) ? '' : 'none';
+      }
+    }
+  </script>
+</body>
+</html>
+</body>
+</html>

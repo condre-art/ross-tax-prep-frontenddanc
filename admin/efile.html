@@ -1,0 +1,500 @@
+<div style="text-align:center;margin:32px 0;">
+  <button id="ai-marketing-btn" style="background:linear-gradient(90deg,#C9A24D 60%,#ffe9a0 100%);color:#0F2A44;font-family:'Montserrat',sans-serif;font-weight:700;border:none;border-radius:8px;padding:18px 38px;font-size:1.2em;box-shadow:0 2px 8px #c9a24d33;cursor:pointer;transition:background 0.2s,color 0.2s,box-shadow 0.2s;">Post AI Marketing Now</button>
+  <div style="font-size:0.98em;color:#0F2A44;margin-top:8px;">(Posts a random AI-generated marketing message, poll, or image to your linked social media.)</div>
+  <div id="ai-marketing-analytics" style="margin-top:18px;padding:16px 0 0 0;font-size:1.05em;"></div>
+</div>
+<script src="../scripts/ai-marketing-widget.js"></script>
+<script src="../scripts/ai-marketing-analytics.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/webp" href="../assets/ross-logo.webp" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-File Transmission Portal</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <img src="../assets/ross-logo.webp" class="header-logo" alt="Logo" />
+      <div>
+        <h1 class="header-title">E-File Transmission</h1>
+        <p class="header-subtitle">Transmit Returns</p>
+      </div>
+      <nav>
+        <a href="../index.html">Public Site</a>
+        <a href="index.html">Dashboard</a>
+        <a href="tasks.html">Tasks</a>
+        <a href="clients.html">Clients</a>
+        <a href="returns.html">Returns</a>
+        <a href="efile.html">E-File</a>
+        <a href="register-staff.html">Register Staff</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+    </div>
+  </header>
+  <div class="container mx-auto p-6">
+    <h1 class="text-2xl font-bold mb-4">E-File Transmission - IRS MEF Integration</h1>
+    
+    <!-- IRS MEF Schema Information -->
+    <div class="bg-blue-50 border border-blue-200 rounded p-4 mb-6">
+      <h2 class="font-bold text-lg mb-2">IRS Modernized e-File (MEF) Schema</h2>
+      <p class="text-sm mb-2">This system validates returns against IRS MEF XML schema standards before transmission.</p>
+      <div class="text-sm space-y-1">
+        <div><strong>Schema Version:</strong> <span id="mef-schema-version">Loading...</span></div>
+        <div><strong>Resources:</strong> 
+          <a href="https://www.irs.gov/e-file-providers/modernized-e-file-mef-for-software-developers" 
+             target="_blank" class="text-blue-600 underline">MEF Developer Guide</a> |
+          <a href="https://www.irs.gov/e-file-providers/schema-and-business-rules" 
+             target="_blank" class="text-blue-600 underline">Schema & Rules</a> |
+          <a href="https://www.irs.gov/pub/irs-pdf/p4164.pdf" 
+             target="_blank" class="text-blue-600 underline">Pub 4164 (PDF)</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Transmission Workflow Steps -->
+    <div class="bg-gray-50 border border-gray-200 rounded p-4 mb-6">
+      <h3 class="font-bold mb-3">Transmission Workflow</h3>
+      <div class="space-y-2 text-sm" id="workflow-steps">
+        <div class="workflow-step" data-step="1">
+          <span class="step-indicator">⚪</span> Step 1: Validate MEF Schema Compliance
+        </div>
+        <div class="workflow-step" data-step="2">
+          <span class="step-indicator">⚪</span> Step 2: Generate IRS XML Envelope
+        </div>
+        <div class="workflow-step" data-step="3">
+          <span class="step-indicator">⚪</span> Step 3: Create Transmission Record
+        </div>
+        <div class="workflow-step" data-step="4">
+          <span class="step-indicator">⚪</span> Step 4: Submit to IRS
+        </div>
+        <div class="workflow-step" data-step="5">
+          <span class="step-indicator">⚪</span> Step 5: Receive Acknowledgment
+        </div>
+      </div>
+    </div>
+
+    <form id="efile-form" class="space-y-4">
+      <div>
+        <label>Return ID <input type="number" name="return_id" required /></label>
+      </div>
+      <div>
+        <label>Client ID <input type="number" name="client_id" required /></label>
+      </div>
+      <div>
+        <label>Preparer ID (optional) <input type="number" name="preparer_id" /></label>
+      </div>
+      <div>
+        <label>Method
+          <select name="method" required>
+            <option value="DIY">DIY (Self-Prepared)</option>
+            <option value="ERO">ERO/PTIN Preparer</option>
+          </select>
+        </label>
+      </div>
+      <div>
+        <label>Test Mode
+          <select name="test_indicator" required>
+            <option value="T">Test (Development)</option>
+            <option value="P">Production (Live Filing)</option>
+          </select>
+        </label>
+      </div>
+      <div>
+        <label>Bank Product
+          <select name="bank_product_id" id="bank-product-select"></select>
+        </label>
+      </div>
+      <div>
+        <label>Payment Method
+          <select name="payment_method" id="payment-method-select"></select>
+        </label>
+      </div>
+      <div class="flex gap-4">
+        <button type="button" id="validate-btn" class="btn btn-secondary">Validate MEF Schema</button>
+        <button type="submit" class="btn btn-primary">Transmit Return</button>
+      </div>
+    </form>
+
+    <!-- Validation Results -->
+    <div id="validation-results" class="mt-6 hidden"></div>
+
+    <!-- Transmission Status -->
+    <div id="efile-status" class="mt-6"></div>
+
+    <!-- Compliance Log -->
+    <div id="compliance-log" class="mt-6 hidden">
+      <h3 class="font-bold mb-2">Compliance Log</h3>
+      <div class="bg-white border rounded p-3 max-h-64 overflow-y-auto">
+        <div id="log-entries" class="text-xs font-mono space-y-1"></div>
+      </div>
+      <button type="button" id="export-logs-btn" class="btn btn-sm mt-2">Export Logs</button>
+    </div>
+
+      <div style="margin-top:2em;">
+        <a href="returns.html" class="btn">View Returns</a>
+        <a href="clients.html" class="btn">View Clients</a>
+        <a href="index.html" class="btn">Back to Dashboard</a>
+      </div>
+  </div>
+  <script type="module">
+    import { 
+      MEF_SCHEMA_VERSION, 
+      validateMEFTransmission, 
+      validate1040Return,
+      getAckMessage,
+      isAckSuccess
+    } from '../lib/irs-mef-schema.js';
+    import { 
+      serializeToMEFXML, 
+      parseAcknowledgment,
+      generateTransmissionId,
+      generateSubmissionId
+    } from '../lib/irs-mef-xml.js';
+    import {
+      logValidation,
+      logTransmission,
+      logAcknowledgment,
+      logError,
+      logStatusCheck,
+      getLogsForReturn,
+      exportLogs
+    } from '../lib/irs-efile-logger.js';
+
+    // Display MEF schema version
+    document.getElementById('mef-schema-version').textContent = MEF_SCHEMA_VERSION;
+
+    // Workflow step management
+    function updateWorkflowStep(stepNumber, status) {
+      const step = document.querySelector(`.workflow-step[data-step="${stepNumber}"]`);
+      if (step) {
+        const indicator = step.querySelector('.step-indicator');
+        if (status === 'active') {
+          indicator.textContent = '🔵';
+          step.style.fontWeight = 'bold';
+        } else if (status === 'complete') {
+          indicator.textContent = '✅';
+          step.style.fontWeight = 'normal';
+        } else if (status === 'error') {
+          indicator.textContent = '❌';
+          step.style.fontWeight = 'normal';
+        } else {
+          indicator.textContent = '⚪';
+          step.style.fontWeight = 'normal';
+        }
+      }
+    }
+
+    // Add log entry to UI
+    function addLogEntry(logEntry) {
+      const logContainer = document.getElementById('log-entries');
+      const complianceLog = document.getElementById('compliance-log');
+      complianceLog.classList.remove('hidden');
+      
+      const entry = document.createElement('div');
+      entry.className = `log-entry ${logEntry.level}`;
+      const timestamp = new Date(logEntry.timestamp).toLocaleString();
+      entry.textContent = `[${timestamp}] [${logEntry.type.toUpperCase()}] ${logEntry.message}`;
+      
+      logContainer.appendChild(entry);
+      logContainer.scrollTop = logContainer.scrollHeight;
+    }
+
+    async function fetchOptions() {
+      try {
+        const [bankProducts, paymentMethods] = await Promise.all([
+          fetch('/api/efile/bank-products').then(r => r.json()),
+          fetch('/api/efile/payment-methods').then(r => r.json())
+        ]);
+        const bankSelect = document.getElementById('bank-product-select');
+        bankProducts.forEach(bp => {
+          const opt = document.createElement('option');
+          opt.value = bp.id;
+          opt.textContent = bp.name;
+          bankSelect.appendChild(opt);
+        });
+        const paySelect = document.getElementById('payment-method-select');
+        paymentMethods.forEach(pm => {
+          const opt = document.createElement('option');
+          opt.value = pm;
+          opt.textContent = pm.charAt(0).toUpperCase() + pm.slice(1);
+          paySelect.appendChild(opt);
+        });
+      } catch (err) {
+        console.error('Failed to fetch options:', err);
+        // Add default options as fallback
+        const bankSelect = document.getElementById('bank-product-select');
+        const defaultBank = document.createElement('option');
+        defaultBank.value = '1';
+        defaultBank.textContent = 'Default Bank Product';
+        bankSelect.appendChild(defaultBank);
+        
+        const paySelect = document.getElementById('payment-method-select');
+        ['credit', 'debit', 'ach'].forEach(pm => {
+          const opt = document.createElement('option');
+          opt.value = pm;
+          opt.textContent = pm.charAt(0).toUpperCase() + pm.slice(1);
+          paySelect.appendChild(opt);
+        });
+      }
+    }
+    fetchOptions();
+
+    // Validate MEF Schema button
+    document.getElementById('validate-btn').onclick = async () => {
+      updateWorkflowStep(1, 'active');
+      const form = document.getElementById('efile-form');
+      const data = Object.fromEntries(new FormData(form));
+      
+      // Create mock return data for validation
+      // NOTE: In production, replace with actual return data from backend
+      const returnData = {
+        taxYear: new Date().getFullYear() - 1,
+        taxpayerSSN: '123456789', // PLACEHOLDER - Replace with actual SSN from return data
+        taxpayerName: 'Sample Taxpayer',
+        filingStatus: 'Single',
+        preparerInfo: { name: 'Ross Tax Prep' },
+        softwareId: 'ROSS-TAX-PREP-V1',
+        efileIndicator: data.method === 'ERO' ? 'ERO' : 'OnlineFiler'
+      };
+
+      const transmissionData = {
+        transmissionId: generateTransmissionId(),
+        submissionId: generateSubmissionId(),
+        testIndicator: data.test_indicator || 'T',
+        checksumAlgorithm: 'SHA-256'
+      };
+
+      // Validate MEF transmission
+      const transmissionValidation = validateMEFTransmission(transmissionData);
+      const returnValidation = validate1040Return(returnData);
+
+      const allErrors = [
+        ...transmissionValidation.errors,
+        ...returnValidation.errors
+      ];
+      
+      const isValid = transmissionValidation.isValid && returnValidation.isValid;
+
+      // Log validation
+      const logEntry = logValidation({ isValid, errors: allErrors }, data.return_id);
+      addLogEntry(logEntry);
+
+      // Display results
+      const resultsDiv = document.getElementById('validation-results');
+      resultsDiv.classList.remove('hidden');
+      
+      if (isValid) {
+        updateWorkflowStep(1, 'complete');
+        resultsDiv.innerHTML = `
+          <div class="p-4 bg-green-100 border border-green-300 rounded">
+            <h3 class="font-bold text-green-800">✅ MEF Schema Validation Passed</h3>
+            <p class="text-sm mt-2">Return data meets IRS MEF schema requirements.</p>
+            <div class="mt-3 text-sm">
+              <div><strong>Transmission ID:</strong> ${transmissionData.transmissionId}</div>
+              <div><strong>Submission ID:</strong> ${transmissionData.submissionId}</div>
+              <div><strong>Test Mode:</strong> ${transmissionData.testIndicator === 'T' ? 'Yes' : 'No (Production)'}</div>
+            </div>
+          </div>
+        `;
+      } else {
+        updateWorkflowStep(1, 'error');
+        resultsDiv.innerHTML = `
+          <div class="p-4 bg-red-100 border border-red-300 rounded">
+            <h3 class="font-bold text-red-800">❌ MEF Schema Validation Failed</h3>
+            <p class="text-sm mt-2">${allErrors.length} validation error(s) found:</p>
+            <ul class="list-disc ml-6 mt-2 text-sm">
+              ${allErrors.map(err => `<li>${err}</li>`).join('')}
+            </ul>
+          </div>
+        `;
+      }
+    };
+
+    document.getElementById('efile-form').onsubmit = async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = Object.fromEntries(new FormData(form));
+      
+      // Reset workflow
+      for (let i = 1; i <= 5; i++) {
+        updateWorkflowStep(i, 'reset');
+      }
+
+      // Client-side validation
+      if (!data.return_id || !data.client_id || !data.method) {
+        alert('Return ID, Client ID, and Method are required.');
+        return;
+      }
+      if (!data.bank_product_id) {
+        alert('Please select a bank product.');
+        return;
+      }
+      if (!data.payment_method) {
+        alert('Please select a payment method.');
+        return;
+      }
+
+      try {
+        // Step 1: Validate MEF Schema
+        updateWorkflowStep(1, 'active');
+        const transmissionData = {
+          transmissionId: generateTransmissionId(),
+          submissionId: generateSubmissionId(),
+          testIndicator: data.test_indicator || 'T',
+          checksumAlgorithm: 'SHA-256',
+          method: data.method
+        };
+
+        const validation = validateMEFTransmission(transmissionData);
+        if (!validation.isValid) {
+          updateWorkflowStep(1, 'error');
+          throw new Error('MEF validation failed: ' + validation.errors.join(', '));
+        }
+        const logEntry1 = logValidation(validation, data.return_id);
+        addLogEntry(logEntry1);
+        updateWorkflowStep(1, 'complete');
+
+        // Step 2: Generate XML Envelope
+        updateWorkflowStep(2, 'active');
+        // NOTE: In production, fetch actual return data from backend API
+        const returnData = {
+          taxYear: new Date().getFullYear() - 1,
+          taxpayerSSN: '123456789', // PLACEHOLDER - Replace with actual SSN from return data
+          filingStatus: 'Single',
+          preparerInfo: { name: 'Ross Tax Prep' },
+          softwareId: 'ROSS-TAX-PREP-V1'
+        };
+        const xmlEnvelope = await serializeToMEFXML(returnData, transmissionData);
+        console.log('Generated MEF XML:', xmlEnvelope.substring(0, 500) + '...');
+        updateWorkflowStep(2, 'complete');
+
+        // Step 3: Create transmission
+        updateWorkflowStep(3, 'active');
+        const txRes = await fetch('/api/efile/transmit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            return_id: Number(data.return_id),
+            client_id: Number(data.client_id),
+            preparer_id: data.preparer_id ? Number(data.preparer_id) : undefined,
+            method: data.method,
+            transmission_id: transmissionData.transmissionId,
+            submission_id: transmissionData.submissionId,
+            test_indicator: transmissionData.testIndicator,
+            mef_xml: xmlEnvelope
+          })
+        });
+        if (!txRes.ok) throw new Error('Failed to create transmission');
+        const tx = await txRes.json();
+        
+        const logEntry2 = logTransmission(transmissionData.submissionId, data.return_id, transmissionData);
+        addLogEntry(logEntry2);
+        updateWorkflowStep(3, 'complete');
+
+        // Step 4: Patch with bank product/payment
+        updateWorkflowStep(4, 'active');
+        const patchRes = await fetch(`/api/efile/transmit/${tx.id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            bank_product_id: data.bank_product_id,
+            payment_method: data.payment_method
+          })
+        });
+        if (!patchRes.ok) throw new Error('Failed to update transmission');
+        updateWorkflowStep(4, 'complete');
+
+        // Step 5: Show status
+        updateWorkflowStep(5, 'active');
+        const statusRes = await fetch(`/api/efile/status/${tx.id}`);
+        if (!statusRes.ok) throw new Error('Failed to fetch status');
+        const status = await statusRes.json();
+        
+        const logEntry3 = logStatusCheck(transmissionData.submissionId, data.return_id, status);
+        addLogEntry(logEntry3);
+        
+        // Simulate acknowledgment (in production, this comes from IRS)
+        const mockAcknowledgment = {
+          acknowledgmentCode: status.ack_code || '0000',
+          timestamp: new Date().toISOString(),
+          submissionId: transmissionData.submissionId,
+          errors: []
+        };
+        
+        const logEntry4 = logAcknowledgment(mockAcknowledgment, data.return_id);
+        addLogEntry(logEntry4);
+
+        const ackMessage = getAckMessage(mockAcknowledgment.acknowledgmentCode);
+        const isSuccess = isAckSuccess(mockAcknowledgment.acknowledgmentCode);
+        
+        if (isSuccess) {
+          updateWorkflowStep(5, 'complete');
+        } else {
+          updateWorkflowStep(5, 'error');
+        }
+
+        document.getElementById('efile-status').innerHTML = `
+          <div class="p-4 ${isSuccess ? 'bg-green-100 border-green-300' : 'bg-yellow-100 border-yellow-300'} border rounded">
+            <h2 class="font-bold text-lg mb-3">IRS Transmission Status</h2>
+            <div class="space-y-2 text-sm">
+              <div><strong>Status:</strong> <span class="font-semibold">${status.status}</span></div>
+              <div><strong>Transmission ID:</strong> ${transmissionData.transmissionId}</div>
+              <div><strong>Submission ID:</strong> ${transmissionData.submissionId}</div>
+              <div><strong>IRS Submission ID:</strong> ${status.irs_submission_id || 'Pending'}</div>
+              <div><strong>Acknowledgment Code:</strong> ${mockAcknowledgment.acknowledgmentCode}</div>
+              <div><strong>Acknowledgment:</strong> ${ackMessage}</div>
+              <div><strong>Test Mode:</strong> ${transmissionData.testIndicator === 'T' ? 'Yes' : 'No (Production)'}</div>
+            </div>
+            ${!isSuccess ? `
+              <div class="mt-3 p-3 bg-white rounded">
+                <strong>Action Required:</strong> Review errors and resubmit.
+              </div>
+            ` : ''}
+          </div>
+        `;
+      } catch (err) {
+        const logEntry = logError(err, 'transmission', data.return_id);
+        addLogEntry(logEntry);
+        
+        // Mark current active step as error
+        for (let i = 1; i <= 5; i++) {
+          const step = document.querySelector(`.workflow-step[data-step="${i}"]`);
+          if (step && step.querySelector('.step-indicator').textContent === '🔵') {
+            updateWorkflowStep(i, 'error');
+            break;
+          }
+        }
+
+        document.getElementById('efile-status').innerHTML = `
+          <div class="p-4 bg-red-100 border border-red-300 rounded">
+            <h3 class="font-bold text-red-800">❌ Transmission Failed</h3>
+            <p class="mt-2">${err.message}</p>
+          </div>
+        `;
+      }
+    };
+
+    // Export logs button
+    document.getElementById('export-logs-btn').onclick = () => {
+      const logs = exportLogs();
+      const blob = new Blob([logs], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `efile-logs-${new Date().toISOString()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+    };
+  </script>
+</body>
+  <footer>© 2026 Ross Tax & Bookkeeping. Internal Use Only.<br>
+    <a href="../privacy.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Privacy Policy</a> |
+    <a href="../terms.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Terms of Service</a> |
+    <a href="../breach-notification.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Breach Notification Policy</a>
+  </footer>
+</div>
+</body>
+</html>

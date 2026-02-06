@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Messages | Client Portal</title>
+  <link rel="stylesheet" href="../styles/main.css?v=1" />
+  <script src="../scripts/portal-auth.js"></script>
+</head>
+<body>
+<script>requireRole(['client','staff','admin']);</script>
+<div class="site-wrapper">
+  <header>
+    <div class="header-inner">
+      <img src="../assets/ross-logo.webp" class="header-logo" alt="Logo" />
+      <div>
+        <h1 class="header-title">Client Portal</h1>
+        <p class="header-subtitle">Messages</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="section-inner">
+      <h2>Your Messages</h2>
+      <div id="messages">Loading...</div>
+
+      <div class="form-card" style="margin-top:20px;">
+        <h1>Send a Message</h1>
+        <form id="msgForm">
+          <label>Subject</label>
+          <input type="text" name="subject" required>
+          <label>Message</label>
+          <textarea name="body" required></textarea>
+          <button type="submit">Send</button>
+        </form>
+        <p id="msgStatus" style="margin-top:10px; font-size:0.9rem;"></p>
+      </div>
+    </div>
+  </main>
+
+  <footer>© 2026 Ross Tax & Bookkeeping.</footer>
+</div>
+
+<script>
+async function loadMessages() {
+  const res = await fetch("/api/messages");
+  const el = document.getElementById("messages");
+  if (!res.ok) {
+    el.textContent = "Please sign in to view messages.";
+    return;
+  }
+  const data = await res.json();
+  if (!data.length) {
+    el.textContent = "No messages yet.";
+    return;
+  }
+  el.innerHTML = data.map(m => `
+    <div class="service-card">
+      <strong>${m.subject}</strong><br>
+      From: ${m.sender_role}<br>
+      ${m.body}
+    </div>
+  `).join("");
+}
+
+document.getElementById("msgForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const body = {
+    client_id: null, // server will infer for client role; or set explicitly
+    subject: form.subject.value,
+    body: form.body.value
+  };
+  const res = await fetch("/api/messages", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+  const msg = document.getElementById("msgStatus");
+  if (!res.ok) {
+    msg.textContent = "Failed to send message.";
+    return;
+  }
+  msg.textContent = "Message sent.";
+  form.reset();
+  loadMessages();
+});
+
+loadMessages();
+</script>
+</body>
+</html>

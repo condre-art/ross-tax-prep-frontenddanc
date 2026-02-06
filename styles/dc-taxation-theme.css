@@ -1,0 +1,54 @@
+/* D&C Taxation LLC Theme: Shiny Burnt Orange, Tan, Grey Trimming */
+:root {
+  --primary-burnt-orange: #d35400;
+  --primary-burnt-orange-shiny: linear-gradient(90deg, #ff7e29 0%, #d35400 100%);
+  --tan: #f5e6ca;
+  --grey-trim: #6e6e6e;
+  --white: #fff;
+  --shadow: 0 2px 8px rgba(211,84,0,0.15);
+}
+
+body {
+  background: var(--tan);
+  color: var(--grey-trim);
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.header, .navbar {
+  background: var(--primary-burnt-orange-shiny);
+  color: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.button-primary {
+  background: var(--primary-burnt-orange-shiny);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  padding: 0.5em 1.5em;
+  font-weight: bold;
+  box-shadow: var(--shadow);
+  transition: background 0.3s;
+}
+
+.button-primary:hover {
+  background: #ff7e29;
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--grey-trim);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+.footer {
+  background: var(--grey-trim);
+  color: var(--tan);
+  padding: 1em 0;
+  text-align: center;
+}
+
+/* Add more themed classes as needed */

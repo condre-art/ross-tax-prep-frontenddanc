@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Client Intake | Ross Tax & Bookkeeping</title>
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+  <header class="site-header">
+    <img src="assets/ross-logo.webp" alt="Ross Tax & Bookkeeping logo" class="site-logo" />
+    <h1>Client Intake</h1>
+  </header>
+  <main>
+    <section>
+      <h2>Start Your Tax Filing</h2>
+      <div class="tab-container">
+        <button class="tab-btn" onclick="showTab('basic')">Basic Info</button>
+        <button class="tab-btn" onclick="showTab('state')">State</button>
+        <button class="tab-btn" onclick="showTab('payroll')">Payroll</button>
+        <button class="tab-btn" onclick="showTab('notice')">Notice</button>
+      </div>
+      <form id="intakeForm">
+        <div class="tab-content" id="tab-basic">
+          <div>
+            <label for="first_name">First Name</label><br>
+            <input type="text" id="first_name" name="first_name" required />
+          </div>
+          <div>
+            <label for="last_name">Last Name</label><br>
+            <input type="text" id="last_name" name="last_name" required />
+          </div>
+          <div>
+            <label for="email">Email</label><br>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div>
+            <label for="phone">Phone</label><br>
+            <input type="tel" id="phone" name="phone" />
+          </div>
+        </div>
+        <div class="tab-content" id="tab-state" style="display:none;">
+          <label for="state">State</label><br>
+          <select id="state" name="state" onchange="handleStateChange()">
+            <option value="">Select State</option>
+            <option value="TX">Texas</option>
+            <option value="AR">Arkansas</option>
+            <option value="LA">Louisiana</option>
+            <option value="CA">California</option>
+            <option value="NY">New York</option>
+            <option value="FL">Florida</option>
+            <option value="Other">Other</option>
+          </select>
+          <div id="notary-section" style="display:none;margin-top:1em;">
+            <h4>Notary Options</h4>
+            <label><input type="checkbox" name="notary_requested" /> Request Notary Service</label>
+            <div id="notary-disclaimer" style="font-size:0.95em;color:#555;">
+              Ross Tax & Bookkeeping provides notary public and document preparation services in Texas, Arkansas, and Louisiana. We are not attorneys and do not provide legal advice.<br>
+              Notary services are limited to verification of identity and witnessing of signatures in accordance with state law.
+            </div>
+          </div>
+        </div>
+        <div class="tab-content" id="tab-payroll" style="display:none;">
+          <label><input type="checkbox" id="payroll" name="payroll" onchange="handlePayrollChange()" /> Payroll Services Needed</label>
+          <div id="payroll-fields" style="display:none;margin-top:1em;">
+            <label for="num_employees">Number of Employees</label><br>
+            <input type="number" id="num_employees" name="num_employees" min="1" /><br>
+            <label for="payroll_provider">Payroll Provider</label><br>
+            <input type="text" id="payroll_provider" name="payroll_provider" /><br>
+          </div>
+        </div>
+        <div class="tab-content" id="tab-notice" style="display:none;">
+          <label for="notice_type">IRS/State Notice Received?</label><br>
+          <select id="notice_type" name="notice_type" onchange="handleNoticeChange()">
+            <option value="">No</option>
+            <option value="CP2000">CP2000 (Income discrepancy)</option>
+            <option value="CP501">CP501-CP504 (Balance due)</option>
+            <option value="Letter525">Letter 525 (Exam appointment)</option>
+            <option value="Letter950">Letter 950 (Proposed changes)</option>
+            <option value="Other">Other</option>
+          </select>
+          <div id="notice-details" style="display:none;margin-top:1em;">
+            <label for="notice_desc">Describe Notice</label><br>
+            <textarea id="notice_desc" name="notice_desc" rows="3" cols="40"></textarea>
+          </div>
+        </div>
+        <button type="submit" style="margin-top:1.5em;">Begin Intake</button>
+      </form>
+      <script>
+        function showTab(tab) {
+          document.querySelectorAll('.tab-content').forEach(e => e.style.display = 'none');
+          document.getElementById('tab-' + tab).style.display = 'block';
+        }
+        function handleStateChange() {
+          var state = document.getElementById('state').value;
+          document.getElementById('notary-section').style.display = (['TX','AR','LA'].includes(state)) ? 'block' : 'none';
+        }
+        function handlePayrollChange() {
+          var checked = document.getElementById('payroll').checked;
+          document.getElementById('payroll-fields').style.display = checked ? 'block' : 'none';
+        }
+        function handleNoticeChange() {
+          var type = document.getElementById('notice_type').value;
+          document.getElementById('notice-details').style.display = type && type !== '' ? 'block' : 'none';
+        }
+      </script>
+    </section>
+    <section>
+      <h2>Compliance</h2>
+      <div class="compliance-badge">
+        <div class="badge-title">IRS Authorized e‑File Provider</div>
+        <div class="badge-details">
+          <strong>EFIN:</strong> 748335<br>
+          <strong>Status:</strong> Active<br>
+          <strong>ETINs:</strong> 95409 (Production), 95410 (Test)
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    © 2026 Ross Tax & Bookkeeping. All rights reserved.<br>
+    Ross Tax & Bookkeeping is an IRS Authorized e‑File Provider (EFIN 748335).<br>
+    Authorization does not imply IRS endorsement of any tax preparer or service.
+  </footer>
+</body>
+</html>

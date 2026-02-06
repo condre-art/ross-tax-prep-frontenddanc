@@ -1,0 +1,240 @@
+<div style="text-align:center;margin:32px 0;">
+  <button id="ai-marketing-btn" style="background:linear-gradient(90deg,#C9A24D 60%,#ffe9a0 100%);color:#0F2A44;font-family:'Montserrat',sans-serif;font-weight:700;border:none;border-radius:8px;padding:18px 38px;font-size:1.2em;box-shadow:0 2px 8px #c9a24d33;cursor:pointer;transition:background 0.2s,color 0.2s,box-shadow 0.2s;">Post AI Marketing Now</button>
+  <div style="font-size:0.98em;color:#0F2A44;margin-top:8px;">(Posts a random AI-generated marketing message, poll, or image to your linked social media.)</div>
+  <div id="ai-marketing-analytics" style="margin-top:18px;padding:16px 0 0 0;font-size:1.05em;"></div>
+</div>
+<script src="../scripts/ai-marketing-widget.js"></script>
+<script src="../scripts/ai-marketing-analytics.js"></script>
+<!-- Certificates & Licenses Dashboard (Admin Only) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Certificates & Licenses | Ross Tax & Bookkeeping</title>
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="icon" type="image/webp" href="/assets/ross-logo.webp" />
+  <style>
+    body { font-family: 'Georgia', serif; background: linear-gradient(135deg, #10274D 80%, #E1B773 100%); margin: 0; min-height: 100vh; }
+    .cert-container { max-width: 1100px; margin: 2em auto; background: #fff; border-radius: 18px; box-shadow: 0 4px 24px #0002; padding: 2em; }
+    .cert-header { display: flex; align-items: center; gap: 1em; margin-bottom: 1.5em; }
+    .cert-header img { height: 60px; }
+    .cert-header h1 { color: #10274D; font-size: 2em; margin: 0; }
+    .cert-table { width: 100%; border-collapse: collapse; margin-top: 1em; }
+    .cert-table th, .cert-table td { border: 1px solid #e5e7eb; padding: 10px 14px; text-align: left; }
+    .cert-table th { background: #10274D; color: #fff; }
+    .cert-table tr:nth-child(even) { background: #f7f9fa; }
+    .cert-actions { margin-bottom: 1em; display: flex; gap: 1em; }
+    .btn { padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; }
+    .btn-primary { background: #E1B773; color: #10274D; }
+    .btn-danger { background: #b53b3b; color: #fff; }
+    .btn-small { padding: 6px 14px; font-size: 0.95em; }
+    .badge { display: inline-block; padding: 2px 10px; border-radius: 6px; font-size: 0.9em; }
+    .badge-active { background: #e6ffed; color: #1a7f37; }
+    .badge-expired { background: #fffbe6; color: #b59f3b; }
+    .badge-revoked { background: #ffe6e6; color: #b53b3b; }
+    .modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0008; align-items: center; justify-content: center; z-index: 1000; }
+    .modal.open { display: flex; }
+    .modal-content { background: #fff; border-radius: 16px; padding: 2em; max-width: 500px; width: 90%; box-shadow: 0 4px 24px #0004; }
+    .modal-content h2 { margin-top: 0; }
+    .modal-content label { display: block; margin-bottom: 1em; }
+    .modal-content input, .modal-content select { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; margin-top: 4px; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="cert-container">
+      <div class="cert-header">
+        <img src="/assets/ross-logo.webp" alt="Logo" />
+        <h1>Certificates & Licenses</h1>
+        <span style="margin-left:auto;">
+          <button class="btn btn-primary" onclick="openIssueModal()">+ Issue Certificate</button>
+          <button class="btn btn-danger" onclick="doLogout()">Logout</button>
+        </span>
+      </div>
+      <div class="cert-actions">
+        <button class="btn btn-primary" onclick="refreshCertificates()">Refresh</button>
+      </div>
+      <table class="cert-table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Title</th>
+            <th>Issued To</th>
+            <th>Issued At</th>
+            <th>Expires</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="certs-body">
+          <tr><td colspan="7">Loading...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Issue Certificate Modal -->
+    <div class="modal" id="issue-modal">
+      <div class="modal-content">
+        <h2>Issue New Certificate</h2>
+        <label>
+          Type:
+          <select id="cert-type"></select>
+        </label>
+        <label>
+          Issued To:
+          <input type="text" id="cert-issued-to" placeholder="Name or Organization" />
+        </label>
+        <label>
+          Credentials (JSON, optional):
+          <input type="text" id="cert-credentials" placeholder='{"EFIN": "123456"}' />
+        </label>
+        <label>
+          Expires At (optional):
+          <input type="date" id="cert-expires" />
+        </label>
+        <div style="margin-top:1em;display:flex;gap:1em;">
+          <button class="btn btn-primary" onclick="issueCertificate()">Issue</button>
+          <button class="btn" onclick="closeIssueModal()">Cancel</button>
+        </div>
+        <div id="issue-error" class="error" style="margin-top:1em;display:none;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = "";
+
+    function getToken() {
+      return localStorage.getItem("crm_token");
+    }
+    function clearToken() {
+      localStorage.removeItem("crm_token");
+    }
+    function doLogout() {
+      clearToken();
+      window.location.href = "/admin/crm.html";
+    }
+
+    async function loadCertTypes() {
+      const sel = document.getElementById("cert-type");
+      try {
+        const res = await fetch(API_BASE + "/api/certificates/types");
+        const types = await res.json();
+        sel.innerHTML = types.map(t => `<option value="${t.type}">${t.title}</option>`).join("");
+      } catch {
+        sel.innerHTML = "<option>Error loading types</option>";
+      }
+    }
+
+    async function refreshCertificates() {
+      const token = getToken();
+      const tbody = document.getElementById("certs-body");
+      tbody.innerHTML = "<tr><td colspan='7'>Loading...</td></tr>";
+      try {
+        const res = await fetch(API_BASE + "/api/certificates", {
+          headers: { "Authorization": "Bearer " + token }
+        });
+        if (res.status === 401) {
+          clearToken();
+          window.location.href = "/admin/crm.html";
+          return;
+        }
+        const data = await res.json();
+        if (!Array.isArray(data) || data.length === 0) {
+          tbody.innerHTML = "<tr><td colspan='7'>No certificates found.</td></tr>";
+          return;
+        }
+        tbody.innerHTML = data.map(c => `
+          <tr>
+            <td>${escapeHtml(c.type)}</td>
+            <td>${escapeHtml(c.title)}</td>
+            <td>${escapeHtml(c.issued_to)}</td>
+            <td>${c.issued_at ? new Date(c.issued_at).toLocaleDateString() : ""}</td>
+            <td>${c.expires_at ? new Date(c.expires_at).toLocaleDateString() : "N/A"}</td>
+            <td><span class="badge badge-${c.status}">${c.status}</span></td>
+            <td>
+              <button class="btn btn-small btn-primary" onclick="downloadCert('${c.id}')">Download</button>
+              ${c.status === 'active' ? `<button class="btn btn-small btn-danger" onclick="revokeCert('${c.id}')">Revoke</button>` : ""}
+            </td>
+          </tr>
+        `).join("");
+      } catch {
+        tbody.innerHTML = "<tr><td colspan='7'>Error loading certificates.</td></tr>";
+      }
+    }
+
+    function openIssueModal() {
+      document.getElementById("issue-modal").classList.add("open");
+      loadCertTypes();
+    }
+    function closeIssueModal() {
+      document.getElementById("issue-modal").classList.remove("open");
+    }
+
+    async function issueCertificate() {
+      const token = getToken();
+      const type = document.getElementById("cert-type").value;
+      const issuedTo = document.getElementById("cert-issued-to").value;
+      const credentialsRaw = document.getElementById("cert-credentials").value;
+      const expiresAt = document.getElementById("cert-expires").value || null;
+      const errEl = document.getElementById("issue-error");
+      errEl.style.display = "none";
+
+      let credentials = {};
+      if (credentialsRaw) {
+        try { credentials = JSON.parse(credentialsRaw); } catch { errEl.textContent = "Invalid JSON for credentials"; errEl.style.display = "block"; return; }
+      }
+
+      try {
+        const res = await fetch(API_BASE + "/api/certificates/issue", {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Authorization": "Bearer " + token },
+          body: JSON.stringify({ type, issuedTo, credentials, expiresAt })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          closeIssueModal();
+          refreshCertificates();
+        } else {
+          errEl.textContent = data.error || "Failed to issue certificate";
+          errEl.style.display = "block";
+        }
+      } catch {
+        errEl.textContent = "Network error";
+        errEl.style.display = "block";
+      }
+    }
+
+    async function downloadCert(id) {
+      const token = getToken();
+      window.open(API_BASE + "/api/certificates/" + id + "/download?token=" + encodeURIComponent(token), "_blank");
+    }
+
+    async function revokeCert(id) {
+      if (!confirm("Are you sure you want to revoke this certificate?")) return;
+      const token = getToken();
+      await fetch(API_BASE + "/api/certificates/" + id + "/revoke", {
+        method: "POST",
+        headers: { "Authorization": "Bearer " + token }
+      });
+      refreshCertificates();
+    }
+
+    function escapeHtml(str) {
+      return String(str).replace(/[&<>"']/g, s => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[s]));
+    }
+
+    // On load
+    (function init() {
+      if (!getToken()) {
+        window.location.href = "/admin/crm.html";
+        return;
+      }
+      refreshCertificates();
+    })();
+  </script>
+</body>
+</html>

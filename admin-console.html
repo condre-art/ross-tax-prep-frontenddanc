@@ -1,0 +1,78 @@
+<!-- admin-console.html: Developer Console & Social Insights Dashboard -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Admin Developer Console | Ross Tax & Bookkeeping</title>
+  <link rel="stylesheet" href="../styles/main.css?v=1" />
+</head>
+<body>
+<div class="site-wrapper">
+  <header>
+    <div class="header-inner">
+      <img src="../assets/ross-logo.webp" class="header-logo" alt="Logo" />
+      <div>
+        <h1 class="header-title">Admin Developer Console</h1>
+        <p class="header-subtitle">Brand Monitoring, Social Insights, and API Tools</p>
+      </div>
+      <nav>
+        <a href="admin-console.html">Dev Console</a>
+        <a href="index.html">Home</a>
+        <a href="client-portal.html">Client Portal</a>
+        <a href="help.html">Help</a>
+        <a href="training.html">Training</a>
+      </nav>
+    </div>
+  </header>
+  <main class="section">
+         <div class="section-inner">
+           <div style="background:#F7F7F7;border-radius:8px;padding:1em 2em;margin-bottom:2em;box-shadow:0 2px 8px #10274D22;">
+             <h2 style="color:#E1B773;font-family:'Georgia',serif;">IRS e-file Registration Status</h2>
+             <div style="font-size:1.1em;color:#10274D;font-weight:bold;">Approved for production use</div>
+             <div style="font-size:0.95em;color:#9A9A9A;">IRS e-file compliant. Not affiliated with the IRS. For authorized e-file providers only.</div>
+           </div>
+      <h2>Brand Monitoring & Social Insights</h2>
+      <div id="brand-monitoring">
+        <h3>Monitor Your Brand</h3>
+        <div id="brand-feed">Loading brand mentions...</div>
+      </div>
+      <div id="event-tracking" style="margin-top:2em;">
+        <h3>Track Events & Trends</h3>
+        <div id="event-feed">Loading events...</div>
+      </div>
+      <div id="social-management" style="margin-top:2em;">
+        <h3>Social Media Management</h3>
+        <button onclick="alert('Post to X coming soon!')">Post to X</button>
+      </div>
+      <div id="customer-care" style="margin-top:2em;">
+        <h3>Customer Care Management</h3>
+        <div id="customer-care-feed">Loading customer care data...</div>
+      </div>
+      <div id="market-research" style="margin-top:2em;">
+        <h3>Market Research & Insights</h3>
+        <div id="market-feed">Loading market insights...</div>
+      </div>
+      <div id="ads-embed" style="margin-top:2em;">
+        <h3>X Ads & Content Embedding</h3>
+        <button onclick="alert('X Ads integration coming soon!')">Manage X Ads</button>
+      </div>
+      <div id="audit-log-section" style="margin-top:2em;">
+        <h3>Audit Log Review</h3>
+        <div id="audit-log-feed">Loading audit log...</div>
+      </div>
+      <div id="audit-analytics-section" style="margin-top:2em;">
+        <body style="background: linear-gradient(135deg, #10274D 80%, #E1B773 100%); font-family: 'Georgia', serif; color: #10274D;">
+            <!-- IRS e-file compliance disclaimer -->
+            <div style="background: #E1B773; color: #10274D; padding: 8px; text-align: center; font-size: 1rem; font-weight: bold; border-bottom: 2px solid #C8A23B;">
+                This platform is IRS e-file compliant. Not affiliated with the IRS. For authorized e-file providers only.
+            </div>
+        <div id="audit-analytics-feed">Loading analytics...</div>
+      </div>
+    </div>
+  </main>
+  <footer>© 2026 Ross Tax & Bookkeeping.</footer>
+</div>
+<script src="../scripts/x-dashboard.js"></script>
+<script src="../scripts/audit-dashboard.js"></script>
+</body>
+</html>

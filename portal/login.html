@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <meta charset="utf-8" />
+        <img src="/public/dc-taxation-logo.png" class="header-logo" alt="D&C Taxation LLC Logo" />
+  <title>Client Portal Login | Ross Tax & Bookkeeping</title>
+  <link rel="stylesheet" href="../styles/main.css?v=1" />
+</head>
+<body>
+<div class="site-wrapper">
+  <header>
+    <div class="header-inner">
+      <img src="../assets/ross-logo.webp" class="header-logo" alt="Logo" />
+      <div>
+        <h1 class="header-title">Client Portal</h1>
+        <p class="header-subtitle">Secure Access</p>
+      </div>
+    </div>
+
+<script type="module">
+import { getUserRole, requireRole } from "./roles.js";
+
+// Test login button for demo/testing
+const testLoginBtn = document.createElement('button');
+testLoginBtn.textContent = 'Test Login as Admin';
+testLoginBtn.style.marginLeft = '1em';
+testLoginBtn.onclick = function() {
+  sessionStorage.setItem('userRole', 'admin');
+  document.getElementById('loginMessage').textContent = 'Logged in as Admin (test). Redirecting...';
+  setTimeout(() => window.location.href = '/portal/status.html', 800);
+};
+document.getElementById('loginForm').appendChild(testLoginBtn);
+</script>
+  </header>
+
+  <main class="section">
+    <div class="section-inner">
+      <div class="form-card">
+        <h1>Sign In</h1>
+         <form id="loginForm">
+           <label>Email</label>
+           <input type="email" name="email" required>
+           <label>Password</label>
+           <input type="password" name="password" required>
+           <button type="submit">Sign In</button>
+           <button type="button" id="enrollMFA" style="margin-left:1em;">Enroll MFA</button>
+         </form>
+         <p id="loginMessage" style="margin-top:10px; font-size:0.9rem;"></p>
+      </div>
+    </div>
+  </main>
+
+  <footer>© 2026 Ross Tax & Bookkeeping.</footer>
+</div>
+            <div class="dc-watermark">D&amp;C TAXATION LLC</div>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const email = form.email.value.trim();
+  const password = form.password.value;
+
+  // Backend authentication API call
+  try {
+    document.getElementById('loginMessage').textContent = 'Authenticating...';
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    if (!res.ok) {
+      document.getElementById('loginMessage').textContent = 'Server error. Please try again.';
+      return;
+    }
+    const result = await res.json();
+    if (result.success) {
+      // MFA required for ERO/admin
+      if (result.role === 'ero' || result.role === 'admin') {
+        // Prompt for MFA code
+        let mfaCode = '';
+        let attempts = 0;
+        let mfaSuccess = false;
+        while (attempts < 3 && !mfaSuccess) {
+          mfaCode = prompt('Enter MFA code sent to your email or phone:');
+          if (!mfaCode) break;
+          const mfaRes = await fetch('/api/auth/mfa', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, mfaCode })
+          });
+          if (!mfaRes.ok) {
+            document.getElementById('loginMessage').textContent = 'MFA server error.';
+            return;
+          }
+          const mfaResult = await mfaRes.json();
+          if (mfaResult.success) {
+            mfaSuccess = true;
+          } else {
+            attempts++;
+            document.getElementById('loginMessage').textContent = 'MFA failed. Try again.';
+          }
+        }
+        if (!mfaSuccess) {
+          document.getElementById('loginMessage').textContent = 'MFA failed. Please contact support.';
+          return;
+        }
+      }
+      sessionStorage.setItem('userRole', result.role);
+      document.getElementById('loginMessage').textContent = `Logged in as ${result.role}. Redirecting...`;
+      setTimeout(() => window.location.href = '/portal/status.html', 800);
+      return;
+    } else {
+      document.getElementById('loginMessage').textContent = result.message || 'Login failed.';
+    }
+  } catch (err) {
+    document.getElementById('loginMessage').textContent = 'Error connecting to authentication service.';
+    // Log error for backend monitoring
+    // TODO: Send error details to backend for audit
+  }
+  // TODO: Integrate with backend user management, logging, and security monitoring
+});
+document.getElementById("enrollMFA").addEventListener("click", async () => {
+  const email = document.querySelector("input[name='email']").value;
+  if (!email) { alert("Enter your email first."); return; }
+  await window.MFAUI.enrollMFA(email);
+});
+<\/script>
+<script src="../scripts/mfa.js"></script>
+</script>
+</body>
+</html>

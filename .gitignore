@@ -1,0 +1,11 @@
+node_modules/
+*.log
+.env
+.DS_Store
+# Next.js build output
+.next/
+out/
+# Ignore Cloudflare workerd binary
+node_modules/@cloudflare/workerd-linux-64/bin/workerd
+# Ignore Wrangler temporary files
+.wrangler/

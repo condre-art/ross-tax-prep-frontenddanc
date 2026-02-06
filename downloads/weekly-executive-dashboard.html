@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Executive Dashboard - Ross Tax Prep</title>
+    <style>
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .no-print { display: none; }
+            @page { margin: 0.5in; }
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff;
+            color: #0A2540;
+            line-height: 1.6;
+            padding: 30px;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #0A2540;
+            padding-bottom: 15px;
+        }
+        .logo { width: 80px; height: 80px; margin-bottom: 10px; }
+        h1 { font-size: 24px; color: #0A2540; margin-bottom: 5px; }
+        .subtitle { font-size: 12px; color: #666; }
+        .date-range {
+            background: #D4A574;
+            color: #0A2540;
+            padding: 8px 20px;
+            display: inline-block;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .metric-card {
+            background: #F4F6F8;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            border-left: 4px solid #D4A574;
+        }
+        .metric-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #0A2540;
+        }
+        .metric-label {
+            font-size: 11px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .metric-change {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .up { color: #22c55e; }
+        .down { color: #ef4444; }
+        .section { margin-bottom: 20px; }
+        .section h2 {
+            font-size: 14px;
+            color: #0A2540;
+            border-left: 4px solid #D4A574;
+            padding-left: 10px;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 11px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th { background: #0A2540; color: #fff; }
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        .green { background: #22c55e; }
+        .yellow { background: #f59e0b; }
+        .red { background: #ef4444; }
+        .footer {
+            margin-top: 30px;
+            padding: 12px;
+            background: #F4F6F8;
+            display: flex;
+            justify-content: space-between;
+            font-size: 9px;
+            border-radius: 4px;
+        }
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #0A2540;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn no-print" onclick="window.print()">📄 Save as PDF</button>
+
+    <div class="header">
+        <img src="../assets/ross-logo.png" alt="Ross Tax Prep" class="logo" onerror="this.style.display='none'">
+        <h1>Weekly Owner Dashboard</h1>
+        <p class="subtitle">Ross Tax Prep & Bookkeeping LLC</p>
+        <div class="date-range">Week of January 27, 2026</div>
+    </div>
+
+    <div class="metrics-grid">
+        <div class="metric-card">
+            <div class="metric-value">47</div>
+            <div class="metric-label">New Clients</div>
+            <div class="metric-change up">↑ 12% vs last week</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">$19,975</div>
+            <div class="metric-label">Revenue</div>
+            <div class="metric-change up">↑ 8% vs last week</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">42</div>
+            <div class="metric-label">Returns Filed</div>
+            <div class="metric-change up">↑ 5% vs last week</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">3.2</div>
+            <div class="metric-label">Avg Turnaround (Days)</div>
+            <div class="metric-change up">↓ 0.5 days improved</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">89%</div>
+            <div class="metric-label">Close Rate</div>
+            <div class="metric-change">→ Stable</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-value">12</div>
+            <div class="metric-label">Backlog</div>
+            <div class="metric-change down">↑ 3 from last week</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>KPI Health Status</h2>
+        <table>
+            <tr>
+                <th>Metric</th>
+                <th>Current</th>
+                <th>Target</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <td>Completion Rate</td>
+                <td>78%</td>
+                <td>≥70%</td>
+                <td><span class="status-dot green"></span>Healthy</td>
+            </tr>
+            <tr>
+                <td>Close Rate</td>
+                <td>89%</td>
+                <td>≥85%</td>
+                <td><span class="status-dot green"></span>Healthy</td>
+            </tr>
+            <tr>
+                <td>Filing Rate</td>
+                <td>96%</td>
+                <td>≥95%</td>
+                <td><span class="status-dot green"></span>Healthy</td>
+            </tr>
+            <tr>
+                <td>Backlog</td>
+                <td>12</td>
+                <td>≤10</td>
+                <td><span class="status-dot yellow"></span>Monitor</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Issues & Alerts</h2>
+        <table>
+            <tr>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Action Required</th>
+            </tr>
+            <tr>
+                <td>IRS Notice</td>
+                <td>CP2000 received for client #1247</td>
+                <td>Review by EOD Friday</td>
+            </tr>
+            <tr>
+                <td>Capacity</td>
+                <td>Backlog trending up</td>
+                <td>Consider overtime hours</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="footer">
+        <span>Ross Tax Prep & Bookkeeping LLC</span>
+        <span>EIN: 33-4891499</span>
+        <span>Generated: Jan 27, 2026</span>
+    </div>
+</body>
+</html>

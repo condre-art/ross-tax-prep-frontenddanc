@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Secure Portal Dashboard | Ross Tax & Bookkeeping</title>
+  <link rel="stylesheet" href="../styles/main.css?v=1" />
+  <style>
+    .welcome-splash {
+      text-align: center;
+      padding: 3em 1em;
+      background: linear-gradient(135deg, #10274D 0%, #1a3a66 100%);
+      color: #FAF4E8;
+      border-radius: 12px;
+      margin-bottom: 2em;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .welcome-splash h1 {
+      font-size: 2.5em;
+      margin: 0 0 0.5em 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.3em;
+    }
+    .welcome-splash p {
+      font-size: 1.1em;
+      margin: 0.5em auto;
+      max-width: 600px;
+    }
+    .security-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5em;
+      background: rgba(250, 244, 232, 0.15);
+      padding: 0.75em 1.5em;
+      border-radius: 8px;
+      margin-top: 1em;
+      font-weight: 600;
+      border: 2px solid rgba(225, 183, 115, 0.3);
+    }
+    .portal-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5em;
+      margin-top: 2em;
+    }
+    .portal-card {
+      background: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 1.5em;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: #10274D;
+      display: block;
+    }
+    .portal-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      border-color: #C9A227;
+    }
+    .portal-card h3 {
+      margin: 0 0 0.5em 0;
+      color: #10274D;
+      font-size: 1.3em;
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+    .portal-card p {
+      margin: 0;
+      color: #666;
+      font-size: 0.95em;
+      line-height: 1.5;
+    }
+    .redirect-notice {
+      text-align: center;
+      padding: 1em;
+      background: #fffbe6;
+      border: 1px solid #C9A227;
+      border-radius: 8px;
+      margin-top: 2em;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+<div class="site-wrapper">
+  <header>
+    <div class="header-inner">
+      <img src="../assets/ross-logo.webp" class="header-logo" alt="Logo" />
+      <div>
+        <h1 class="header-title">Client Portal</h1>
+        <p class="header-subtitle">Secure Dashboard</p>
+      </div>
+      <nav>
+        <a href="../index.html">Home</a>
+        <a href="status.html">My Returns</a>
+        <a href="upload.html">Upload</a>
+        <a href="messages.html">Messages</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="section-inner">
+      <div class="welcome-splash">
+        <h1>🔒 Welcome to Your Secure Portal</h1>
+        <p>Your documents and data are protected with bank-level encryption</p>
+        <div class="security-badge">
+          🔐 256-bit SSL Encryption • SOC 2 Compliant • HIPAA Protected
+        </div>
+      </div>
+
+      <h2 style="margin-bottom: 1em;">Quick Access</h2>
+      
+      <div class="portal-cards">
+        <a href="status.html" class="portal-card">
+          <h3>📊 Return Status</h3>
+          <p>Track your tax return progress in real time and view filing updates</p>
+        </a>
+
+        <a href="upload.html" class="portal-card">
+          <h3>📤 Upload Documents</h3>
+          <p>Securely upload W-2s, 1099s, receipts, and supporting documents</p>
+        </a>
+
+        <a href="messages.html" class="portal-card">
+          <h3>💬 Messages</h3>
+          <p>Communicate directly with your tax preparer</p>
+        </a>
+
+        <a href="../app/bank-products" class="portal-card">
+          <h3>🏦 Bank Products</h3>
+          <p>Choose refund delivery options and bank product services</p>
+        </a>
+
+        <a href="../app/refund-allocation" class="portal-card">
+          <h3>💰 Money Management</h3>
+          <p>Allocate refunds to savings bonds or split across multiple accounts</p>
+        </a>
+
+        <a href="../client-portal.html" class="portal-card">
+          <h3>⚙️ Account Settings</h3>
+          <p>Update your profile, payment methods, and preferences</p>
+        </a>
+      </div>
+
+      <div class="redirect-notice" id="autoRedirect" style="display: none;">
+        ⏱️ Redirecting to your dashboard...
+      </div>
+    </div>
+  </main>
+
+  <footer>© 2026 Ross Tax & Bookkeeping.</footer>
+</div>
+
+<script>
+// Auto-redirect after 3 seconds if accessed directly after login
+const params = new URLSearchParams(window.location.search);
+if (params.get('auto') === 'true') {
+  document.getElementById('autoRedirect').style.display = 'block';
+  setTimeout(() => {
+    window.location.href = 'status.html';
+  }, 3000);
+}
+</script>
+</body>
+</html>

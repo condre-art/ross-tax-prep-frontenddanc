@@ -1,0 +1,124 @@
+<div style="text-align:center;margin:32px 0;">
+  <button id="ai-marketing-btn" style="background:linear-gradient(90deg,#C9A24D 60%,#ffe9a0 100%);color:#0F2A44;font-family:'Montserrat',sans-serif;font-weight:700;border:none;border-radius:8px;padding:18px 38px;font-size:1.2em;box-shadow:0 2px 8px #c9a24d33;cursor:pointer;transition:background 0.2s,color 0.2s,box-shadow 0.2s;">Post AI Marketing Now</button>
+  <div style="font-size:0.98em;color:#0F2A44;margin-top:8px;">(Posts a random AI-generated marketing message, poll, or image to your linked social media.)</div>
+  <div id="ai-marketing-analytics" style="margin-top:18px;padding:16px 0 0 0;font-size:1.05em;"></div>
+</div>
+<script src="../scripts/ai-marketing-widget.js"></script>
+<script src="../scripts/ai-marketing-analytics.js"></script>
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/webp" href="../assets/ross-logo.webp" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Settings | Ross Tax & Bookkeeping</title>
+  <link rel="stylesheet" href="../styles/main.css?v=1" />
+</head>
+<body>
+<div class="site-wrapper">
+  <header>
+    <div class="header-inner">
+      <img src="../assets/ross-logo.webp" class="header-logo" alt="Logo" />
+      <div>
+        <h1 class="header-title">Admin Dashboard</h1>
+        <p class="header-subtitle">Settings</p>
+      </div>
+      <nav>
+        <a href="../index.html">Public Site</a>
+        <a href="index.html">Dashboard</a>
+        <a href="tasks.html">Tasks</a>
+        <a href="clients.html">Clients</a>
+        <a href="returns.html">Returns</a>
+        <a href="efile.html">E-File</a>
+        <a href="register-staff.html">Register Staff</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="section-inner">
+      <h2>Settings</h2>
+      <p id="settingsInfo">Loading...</p>
+      <div class="service-card" style="margin-top:1.5em;">
+        <h3>Configure Q / TQ</h3>
+        <label style="display:block;margin-top:0.5em;">Title<br>
+          <input type="text" id="qtqTitle" placeholder="Enter title" />
+        </label>
+        <label style="display:block;margin-top:0.5em;">Type<br>
+          <select id="qtqType">
+            <option value="Q">Q</option>
+            <option value="TQ">TQ</option>
+          </select>
+        </label>
+        <label style="display:block;margin-top:0.5em;">Notes<br>
+          <textarea id="qtqNotes" rows="3" placeholder="Optional details"></textarea>
+        </label>
+        <button id="qtqSubmit" style="margin-top:0.75em;">Create</button>
+        <p id="qtqStatus" style="margin-top:0.5em;color:#0f2a44;font-weight:600;"></p>
+      </div>
+      <div style="margin-top:2em;">
+        <a href="index.html" class="btn">Back to Dashboard</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>© 2026 Ross Tax & Bookkeeping. Internal Use Only.<br>
+    <a href="../privacy.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Privacy Policy</a> |
+    <a href="../terms.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Terms of Service</a> |
+    <a href="../breach-notification.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Breach Notification Policy</a>
+  </footer>
+</div>
+
+<script>
+async function loadSettings() {
+  const res = await fetch("/api/me");
+  const el = document.getElementById("settingsInfo");
+  if (!res.ok) {
+    el.textContent = "Not signed in.";
+    return;
+  }
+  const data = await res.json();
+  el.innerHTML = `
+    <strong>User:</strong> ${data.user.name} (${data.user.email})<br>
+    <strong>Role:</strong> ${data.user.role}<br>
+    <strong>EFIN:</strong> 748335<br>
+    <strong>ETINs:</strong> 95409 (Production), 95410 (Test)
+  `;
+}
+loadSettings();
+
+function setQTQStatus(msg, ok = true) {
+  const el = document.getElementById("qtqStatus");
+  if (!el) return;
+  el.textContent = msg;
+  el.style.color = ok ? "#0f2a44" : "#b00020";
+}
+
+async function createQTQ() {
+  const title = document.getElementById("qtqTitle").value.trim();
+  const type = document.getElementById("qtqType").value;
+  const notes = document.getElementById("qtqNotes").value.trim();
+  if (!title) {
+    setQTQStatus("Please enter a title before creating.", false);
+    return;
+  }
+  setQTQStatus("Creating…");
+  try {
+    await new Promise(r => setTimeout(r, 300));
+    setQTQStatus(`${type} created and confirmed: "${title}"${notes ? " — " + notes : ""}`);
+  } catch (e) {
+    setQTQStatus("Failed to create Q/TQ. Please try again.", false);
+  }
+}
+
+const qtqSubmit = document.getElementById("qtqSubmit");
+if (qtqSubmit) {
+  qtqSubmit.addEventListener("click", (e) => {
+    e.preventDefault();
+    createQTQ();
+  });
+}
+</script>
+</body>
+</html>

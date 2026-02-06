@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Texas Notary Intake | Ross Tax & Bookkeeping</title>
+  <link rel="stylesheet" href="styles/main.css?v=1" />
+  <style>
+    .form-section { max-width: 600px; margin: 2em auto; background: #F6F1E5; padding: 2em; border-radius: 10px; }
+    .form-section h2 { color: #0B1F3A; }
+    .form-section label { display: block; margin-top: 1em; }
+    .form-section input, .form-section textarea { width: 100%; padding: 8px; margin-top: 4px; border-radius: 4px; border: 1px solid #ccc; }
+    .disclaimer { font-size: 0.95em; color: #4B5563; margin-top: 1.5em; background: #fff; padding: 1em; border-radius: 6px; }
+    .btn { background: #0B1F3A; color: #fff; padding: 10px 24px; border: none; border-radius: 6px; margin-top: 1.5em; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <img src="assets/ross-logo.webp" alt="Ross Tax & Bookkeeping logo" class="site-logo" />
+    <h1>Texas Notary Intake Form</h1>
+  </header>
+  <main>
+    <div class="form-section">
+      <h2>Request Notary Service</h2>
+      <form>
+        <label for="client_name">Full Name</label>
+        <input type="text" id="client_name" name="client_name" required />
+        <label for="client_email">Email</label>
+        <input type="email" id="client_email" name="client_email" required />
+        <label for="client_phone">Phone</label>
+        <input type="tel" id="client_phone" name="client_phone" />
+        <label for="doc_type">Document Type</label>
+        <input type="text" id="doc_type" name="doc_type" required />
+        <label for="notes">Additional Notes</label>
+        <textarea id="notes" name="notes" rows="3"></textarea>
+        <div class="disclaimer">
+          <strong>Texas Notary & Document Services Disclaimer</strong><br>
+          Ross Tax & Bookkeeping provides notary public and document preparation services in the State of Texas.<br>
+          We are not attorneys and do not provide legal advice.<br>
+          We do not represent clients in court or provide legal opinions regarding documents.<br>
+          Notary services are limited to verification of identity and witnessing of signatures in accordance with Texas law.<br>
+          Court and document services are administrative in nature and do not replace the advice of a licensed attorney.
+        </div>
+        <button type="submit" class="btn">Submit Request</button>
+      </form>
+    </div>
+  </main>
+  <footer class="site-footer">
+    © 2026 Ross Tax & Bookkeeping. All rights reserved.
+  </footer>
+</body>
+</html>

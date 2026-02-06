@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin | Ross Tax & Bookkeeping</title>
+  <link rel="stylesheet" href="../styles/main.css?v=1" />
+</head>
+     <style>
+       .dc-watermark {
+         position: fixed;
+         bottom: 10px;
+         right: 10px;
+         opacity: 0.1;
+         font-size: 48px;
+         color: #000;
+       }
+     </style>
+<body>
+
+<div class="admin-layout">
+  <aside class="sidebar">
+    <img src="../assets/ross-logo.webp" class="header-logo" alt="Ross Tax & Bookkeeping Logo" />
+      <img src="/public/dc-taxation-logo.png" class="header-logo" alt="D&C Taxation LLC Logo" />
+      <a href="index.html">Dashboard</a>
+      <a href="staff.html">Staff</a>
+      <a href="clients.html">Clients</a>
+      <a href="returns.html">Returns</a>
+      <a href="efile.html">E-File</a>
+      <a href="refunds.html">Refund Tracker</a>
+      <a href="tasks.html">Tasks</a>
+      <a href="onboarding-staff.html">Staff Onboarding</a>
+      <a href="register-staff.html">Register Staff</a>
+      <a href="compliance.html">Compliance</a>
+      <a href="settings.html">Settings</a>
+      <a href="../index.html" style="color:#C9A24D;">Public Site</a>
+    </nav>
+  </aside>
+  <div style="flex:1;display:flex;flex-direction:column;min-height:100vh;">
+    <header>
+      <div class="breadcrumbs">Admin &gt; Dashboard</div>
+      <div id="status-indicators">
+        <span id="efile-status-indicator">E-File: <span id="efile-status">Loading…</span></span>
+        <span id="tasks-status-indicator">Tasks: <span id="tasks-status">Loading…</span></span>
+      </div>
+    </header>
+    <main class="section" style="flex:1;">
+      <div class="section-inner">
+        <h2>Welcome to Ross Tax & Bookkeeping Admin</h2>
+        <div class="compliance-badges">
+          <span class="compliance-badge"><span class="badge-icon">🛡️</span> IRS Authorized E-File Provider</span>
+          <span class="compliance-badge"><span class="badge-icon">🏦</span> Bank Product Partner</span>
+          <span class="compliance-badge"><span class="badge-icon">🔒</span> SOC 2 / HIPAA / GLBA</span>
+          <span class="compliance-badge"><span class="badge-icon">📄</span> EFIN: <b>11200000</b></span>
+        </div>
+        <div style="text-align:center;margin:32px 0;">
+          <button id="ai-marketing-btn" style="background:linear-gradient(90deg,#C9A24D 60%,#ffe9a0 100%);color:#0F2A44;font-family:'Montserrat',sans-serif;font-weight:700;border:none;border-radius:8px;padding:18px 38px;font-size:1.2em;box-shadow:0 2px 8px #c9a24d33;cursor:pointer;transition:background 0.2s,color 0.2s,box-shadow 0.2s;">Post AI Marketing Now</button>
+          <div style="font-size:0.98em;color:#0F2A44;margin-top:8px;">(Posts a random AI-generated marketing message, poll, or image to your linked social media.)</div>
+          <div id="ai-marketing-analytics" style="margin-top:18px;padding:16px 0 0 0;font-size:1.05em;"></div>
+        </div>
+        <div class="dashboard-cards">
+          <div class="dashboard-card">
+            <div class="card-title">Active Clients</div>
+            <div class="card-value" id="card-clients">—</div>
+            <div class="card-badge">Clients</div>
+          </div>
+          <div class="dashboard-card">
+            <div class="card-title">Returns in Progress</div>
+            <div class="card-value" id="card-returns">—</div>
+            <div class="card-badge">Returns</div>
+          </div>
+          <div class="dashboard-card">
+            <div class="card-title">E-Files Transmitted</div>
+            <div class="card-value" id="card-efiles">—</div>
+            <div class="card-badge">E-File</div>
+          </div>
+          <div class="dashboard-card">
+            <div class="card-title">Refunds Tracked</div>
+            <div class="card-value" id="card-refunds">—</div>
+            <div class="card-badge">Refunds</div>
+          </div>
+        </div>
+        <div style="margin-top:2em;display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="/downloads/Ross_Tax_Master_IRS_Compliance_Binder.pdf" class="btn" download>Download IRS Credential Binder (PDF)</a>
+          <span class="compliance-badge" style="background:#E1B773;color:#10274D;padding:8px 16px;border-radius:8px;font-weight:bold;display:inline-flex;align-items:center;gap:8px;"><span class="badge-icon">🛡️</span> IRS E-File Badge</span>
+          <button class="btn" onclick="triggerDMCampaign()">Trigger DM Campaign</button>
+          <button class="btn" onclick="logEngagement()">Log Engagement (Analytics)</button>
+        </div>
+        <div style="margin-top:2em;display:flex;gap:12px;flex-wrap:wrap;">
+          <a href="onboarding-staff.html" class="btn">Staff Onboarding</a>
+          <a href="clients.html" class="btn">View Clients</a>
+          <a href="returns.html" class="btn">View Returns</a>
+          <a href="efile.html" class="btn">Transmit E-File</a>
+          <a href="refunds.html" class="btn">Refund Tracker</a>
+          <a href="tasks.html" class="btn">View Tasks</a>
+        </div>
+        <p id="userInfo" style="margin-top:2em;">Loading user...</p>
+        <div style="margin-top:2em;">
+          <h3>Live Traffic Monitoring</h3>
+          <pre id="live-traffic-feed" style="background:#f7f7fa;border-radius:8px;padding:1em;color:#1a237e;font-size:1.1em;">Loading traffic...</pre>
+        </div>
+      </div>
+    </main>
+    <footer style="background:#0F2A44;color:#fff;text-align:center;padding:18px 0;">© 2026 Ross Tax & Bookkeeping. Internal Use Only.</footer>
+  </div>
+</div>
+
+<script>
+  <div class="dc-watermark">D&amp;C TAXATION LLC</div>
+async function loadMe() {
+  const res = await fetch("/api/me");
+  const el = document.getElementById("userInfo");
+  if (!res.ok) {
+    el.textContent = "Not signed in or unauthorized.";
+    return;
+  }
+  const data = await res.json();
+  el.textContent = `Signed in as ${data.user.name} (${data.user.role})`;
+}
+loadMe();
+// Fetch live dashboard metrics from Worker API
+async function loadDashboardMetrics() {
+  try {
+    const [clientsRes, returnsRes, efilesRes, refundsRes] = await Promise.all([
+      fetch('/api/admin/clients'),
+      fetch('/api/admin/returns'),
+      fetch('/api/admin/efiles'),
+      fetch('/api/admin/refunds')
+    ]);
+    document.getElementById('card-clients').textContent = clientsRes.ok ? (await clientsRes.json()).count : '—';
+    document.getElementById('card-returns').textContent = returnsRes.ok ? (await returnsRes.json()).count : '—';
+    document.getElementById('card-efiles').textContent = efilesRes.ok ? (await efilesRes.json()).count : '—';
+    document.getElementById('card-refunds').textContent = refundsRes.ok ? (await refundsRes.json()).count : '—';
+  } catch {
+    document.getElementById('card-clients').textContent = '—';
+    document.getElementById('card-returns').textContent = '—';
+    document.getElementById('card-efiles').textContent = '—';
+    document.getElementById('card-refunds').textContent = '—';
+  }
+}
+loadDashboardMetrics();
+
+// DM campaign trigger
+async function triggerDMCampaign() {
+  try {
+    const res = await fetch('/api/x/dm-campaign', { method: 'POST' });
+    if (res.ok) alert('DM campaign triggered!');
+    else alert('Failed to trigger DM campaign.');
+  } catch { alert('Error triggering DM campaign.'); }
+}
+
+// Engagement analytics log
+async function logEngagement() {
+  try {
+    const res = await fetch('/api/admin/analytics/engagement', { method: 'POST' });
+    if (res.ok) alert('Engagement logged!');
+    else alert('Failed to log engagement.');
+  } catch { alert('Error logging engagement.'); }
+}
+<script src="../scripts/ai-marketing-widget.js"></script>
+<script src="../scripts/ai-marketing-analytics.js"></script>
+</script>
+<script src="../scripts/live-traffic.js"></script>
+<script>
+// Real-time status indicators for E-File and Tasks
+async function loadStatusIndicators() {
+  try {
+    const efileRes = await fetch("/api/efile/status/latest");
+    const efileStatus = document.getElementById("efile-status");
+    if (efileRes.ok) {
+      const data = await efileRes.json();
+      efileStatus.textContent = data.status ? data.status : "No recent";
+    } else {
+      efileStatus.textContent = "Unavailable";
+    }
+  } catch { document.getElementById("efile-status").textContent = "Error"; }
+  try {
+    const tasksRes = await fetch("/api/tasks");
+    const tasksStatus = document.getElementById("tasks-status");
+    if (tasksRes.ok) {
+      const data = await tasksRes.json();
+      tasksStatus.textContent = data.length ? `${data.filter(t=>t.status!=='done').length} open` : "All done";
+    } else {
+      tasksStatus.textContent = "Unavailable";
+    }
+  } catch { document.getElementById("tasks-status").textContent = "Error"; }
+}
+loadStatusIndicators();
+</script>
+</body>
+</html>

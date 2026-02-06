@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KPI Definitions & SOP - Ross Tax Prep</title>
+    <style>
+        @media print {
+            body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .no-print { display: none; }
+            @page { margin: 0.5in; }
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff;
+            color: #0A2540;
+            line-height: 1.6;
+            padding: 40px;
+            max-width: 850px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #0A2540;
+            padding-bottom: 20px;
+        }
+        .logo { width: 110px; height: 110px; margin-bottom: 15px; }
+        h1 { font-size: 28px; color: #0A2540; margin-bottom: 10px; }
+        .subtitle { font-size: 14px; color: #666; }
+        .section { margin-bottom: 25px; page-break-inside: avoid; }
+        .section h2 {
+            font-size: 16px;
+            color: #0A2540;
+            border-left: 4px solid #D4A574;
+            padding-left: 12px;
+            margin-bottom: 10px;
+        }
+        .section p { font-size: 12px; color: #333; padding-left: 16px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 11px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th { background: #0A2540; color: #fff; }
+        tr:nth-child(even) { background: #F4F6F8; }
+        .status-good { color: #22c55e; font-weight: bold; }
+        .status-warn { color: #f59e0b; font-weight: bold; }
+        .status-bad { color: #ef4444; font-weight: bold; }
+        .footer {
+            margin-top: 40px;
+            padding: 15px;
+            background: #F4F6F8;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            border-radius: 4px;
+        }
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #0A2540;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+        .print-btn:hover { background: #1a3a5c; }
+    </style>
+</head>
+<body>
+    <button class="print-btn no-print" onclick="window.print()">📄 Save as PDF</button>
+
+    <div class="header">
+        <img src="../assets/ross-logo.png" alt="Ross Tax Prep" class="logo" onerror="this.style.display='none'">
+        <h1>KPI Definitions & Operating SOP</h1>
+        <p class="subtitle"><strong>Ross Tax Prep & Bookkeeping LLC</strong><br>Internal Use Only</p>
+    </div>
+
+    <div class="section">
+        <h2>Core KPI Definitions</h2>
+        <table>
+            <tr>
+                <th>KPI</th>
+                <th>Definition</th>
+                <th>Calculation</th>
+            </tr>
+            <tr>
+                <td><strong>Intake Rate</strong></td>
+                <td>New client intakes received</td>
+                <td>Count of new intakes per week</td>
+            </tr>
+            <tr>
+                <td><strong>Completion Rate</strong></td>
+                <td>Returns completed vs started</td>
+                <td>(Completed / Started) × 100</td>
+            </tr>
+            <tr>
+                <td><strong>Close Rate</strong></td>
+                <td>Signed engagements vs proposals</td>
+                <td>(Signed / Proposals) × 100</td>
+            </tr>
+            <tr>
+                <td><strong>Filing Rate</strong></td>
+                <td>Returns e-filed vs completed</td>
+                <td>(Filed / Completed) × 100</td>
+            </tr>
+            <tr>
+                <td><strong>Revenue Collected</strong></td>
+                <td>Actual payments received</td>
+                <td>Sum of all payments</td>
+            </tr>
+            <tr>
+                <td><strong>Turnaround Time</strong></td>
+                <td>Avg days from intake to filing</td>
+                <td>Avg(Filing Date - Intake Date)</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Healthy Thresholds</h2>
+        <table>
+            <tr>
+                <th>KPI</th>
+                <th class="status-good">Healthy</th>
+                <th class="status-warn">Warning</th>
+                <th class="status-bad">Critical</th>
+            </tr>
+            <tr>
+                <td>Completion Rate</td>
+                <td>≥ 70%</td>
+                <td>50-69%</td>
+                <td>< 50%</td>
+            </tr>
+            <tr>
+                <td>Close Rate</td>
+                <td>≥ 85%</td>
+                <td>70-84%</td>
+                <td>< 70%</td>
+            </tr>
+            <tr>
+                <td>Filing Rate</td>
+                <td>≥ 95%</td>
+                <td>85-94%</td>
+                <td>< 85%</td>
+            </tr>
+            <tr>
+                <td>Turnaround Time</td>
+                <td>≤ 5 days</td>
+                <td>6-10 days</td>
+                <td>> 10 days</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Review Cadence</h2>
+        <p>• <strong>Weekly:</strong> KPIs reviewed every Monday by Owner/Admin<br>
+        • <strong>Monthly:</strong> Full performance review with all staff<br>
+        • <strong>Quarterly:</strong> Strategic review and target adjustments</p>
+    </div>
+
+    <div class="section">
+        <h2>Corrective Action Protocol</h2>
+        <p>When any KPI falls below threshold:<br>
+        1. Identify root cause within 48 hours<br>
+        2. Document corrective action plan<br>
+        3. Implement changes immediately<br>
+        4. Monitor daily until restored to healthy range</p>
+    </div>
+
+    <div class="footer">
+        <span>Ross Tax Prep & Bookkeeping LLC</span>
+        <span>EIN: 33-4891499</span>
+        <span>Confidential</span>
+    </div>
+</body>
+</html>

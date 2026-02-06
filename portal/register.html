@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Client Registration | Ross Tax & Bookkeeping</title>
+  <link rel="stylesheet" href="../styles/main.css?v=1" />
+  <script src="../scripts/portal-auth.js"></script>
+</head>
+<body>
+<script>requireRole(['client']);</script>
+<div class="site-wrapper">
+  <header>
+    <div class="header-inner">
+      <img src="../assets/ross-logo.webp" class="header-logo" alt="Logo" />
+      <div>
+        <h1 class="header-title">Client Portal</h1>
+        <p class="header-subtitle">Register for Secure Access</p>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="section-inner">
+      <div class="form-card">
+        <h1>Register as a Client</h1>
+        <form id="clientRegForm">
+          <label>Name</label>
+          <input type="text" name="name" required>
+          <label>Email</label>
+          <input type="email" name="email" required>
+          <label>Phone</label>
+          <input type="tel" name="phone">
+          <label>Password</label>
+          <input type="password" name="password" required>
+          <button type="submit">Register</button>
+        </form>
+        <p id="clientRegMsg" style="margin-top:10px; font-size:0.9rem;"></p>
+      </div>
+    </div>
+  </main>
+
+  <footer>© 2026 Ross Tax & Bookkeeping.</footer>
+</div>
+
+<script>
+document.getElementById("clientRegForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const body = {
+    name: form.name.value,
+    email: form.email.value,
+    phone: form.phone.value,
+    password: form.password.value
+  };
+  const res = await fetch("/register/client", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+  const msg = document.getElementById("clientRegMsg");
+  if (!res.ok) {
+    msg.textContent = await res.text();
+    return;
+  }
+  msg.textContent = "Registration successful.";
+  form.reset();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+name = "ross-tax-prep"
+main = "functions/_middleware.ts"
+compatibility_date = "2024-01-01"
+
+# R2 Bucket bindings for document storage
+[[r2_buckets]]
+binding = "TAX_DOCUMENTS"
+bucket_name = "ross-tax-documents"
+preview_bucket_name = "ross-tax-documents-preview"
+
+[[r2_buckets]]
+binding = "CLIENT_UPLOADS"
+bucket_name = "ross-client-uploads"
+preview_bucket_name = "ross-client-uploads-preview"
+
+[[r2_buckets]]
+binding = "IRS_SUBMISSIONS"
+bucket_name = "ross-irs-submissions"
+preview_bucket_name = "ross-irs-submissions-preview"
+
+# D1 Database bindings
+[[d1_databases]]
+binding = "DB"
+database_name = "ross-tax-prep-db"
+database_id = "" # Will be populated after creating D1 database: wrangler d1 create ross-tax-prep-db
+
+# KV Namespaces for sessions and cache
+[[kv_namespaces]]
+binding = "SESSIONS"
+id = "" # Will be populated after creating KV: wrangler kv:namespace create "SESSIONS"
+preview_id = "" # Will be populated after creating preview KV
+
+[[kv_namespaces]]
+binding = "CACHE"
+id = "" # Will be populated after creating KV: wrangler kv:namespace create "CACHE"
+preview_id = "" # Will be populated after creating preview KV
+
+# Environment variables
+[vars]
+ENVIRONMENT = "production"
+IRS_MEF_ENDPOINT = "https://prod.irs.gov/mef"
+IRS_TEST_MODE = "false"
+
+# Durable Objects for real-time features
+[[durable_objects.bindings]]
+name = "LIVE_SESSIONS"
+class_name = "LiveSession"
+script_name = "ross-tax-prep"
+
+# Analytics Engine binding
+[[analytics_engine_datasets]]
+binding = "ANALYTICS"
+
+# Secrets (set via: wrangler secret put <SECRET_NAME>)
+# Required secrets:
+# - JWT_SECRET: Secret key for JWT token signing
+# - ENCRYPTION_KEY: Key for encrypting sensitive data (SSN, etc.)
+# - IRS_EFIN: Electronic Filing Identification Number
+# - IRS_ETIN: Electronic Transmitter Identification Number
+# - IRS_CERTIFICATE: IRS authentication certificate (base64)
+# - IRS_PRIVATE_KEY: IRS private key (base64)
+# - TOTP_SECRET: Secret for 2FA TOTP generation
+# - DB_ENCRYPTION_KEY: Database field-level encryption key
+
+[build]
+command = "npm run build"
+
+[site]
+bucket = "./out"
+
+# Development settings
+[dev]
+ip = "0.0.0.0"
+port = 8787
+local_protocol = "http"

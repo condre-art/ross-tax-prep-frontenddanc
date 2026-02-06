@@ -1,0 +1,76 @@
+components:
+  schemas:
+
+    Badge:
+      type: object
+      properties:
+        id:
+          type: string
+        tenantId:
+          type: string
+        name:
+          type: string
+        iconUrl:
+          type: string
+        status:
+          type: string
+          enum: [active, expired, revoked]
+        issuedAt:
+          type: string
+          format: date-time
+        expiresAt:
+          type: string
+          format: date-time
+          nullable: true
+      required: [id, tenantId, name, status, issuedAt]
+
+    Certificate:
+      type: object
+      properties:
+        id:
+          type: string
+        tenantId:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+          enum: [irs, security, lms, operational, state]
+        status:
+          type: string
+          enum: [active, expired, missing, revoked]
+        issuedAt:
+          type: string
+          format: date-time
+        expiresAt:
+          type: string
+          format: date-time
+          nullable: true
+        downloadUrl:
+          type: string
+      required: [id, tenantId, title, type, status, issuedAt]
+
+    License:
+      type: object
+      properties:
+        id:
+          type: string
+        tenantId:
+          type: string
+        licenseType:
+          type: string
+          enum: [affiliate, reseller, enterprise]
+        status:
+          type: string
+          enum: [pending, active, expired, revoked]
+        seats:
+          type: integer
+        startsAt:
+          type: string
+          format: date-time
+        expiresAt:
+          type: string
+          format: date-time
+        meta:
+          type: object
+      required: [id, tenantId, licenseType, status, startsAt]

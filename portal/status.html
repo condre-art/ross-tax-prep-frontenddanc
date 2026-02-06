@@ -1,0 +1,96 @@
+<div style="text-align:center;margin:32px 0;">
+  <button id="ai-marketing-btn" style="background:linear-gradient(90deg,#C9A24D 60%,#ffe9a0 100%);color:#0F2A44;font-family:'Montserrat',sans-serif;font-weight:700;border:none;border-radius:8px;padding:18px 38px;font-size:1.2em;box-shadow:0 2px 8px #c9a24d33;cursor:pointer;transition:background 0.2s,color 0.2s,box-shadow 0.2s;">Post AI Marketing Now</button>
+  <div style="font-size:0.98em;color:#0F2A44;margin-top:8px;">(Posts a random AI-generated marketing message, poll, or image to your linked social media.)</div>
+  <div id="ai-marketing-analytics" style="margin-top:18px;padding:16px 0 0 0;font-size:1.05em;"></div>
+</div>
+<script src="../scripts/ai-marketing-widget.js"></script>
+<script src="../scripts/ai-marketing-analytics.js"></script>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Return Status | Client Portal</title>
+  <link rel="stylesheet" href="../styles/main.css?v=1" />
+  <script src="../scripts/portal-auth.js"></script>
+  <style>
+    .status-badge { padding:2px 8px; border-radius:4px; font-size:0.95em; margin-right:8px; }
+    .status-pending { background:#fffbe6; color:#b59f3b; }
+    .status-inprogress { background:#e6f0ff; color:#2a4fb3; }
+    .status-completed { background:#e6ffed; color:#1a7f37; }
+    .status-rejected { background:#ffe6e6; color:#b53b3b; }
+    .progress-bar { height:8px; border-radius:4px; background:#eee; margin:6px 0 12px 0; overflow:hidden; }
+    .progress-inner { height:8px; border-radius:4px; }
+  </style>
+</head>
+<body>
+<script type="module">
+import { requireRole } from "./roles.js";
+requireRole(['client', 'admin', 'staff']); // Only allow logged-in users
+</script>
+<script>requireRole(['client','staff','admin']);</script>
+<div class="site-wrapper">
+  <header>
+    <div class="header-inner">
+      <img src="/public/dc-taxation-logo.png" class="header-logo" alt="D&C Taxation LLC Logo" />
+      <div>
+        <h1 class="header-title">Client Portal</h1>
+        <p class="header-subtitle">Return Status</p>
+      </div>
+      <div class="dc-watermark">D&amp;C TAXATION LLC</div>
+  </header>
+
+  <main class="section">
+    <div class="section-inner">
+      <h2>Your Return Status</h2>
+      <div id="status">Loading...</div>
+    </div>
+  </main>
+
+  <footer>© 2026 Ross Tax & Bookkeeping.</footer>
+</div>
+
+<script>
+async function loadStatus() {
+  const res = await fetch("/api/returns?scope=client");
+  const el = document.getElementById("status");
+  if (!res.ok) {
+    el.textContent = "Please sign in to view your status.";
+    return;
+  }
+  const data = await res.json();
+  if (!data.length) {
+    el.textContent = "No returns found yet.";
+    return;
+  }
+  function getStatusClass(status) {
+    const s = (status||'').toLowerCase();
+    if (s.includes('pending')) return 'status-pending';
+    if (s.includes('in progress')) return 'status-inprogress';
+    if (s.includes('completed')||s.includes('filed')) return 'status-completed';
+    if (s.includes('rejected')||s.includes('error')) return 'status-rejected';
+    return 'status-pending';
+  }
+  function getProgress(status) {
+    const s = (status||'').toLowerCase();
+    if (s.includes('pending')) return 20;
+    if (s.includes('in progress')) return 50;
+    if (s.includes('completed')||s.includes('filed')) return 100;
+    if (s.includes('rejected')||s.includes('error')) return 100;
+    return 10;
+  }
+  el.innerHTML = data.map(r => {
+    const statusClass = getStatusClass(r.status);
+    const progress = getProgress(r.status);
+    return `<div class="service-card">
+      <strong>Tax Year ${r.tax_year}</strong><br>
+      <span class="status-badge ${statusClass}">${r.status}</span><br>
+      <div class="progress-bar"><div class="progress-inner" style="width:${progress}%;background:#C9A227;"></div></div>
+      Last Updated: ${r.updated_at || "-"}
+    </div>`;
+  }).join("");
+}
+loadStatus();
+</script>
+</body>
+</html>

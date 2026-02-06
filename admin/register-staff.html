@@ -1,0 +1,97 @@
+<div style="text-align:center;margin:32px 0;">
+  <button id="ai-marketing-btn" style="background:linear-gradient(90deg,#C9A24D 60%,#ffe9a0 100%);color:#0F2A44;font-family:'Montserrat',sans-serif;font-weight:700;border:none;border-radius:8px;padding:18px 38px;font-size:1.2em;box-shadow:0 2px 8px #c9a24d33;cursor:pointer;transition:background 0.2s,color 0.2s,box-shadow 0.2s;">Post AI Marketing Now</button>
+  <div style="font-size:0.98em;color:#0F2A44;margin-top:8px;">(Posts a random AI-generated marketing message, poll, or image to your linked social media.)</div>
+  <div id="ai-marketing-analytics" style="margin-top:18px;padding:16px 0 0 0;font-size:1.05em;"></div>
+</div>
+<script src="../scripts/ai-marketing-widget.js"></script>
+<script src="../scripts/ai-marketing-analytics.js"></script>
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/webp" href="../assets/ross-logo.webp" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Staff Registration | Ross Tax & Bookkeeping</title>
+  <link rel="stylesheet" href="../styles/main.css?v=1" />
+</head>
+<body>
+<div class="site-wrapper">
+  <header>
+    <div class="header-inner">
+      <img src="../assets/ross-logo.webp" class="header-logo" alt="Logo" />
+      <div>
+        <h1 class="header-title">Staff Registration</h1>
+        <p class="header-subtitle">Create a staff account</p>
+      </div>
+      <nav>
+        <a href="../index.html">Public Site</a>
+        <a href="index.html">Dashboard</a>
+        <a href="tasks.html">Tasks</a>
+        <a href="clients.html">Clients</a>
+        <a href="returns.html">Returns</a>
+        <a href="efile.html">E-File</a>
+        <a href="register-staff.html">Register Staff</a>
+        <a href="settings.html">Settings</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="section-inner">
+      <div class="form-card">
+        <h1>Register Staff</h1>
+        <form id="staffRegForm">
+          <label>Name</label>
+          <input type="text" name="name" required>
+          <label>Email</label>
+          <input type="email" name="email" required>
+          <label>Password</label>
+          <input type="password" name="password" required>
+          <label>Role</label>
+          <select name="role" required>
+            <option value="staff">Staff</option>
+            <option value="admin">Admin</option>
+          </select>
+          <button type="submit">Register</button>
+        </form>
+        <p id="staffRegMsg" style="margin-top:10px; font-size:0.9rem;"></p>
+        <div style="margin-top:2em;">
+          <a href="index.html" class="btn">Back to Dashboard</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer>© 2026 Ross Tax & Bookkeeping. Internal Use Only.<br>
+    <a href="../privacy.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Privacy Policy</a> |
+    <a href="../terms.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Terms of Service</a> |
+    <a href="../breach-notification.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Breach Notification Policy</a>
+  </footer>
+</div>
+
+<script>
+document.getElementById("staffRegForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const body = {
+    name: form.name.value,
+    email: form.email.value,
+    password: form.password.value,
+    role: form.role.value
+  };
+  const res = await fetch("/register/staff", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+  const msg = document.getElementById("staffRegMsg");
+  if (!res.ok) {
+    msg.textContent = await res.text();
+    return;
+  }
+  msg.textContent = "Registration successful.";
+  form.reset();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!doctype html>
+<html lang="en">
+<head>
+      <link rel="icon" type="image/webp" href="assets/ross-logo.webp" />
+    <!-- Social & Open Graph -->
+    <meta property="og:site_name" content="Ross Tax Prep & Bookkeeping">
+    <meta property="og:url" content="https://www.rosstaxprepandbookkeeping.com">
+    <meta property="og:title" content="Ross Tax Prep & Bookkeeping">
+    <meta property="og:description" content="Professional tax preparation and bookkeeping services.">
+    <meta property="og:image" content="/assets/social-card.png">
+    <link rel="me" href="https://www.instagram.com/rosstaxprepandbookkeepingllc">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ross Tax & Bookkeeping</title>
+
+  <style>
+    :root {
+  --navy: #3A6EA5;
+  --gold: #C9A24D;
+  --off-white: #F4F6F8;
+  --text-dark: #1B1B1B;
+}
+
+body {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  background: var(--off-white);
+  color: var(--text-dark);
+}
+
+header,
+footer {
+  background: var(--navy);
+  color: white;
+}
+
+.cta-btn {
+  background: var(--gold);
+  color: var(--navy);
+}
+
+.cta-btn:hover {
+  background: #b8913f; /* darker gold */
+}
+
+h1, h2, h3 {
+  color: var(--navy);
+}
+body {
+      margin: 0;
+      font-family: "Georgia", "Times New Roman", serif;
+      background: #f4f6f8;
+      color: #1b1b1b;
+      line-height: 1.6;
+    }
+
+    header {
+      background: #3A6EA5;
+      padding: 24px;
+      text-align: center;
+    }
+
+    header img {
+      max-width: 260px;
+    }
+
+    .hero {
+      padding: 60px 20px;
+      text-align: center;
+      background: #ffffff;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      max-width: 720px;
+      margin: 0 auto 32px;
+      font-size: 1.1rem;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      padding: 14px 28px;
+      background: #c9a24d;
+      color: #3A6EA5;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+
+    .services {
+      padding: 50px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .services h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .service-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .service {
+      background: #ffffff;
+      padding: 24px;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+
+    footer {
+      background: #3A6EA5;
+      color: #ffffff;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+
+<body>
+
+<div style="text-align:center; margin-top:18px;">
+  <a href="https://www.instagram.com/rosstaxprepandbookkeepingllc" target="_blank" style="color:#C9A24D; font-weight:bold; text-decoration:none;">
+    <img src="assets/instagram-icon.png" alt="Instagram" style="height:24px;vertical-align:middle;margin-right:6px;"/>
+    @rosstaxprepandbookkeepingllc on Instagram
+  </a>
+</div>
+
+  <header class="site-header">
+    <img src="/public/dc-taxation-logo.png" alt="D&C Taxation LLC Logo" class="site-logo" />
+    <h1>D&C Taxation LLC</h1>
+    <p>Client Portal & Staff Dashboard</p>
+  </header>
+
+<section class="hero">
+ <h1>Trusted Tax & Bookkeeping Services</h1>
+<p>
+  Ross Tax & Bookkeeping provides accurate, confidential, and dependable
+  tax preparation and bookkeeping services for individuals and small businesses.
+  We simplify the process so you can file with confidence.
+</p>
+<a class="cta-btn" href="/intake.html">Start Your Tax Filing</a>
+<a class="cta-btn" href="client-portal.html" style="margin-left:12px;">Client Portal Login</a>
+
+<div style="margin-top:1.5em;">
+  <a href="https://sa.www4.irs.gov/wmr/" target="_blank" style="color:#C9A227;font-weight:bold;">Where's My Refund?</a> |
+  <a href="https://www.irs.gov/filing/wheres-my-amended-return" target="_blank" style="color:#C9A227;font-weight:bold;">Where's My Amended Return?</a>
+</div>
+
+
+
+</section>
+
+<!-- AI Persona Widget -->
+<section class="card" style="max-width:700px;margin:48px auto 0 auto;box-shadow:0 4px 32px #d3540022;background:var(--tan);border:2px solid var(--primary-burnt-orange);border-radius:18px;">
+  <h2 style="text-align:center;font-family:'Montserrat',sans-serif;">AI Tax Attorney & Brand Ambassador</h2>
+  <form id="aiPersonaForm" style="display:flex;flex-direction:column;gap:12px;align-items:center;">
+    <select name="persona" style="font-size:1.1em;padding:6px 12px;">
+      <option value="tax-attorney">AI Tax Attorney</option>
+      <option value="marketer">AI Brand Ambassador/Recruiter</option>
+    </select>
+    <input type="text" name="question" placeholder="Ask a tax or marketing question..." style="width:80%;padding:8px 12px;font-size:1.1em;" required />
+    <button type="submit" class="button-primary">Ask AI</button>
+  </form>
+  <div id="aiPersonaResponse" style="margin-top:18px;font-size:1.1em;"></div>
+  <div id="aiPersonaDisclaimer" style="margin-top:8px;font-size:0.95em;color:#d35400;"></div>
+</section>
+<script src="scripts/ai-persona-widget.js"></script>
+
+<!-- D&C Taxation LLC Modern Dashboard Section -->
+<section class="card" style="max-width:1100px;margin:48px auto 0 auto;box-shadow:0 4px 32px #d3540022;background:var(--tan);border:2px solid var(--primary-burnt-orange);border-radius:18px;">
+  <div class="header" style="background:var(--primary-burnt-orange-shiny);color:var(--white);padding:24px 0 12px 0;border-radius:16px 16px 0 0;text-align:center;">
+    <h2 style="font-family:'Montserrat',sans-serif;font-size:2em;font-weight:900;letter-spacing:0.04em;margin:0;">D&C Taxation Dashboard</h2>
+    <div style="font-size:1.1em;opacity:0.92;">Hi-tech features for your tax software</div>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;gap:32px;justify-content:space-between;padding:32px;">
+        <!-- Task Assignment Widget -->
+        <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+          <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">Assigned Tasks</h3>
+          <ul id="task-list" style="list-style:none;padding:0;margin:0;font-size:1em;">
+            <li><input type="checkbox" id="task1"> <label for="task1">Collect taxpayer info</label></li>
+            <li><input type="checkbox" id="task2"> <label for="task2">Submit Refund Advantage app</label></li>
+            <li><input type="checkbox" id="task3"> <label for="task3">Transmit efile</label></li>
+            <li><input type="checkbox" id="task4"> <label for="task4">Notify client</label></li>
+          </ul>
+        </div>
+        <!-- Workflow Progress Widget -->
+        <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+          <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">Workflow Progress</h3>
+          <div style="margin-bottom:8px;">Refund Advantage Integration</div>
+          <progress id="workflow-progress" value="2" max="5" style="width:100%;height:18px;"></progress>
+          <div style="font-size:0.98em;color:var(--grey-trim);margin-top:6px;">Step 2 of 5: Application Submitted</div>
+        </div>
+        <!-- Refund Status Widget -->
+        <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+          <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">Refund Status</h3>
+          <div style="font-size:1.2em;font-weight:700;">Pending Bank Approval</div>
+          <div style="color:var(--grey-trim);font-size:0.98em;">Expected: 2-5 business days</div>
+        </div>
+    <!-- E-File Status Widget -->
+    <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+      <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">E-File Status</h3>
+      <div style="font-size:1.2em;font-weight:700;">Accepted</div>
+      <div style="color:var(--grey-trim);font-size:0.98em;">Last updated: <span id="efile-status-time">Just now</span></div>
+    </div>
+    <!-- Notifications Widget -->
+    <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+      <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">Notifications</h3>
+      <ul style="list-style:none;padding:0;margin:0;font-size:1em;">
+        <li><span style="color:var(--primary-burnt-orange);font-weight:bold;">•</span> IRS Acknowledgement received</li>
+        <li><span style="color:var(--primary-burnt-orange);font-weight:bold;">•</span> New client message</li>
+        <li><span style="color:var(--primary-burnt-orange);font-weight:bold;">•</span> Compliance check passed</li>
+      </ul>
+    </div>
+    <!-- AI Assistant Widget -->
+    <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+      <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">AI Assistant</h3>
+      <div style="font-size:1em;">How can I help you today?</div>
+      <button class="button-primary" style="margin-top:12px;">Ask a Tax Question</button>
+    </div>
+    <!-- ERO E-File Transmission Widget -->
+    <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+      <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">E-File Transmission</h3>
+      <button class="button-primary" onclick="alert('Transmit efile to IRS initiated!')">Transmit E-File</button>
+      <div style="font-size:0.98em;color:var(--grey-trim);margin-top:8px;">Status: Ready</div>
+    </div>
+    <!-- Compliance Alerts Widget -->
+    <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+      <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">Compliance Alerts</h3>
+      <ul style="list-style:none;padding:0;margin:0;font-size:1em;">
+        <li><span style="color:var(--primary-burnt-orange);font-weight:bold;">•</span> IRS business rules validated</li>
+        <li><span style="color:var(--primary-burnt-orange);font-weight:bold;">•</span> No compliance issues</li>
+      </ul>
+    </div>
+    <!-- Refund Tracking Widget -->
+    <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+      <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">Refund Tracking</h3>
+      <div style="font-size:1.2em;font-weight:700;">Refund: $2,350.00</div>
+      <div style="color:var(--grey-trim);font-size:0.98em;">Disbursement: Pending</div>
+    </div>
+    <!-- Bank Product Management Widget -->
+    <div class="card" style="flex:1 1 260px;min-width:240px;background:var(--white);border:1.5px solid var(--grey-trim);">
+      <h3 style="color:var(--primary-burnt-orange);font-family:'Montserrat',sans-serif;">Bank Product Management</h3>
+      <button class="button-primary" onclick="alert('Refund Advantage application submitted!')">Submit Bank Product App</button>
+      <div style="font-size:0.98em;color:var(--grey-trim);margin-top:8px;">Status: Awaiting approval</div>
+    </div>
+  </div>
+</section>
+
+<section class="services">
+  <h2>Our Services</h2>
+
+  <div style="text-align:center; margin-bottom:24px;">
+    <button id="test-api-btn" class="cta-btn">Test Backend API</button>
+    <div id="api-result" style="margin-top:12px; color:#3A6EA5; font-weight:bold;"></div>
+  </div>
+
+  <div class="service-list">
+    <div class="service">
+     <h3>Individual Tax Preparation</h3>
+<p>
+  Federal and state tax returns prepared accurately and on time, with
+  personalized support every step of the way.
+</p>
+
+<h3>Business Tax Services</h3>
+<p>
+  Tax solutions for small businesses, self-employed professionals,
+  and independent contractors.
+</p>
+
+<h3>Bookkeeping</h3>
+<p>
+  Monthly and quarterly bookkeeping to keep your finances organized,
+  compliant, and stress-free.
+<body style="margin:0;font-family:'Roboto',Arial,sans-serif;background:linear-gradient(135deg,#e9f0ff 0%,#f7f7fa 100%);color:#1a2233;">
+  <header style="background:linear-gradient(90deg,#3A6EA5 80%,#5088bd 100%);color:#fff;padding:32px 0;text-align:center;box-shadow:0 2px 16px #3a6ea522;">
+    <img src="assets/ross-logo.webp" alt="Ross Tax & Bookkeeping Logo" style="width:160px;margin-bottom:12px;" />
+    <h1 style="font-family:'Montserrat',sans-serif;font-size:2.5em;font-weight:900;letter-spacing:0.04em;margin:0;">Ross Tax & Bookkeeping Cloud</h1>
+    <div style="font-size:1.2em;font-family:'Montserrat',sans-serif;margin:8px 0 0 0;">IRS-Authorized | Secure | DIY & Pro E-File</div>
+    <div class="compliance-badges" style="display:flex;gap:18px;justify-content:center;margin:18px 0 0 0;flex-wrap:wrap;">
+      <span class="compliance-badge" style="background:#fffbe6;color:#C9A24D;border:2px solid #C9A24D;border-radius:8px;padding:6px 18px;font-weight:700;display:flex;align-items:center;gap:8px;"><span class="badge-icon">🛡️</span> IRS E-File Provider</span>
+      <span class="compliance-badge" style="background:#fffbe6;color:#C9A24D;border:2px solid #C9A24D;border-radius:8px;padding:6px 18px;font-weight:700;display:flex;align-items:center;gap:8px;"><span class="badge-icon">🏦</span> Bank Product Partner</span>
+      <span class="compliance-badge" style="background:#fffbe6;color:#C9A24D;border:2px solid #C9A24D;border-radius:8px;padding:6px 18px;font-weight:700;display:flex;align-items:center;gap:8px;"><span class="badge-icon">🔒</span> SOC 2 / HIPAA / GLBA</span>
+      <span class="compliance-badge" style="background:#fffbe6;color:#C9A24D;border:2px solid #C9A24D;border-radius:8px;padding:6px 18px;font-weight:700;display:flex;align-items:center;gap:8px;"><span class="badge-icon">📄</span> EFIN: <b>11200000</b></span>
+    </div>
+  </header>
+  <nav style="background:#fffbe6;padding:18px 0;text-align:center;box-shadow:0 2px 8px #c9a24d22;">
+    <a href="admin/index.html" style="font-family:'Montserrat',sans-serif;font-weight:700;color:#3A6EA5;padding:10px 24px;text-decoration:none;border-radius:8px;margin:0 8px;background:#C9A24D;">Admin Portal</a>
+    <a href="employee-login.html" style="font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;padding:10px 24px;text-decoration:none;border-radius:8px;margin:0 8px;background:#3A6EA5;">👥 Employee Login</a>
+    <a href="client-portal.html" style="font-family:'Montserrat',sans-serif;font-weight:700;color:#3A6EA5;padding:10px 24px;text-decoration:none;border-radius:8px;margin:0 8px;background:#ffe9a0;">Client Portal</a>
+    <a href="/lms" style="font-family:'Montserrat',sans-serif;font-weight:700;color:#fff;padding:10px 24px;text-decoration:none;border-radius:8px;margin:0 8px;background:#4F46E5;box-shadow:0 2px 8px #4F46E544;">🎓 University</a>
+    <a href="onboarding-client.html" style="font-family:'Montserrat',sans-serif;font-weight:700;color:#3A6EA5;padding:10px 24px;text-decoration:none;border-radius:8px;margin:0 8px;background:#fff;">Get Started (DIY)</a>
+    <a href="efile.html" style="font-family:'Montserrat',sans-serif;font-weight:700;color:#3A6EA5;padding:10px 24px;text-decoration:none;border-radius:8px;margin:0 8px;background:#fff;">E-File Now</a>
+    <a href="services.html" style="font-family:'Montserrat',sans-serif;font-weight:700;color:#3A6EA5;padding:10px 24px;text-decoration:none;border-radius:8px;margin:0 8px;background:#fff;">Services</a>
+  </nav>
+  <section class="hero" style="padding:60px 20px;text-align:center;background:#fff;box-shadow:0 4px 32px #3a6ea511;">
+    <h2 style="font-family:'Montserrat',sans-serif;font-size:2.2em;font-weight:900;color:#3A6EA5;">Cloud-Based, Self-Paced, IRS-Compliant Tax Software</h2>
+    <p style="max-width:720px;margin:0 auto 32px;font-size:1.2em;">Empowering individuals and professionals to file taxes with confidence. Secure, efficient, and fully compliant with federal law and IRS guidelines. DIY or guided e-file, bank products, audit support, and more—all in one platform.</p>
+    <div style="display:flex;justify-content:center;gap:32px;flex-wrap:wrap;margin:32px 0;">
+      <div style="background:linear-gradient(120deg,#fffbe6 60%,#ffe9a0 100%);border-radius:18px;box-shadow:0 2px 16px #c9a24d22;padding:32px 28px;min-width:220px;flex:1 1 220px;max-width:320px;">
+        <div style="font-size:1.2em;font-weight:700;color:#3A6EA5;margin-bottom:8px;">DIY E-File</div>
+        <div style="font-size:2.1em;font-weight:900;color:#C9A24D;margin-bottom:4px;">Fast & Easy</div>
+        <div style="font-size:1em;color:#3A6EA5;">Step-by-step, self-paced, and mobile-friendly. Start, pause, and finish anytime.</div>
+      </div>
+      <div style="background:linear-gradient(120deg,#fffbe6 60%,#ffe9a0 100%);border-radius:18px;box-shadow:0 2px 16px #c9a24d22;padding:32px 28px;min-width:220px;flex:1 1 220px;max-width:320px;">
+        <div style="font-size:1.2em;font-weight:700;color:#3A6EA5;margin-bottom:8px;">Bank Products</div>
+        <div style="font-size:2.1em;font-weight:900;color:#C9A24D;margin-bottom:4px;">Refund Advance</div>
+        <div style="font-size:1em;color:#3A6EA5;">Get your refund fast with direct deposit, ACH, or check. Secure and IRS-approved.</div>
+      </div>
+      <div style="background:linear-gradient(120deg,#fffbe6 60%,#ffe9a0 100%);border-radius:18px;box-shadow:0 2px 16px #c9a24d22;padding:32px 28px;min-width:220px;flex:1 1 220px;max-width:320px;">
+        <div style="font-size:1.2em;font-weight:700;color:#3A6EA5;margin-bottom:8px;">Audit & Compliance</div>
+        <div style="font-size:2.1em;font-weight:900;color:#C9A24D;margin-bottom:4px;">Peace of Mind</div>
+        <div style="font-size:1em;color:#3A6EA5;">SOC 2, HIPAA, GLBA, and IRS standards. Privacy, security, and audit support built in.</div>
+      </div>
+    </div>
+    <a href="onboarding-client.html" class="btn" style="background:linear-gradient(90deg,#C9A24D 60%,#ffe9a0 100%);color:#3A6EA5;font-family:'Montserrat',sans-serif;font-weight:700;border:none;border-radius:8px;padding:18px 38px;font-size:1.3em;box-shadow:0 2px 8px #c9a24d33;cursor:pointer;transition:background 0.2s,color 0.2s,box-shadow 0.2s;">Start Your Taxes Now</a>
+  </section>
+  <section style="background:#fffbe6;padding:32px 0;text-align:center;box-shadow:0 2px 8px #c9a24d22;">
+    <div style="font-family:'Montserrat',sans-serif;font-size:1.1em;color:#3A6EA5;max-width:900px;margin:0 auto;">
+      <b>Why Ross Tax & Bookkeeping?</b> Trusted by individuals and professionals nationwide. IRS-authorized, bank product partner, and committed to privacy, security, and compliance. Cloud-based, mobile-ready, and always up to date with the latest tax law.
+    </div>
+  </section>
+  <footer style="background:#0F2A44;color:#fff;text-align:center;padding:24px 0;font-size:1.1em;">
+    © 2026 Ross Tax & Bookkeeping LLC. IRS E-File Provider. All Rights Reserved.<br>
+    <span style="font-size:0.95em;color:#ffe9a0;">Apple Inc. is not affiliated with, does not endorse, sponsor, or certify this software. All tax law compliance and privacy standards strictly enforced.</span>
+    <br>
+    <a href="privacy.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Privacy Policy</a> |
+    <a href="terms.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Terms of Service</a> |
+    <a href="breach-notification.html" style="color:#ffe9a0;text-decoration:underline;font-size:0.98em;">Breach Notification Policy</a>
+  </footer>
+
+  <div style="text-align:center;margin:32px 0;">
+    <button id="ai-marketing-btn" style="background:linear-gradient(90deg,#C9A24D 60%,#ffe9a0 100%);color:#0F2A44;font-family:'Montserrat',sans-serif;font-weight:700;border:none;border-radius:8px;padding:18px 38px;font-size:1.2em;box-shadow:0 2px 8px #c9a24d33;cursor:pointer;transition:background 0.2s,color 0.2s,box-shadow 0.2s;">Post AI Marketing Now</button>
+    <div style="font-size:0.98em;color:#0F2A44;margin-top:8px;">(Posts a random AI-generated marketing message, poll, or image to your linked social media.)</div>
+    <div id="ai-marketing-analytics" style="margin-top:18px;padding:16px 0 0 0;font-size:1.05em;"></div>
+  </div>
+
+  <script src="scripts/dashboard-widgets.js"></script>
+  <script src="scripts/ai-marketing-widget.js"></script>
+  <script src="scripts/ai-marketing-analytics.js"></script>
+  <div class="dc-watermark">D&amp;C TAXATION LLC</div>
+      padding: 14px;
+      background: #3a6ea5;
+      color: #ffffff;
+      border: none;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+
+<body>
+
+<form><input type="hidden" name="_subject" value="New Tax Intake Submission">
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_template" value="table">
+
+  <h1>Client Intake Form</h1>
+
+  <label>Full Name</label>
+  <input type="text" required>
+
+  <label>Email Address</label>
+  <input type="email" required>
+
+  <label>Phone Number</label>
+  <input type="tel">
+<input type="hidden" name="_subject" value="New Tax Intake Submission">
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_template" value="table">
+
+  <label>Service Needed</label>
+  <select>
+    <option>Individual Tax Preparation</option>
+    <option>Business Tax Services</option>
+    <option>Bookkeeping</option>
+  </select>
+
+  <button type="submit">
+    Submit Intake Request
+  </button>
+<form action="https://formsubmit.co/YOUREMAIL@yourdomain.com" method="POST">
+
+
+</body>
+</html>
+<footer>
+  © 2026 Ross Tax & Bookkeeping. All rights reserved.<br>
+  <a href="https://www.instagram.com/rosstaxprepandbookkeepingllc" target="_blank" style="color:#C9A24D;">Instagram Business Page</a>
+
+<!-- Instagram Embed (optional, can be moved or removed) -->
+<div style="max-width:500px;margin:32px auto 0;">
+  <iframe 
+    src="https://www.instagram.com/rosstaxprepandbookkeepingllc/embed"
+    width="100%" 
+    height="600" 
+    frameborder="0"
+    scrolling="no"
+    allowtransparency="true"
+    style="border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+  </iframe>
+</div>
+</footer>
