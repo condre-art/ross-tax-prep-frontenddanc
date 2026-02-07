@@ -1,4 +1,5 @@
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
   title: "ROSS Tax & Bookkeeping",
@@ -8,7 +9,10 @@ export const metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className="bg-cream text-navy min-h-screen">{children}</body>
+      <body className="bg-cream text-navy min-h-screen">
+        {children}
+        <Analytics />
+      </body>
     </html>
   );
 }
