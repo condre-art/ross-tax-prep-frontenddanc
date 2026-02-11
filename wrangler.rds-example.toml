@@ -1,0 +1,102 @@
+# AWS RDS Configuration Example for wrangler.toml
+
+# Add this section to your wrangler.toml to enable AWS RDS via Hyperdrive
+
+## Option 1: Use Hyperdrive for AWS RDS (Recommended)
+# Cloudflare Hyperdrive provides connection pooling and caching for database connections
+# This significantly improves performance and reduces latency for database queries
+
+[[hyperdrive]]
+binding = "HYPERDRIVE"
+id = "your-hyperdrive-id-here" # Get this from: wrangler hyperdrive create
+
+# To create Hyperdrive configuration:
+# 1. Create an AWS RDS instance (PostgreSQL or MySQL)
+# 2. Get the connection string:
+#    postgres://username:password@host:5432/database?sslmode=require
+# 3. Run: wrangler hyperdrive create ross-tax-prep-hyperdrive --connection-string="..."
+# 4. Copy the ID from the output and paste it above
+
+## Database Type Configuration
+# Add to [vars] section to specify which database to use
+
+[vars]
+# ... existing vars ...
+DB_TYPE = "rds" # Options: "d1" (default) or "rds"
+
+# Note: When HYPERDRIVE binding is present, the application will automatically
+# use AWS RDS. If not present, it falls back to Cloudflare D1.
+
+## Complete Example wrangler.toml with Both D1 and Hyperdrive:
+
+# name = "ross-tax-prep"
+# main = "functions/_middleware.ts"
+# compatibility_date = "2024-01-01"
+
+# # Cloudflare D1 (default database)
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "ross-tax-prep-db"
+# database_id = "your-d1-database-id"
+
+# # AWS RDS via Hyperdrive (optional, for production)
+# [[hyperdrive]]
+# binding = "HYPERDRIVE"
+# id = "your-hyperdrive-id"
+
+# # The application will detect which database is available:
+# # 1. If HYPERDRIVE is configured, use AWS RDS
+# # 2. Otherwise, use Cloudflare D1
+
+## Security Best Practices
+
+# 1. Never commit database credentials to git
+# 2. Use wrangler secrets for sensitive data:
+#    wrangler secret put RDS_PASSWORD
+# 3. Enable SSL/TLS for RDS connections
+# 4. Use IAM authentication for RDS (advanced)
+# 5. Restrict security group to Cloudflare IP ranges
+
+## Cost Comparison
+
+# Cloudflare D1:
+# - Free tier: 5GB storage, 5 million reads/day
+# - Paid: $0.001 per 1,000 read operations
+# - Best for: Small to medium deployments (< 500 clients)
+
+# AWS RDS (PostgreSQL):
+# - db.t4g.micro: ~$12/month (1 GB RAM, 20 GB storage)
+# - db.t4g.small: ~$24/month (2 GB RAM, 20 GB storage)
+# - Best for: Large deployments (500+ clients), advanced features
+
+# Cloudflare Hyperdrive:
+# - Currently in beta (free)
+# - Pricing TBA
+# - Provides connection pooling and edge caching
+
+## Migration Path
+
+# Phase 1: Start with D1 (simple, cost-effective)
+# Phase 2: Add Hyperdrive when scaling up
+# Phase 3: Use both D1 and RDS for different workloads
+# Phase 4: Full migration to RDS if needed
+
+## Troubleshooting
+
+# Issue: "No database binding found"
+# Solution: Ensure either DB or HYPERDRIVE binding is configured
+
+# Issue: Connection timeout to RDS
+# Solution: Check security group allows Cloudflare IPs
+
+# Issue: High latency
+# Solution: Use Hyperdrive for connection pooling
+
+# Issue: Database not found
+# Solution: Verify database name in connection string matches RDS instance
+
+## Support
+
+# Cloudflare Hyperdrive: https://developers.cloudflare.com/hyperdrive/
+# AWS RDS: https://docs.aws.amazon.com/rds/
+# Ross Tax Prep: See docs/AWS-RDS-INTEGRATION.md

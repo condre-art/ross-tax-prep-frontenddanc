@@ -6,6 +6,7 @@
 
 - ✅ **Cloudflare R2** Object Storage for documents
 - ✅ **Cloudflare D1** SQL database with complete schema
+- ✅ **AWS RDS Support** - PostgreSQL/MySQL via Hyperdrive (optional)
 - ✅ **JWT Authentication** with 2FA (TOTP) support
 - ✅ **Role-Based Access Control** (Admin, ERO, Client, Demo)
 - ✅ **End-to-End Encryption** for sensitive data (SSN, tax returns)
@@ -171,6 +172,7 @@ See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for the complete guide.
 
 - **[SETUP.md](./SETUP.md)** - Complete infrastructure setup guide
 - **[DEPLOYMENT.md](./DEPLOYMENT.md)** - GitHub Actions deployment guide
+- **[docs/AWS-RDS-INTEGRATION.md](./docs/AWS-RDS-INTEGRATION.md)** - AWS RDS (Cloud SQL) setup guide
 - **[docs/AWS-CLOUD-INTEGRATION.md](./docs/AWS-CLOUD-INTEGRATION.md)** - AWS CloudWatch & SNS integration guide
 - **[docs/CLOUD-INTEGRATION.md](./docs/CLOUD-INTEGRATION.md)** - Cloud monitoring configuration
 - **[database/README.md](./database/README.md)** - Database setup instructions

@@ -36,6 +36,7 @@ import {
 
 interface Env {
   DB: D1Database;
+  HYPERDRIVE?: any; // AWS RDS via Hyperdrive
   SESSIONS: KVNamespace;
   CACHE: KVNamespace;
   TAX_DOCUMENTS: R2Bucket;
