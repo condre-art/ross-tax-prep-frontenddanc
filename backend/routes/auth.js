@@ -34,6 +34,8 @@ router.post('/login', async (req, res) => {
     // Generate JWT token
     const jwtSecret = process.env.JWT_SECRET;
     
+    // Defense-in-depth: validate JWT_SECRET even though server.js checks at startup
+    // This protects against runtime environment changes or configuration errors
     if (!jwtSecret) {
       console.error('FATAL: JWT_SECRET environment variable is not set');
       return res.status(500).json({ success: false, message: 'Server configuration error' });
