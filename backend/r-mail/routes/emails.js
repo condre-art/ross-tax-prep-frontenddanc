@@ -162,8 +162,14 @@ router.post('/', auth, checkPermission('send'), auditLogger('send_email', 'email
 
     await email.save();
 
-    // Create inbox copies for recipients
-    for (const recipient of email.to) {
+    // Create inbox copies for recipients (TO, CC, and BCC)
+    const allEmailRecipients = [
+      ...email.to,
+      ...email.cc,
+      ...email.bcc
+    ];
+    
+    for (const recipient of allEmailRecipients) {
       const inboxEmail = new Email({
         ...email.toObject(),
         _id: undefined,
