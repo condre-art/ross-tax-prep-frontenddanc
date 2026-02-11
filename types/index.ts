@@ -33,6 +33,7 @@ export interface Env {
   ENVIRONMENT: string;
   IRS_MEF_ENDPOINT: string;
   IRS_TEST_MODE: string;
+  MCP_SERVER_URL?: string;
 }
 
 // ============================
@@ -594,4 +595,51 @@ export interface SubmitEFileRequest {
   provider_id: string;
   submission_type: SubmissionType;
   workflow_id?: string;
+}
+
+// ============================
+// Cloud Agent / MCP Types
+// ============================
+
+export type CloudAgentTaskType =
+  | 'tax_calculation'
+  | 'document_analysis'
+  | 'compliance_check'
+  | 'form_validation'
+  | 'data_extraction'
+  | 'custom';
+
+export type CloudAgentStatus = 'pending' | 'processing' | 'completed' | 'failed';
+
+export interface CloudAgentRequest {
+  task_type: CloudAgentTaskType;
+  prompt: string;
+  context?: Record<string, any>;
+  metadata?: Record<string, any>;
+}
+
+export interface CloudAgentResponse {
+  success: boolean;
+  task_id: string;
+  status: CloudAgentStatus;
+  result?: any;
+  error?: string;
+  processing_time_ms?: number;
+}
+
+export interface MCPToolCall {
+  name: string;
+  arguments: Record<string, any>;
+}
+
+export interface MCPMessage {
+  role: 'user' | 'assistant';
+  content: string;
+}
+
+export interface MCPRequest {
+  messages: MCPMessage[];
+  tools?: MCPToolCall[];
+  max_tokens?: number;
+  temperature?: number;
 }
