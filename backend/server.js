@@ -13,6 +13,13 @@ const helmet = require('helmet');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+// Check required environment variables
+if (!process.env.JWT_SECRET) {
+  console.error('FATAL ERROR: JWT_SECRET environment variable is not set.');
+  console.error('Please set JWT_SECRET in your .env file before starting the server.');
+  console.error('Example: JWT_SECRET=your-secure-random-secret-key-here');
+  process.exit(1);
+}
 
 const app = express();
 app.use(helmet());
