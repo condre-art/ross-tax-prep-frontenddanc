@@ -11,12 +11,8 @@ import type {
   CloudAgentResponse,
   CloudAgentTaskType,
   CloudAgentStatus,
+  Env,
 } from '../../types';
-
-interface Env {
-  DB: D1Database;
-  MCP_SERVER_URL?: string;
-}
 
 /**
  * Delegate a task to the cloud agent

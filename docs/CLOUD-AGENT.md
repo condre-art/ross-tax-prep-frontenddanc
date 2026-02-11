@@ -267,7 +267,8 @@ Ensure your MCP server endpoint is accessible from Cloudflare Workers and respon
 ## Performance
 
 - Default timeout: 30 seconds
-- Automatic retry: 2 attempts with exponential backoff
+- Automatic retry: Up to 2 additional retries after initial attempt (3 total attempts)
+- Exponential backoff: 1s, 2s delays between retry attempts
 - Average response time: 1-5 seconds depending on task complexity
 - Maximum concurrent requests: Limited by Cloudflare Workers limits
 

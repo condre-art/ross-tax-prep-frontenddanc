@@ -35,9 +35,9 @@ export class MCPClient {
    */
   async sendRequest(request: MCPRequest): Promise<any> {
     let lastError: Error | null = null;
-    const maxAttempts = this.retries + 1; // Initial attempt + retries
+    const totalAttempts = this.retries + 1; // Initial attempt + retries
 
-    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    for (let attempt = 0; attempt < totalAttempts; attempt++) {
       try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), this.timeout);
@@ -62,12 +62,13 @@ export class MCPClient {
         lastError = error;
         
         // Don't retry on the last attempt
-        if (attempt === maxAttempts - 1) {
+        if (attempt === totalAttempts - 1) {
           break;
         }
 
         // Wait before retrying with exponential backoff
-        // attempt 0 (first retry): 1s, attempt 1 (second retry): 2s, etc.
+        // attempt 0 (initial): no delay before first retry
+        // attempt 0 -> retry 1: 1s delay, attempt 1 -> retry 2: 2s delay, etc.
         const delayMs = Math.pow(2, attempt) * BACKOFF_BASE_MS;
         await new Promise(resolve => setTimeout(resolve, delayMs));
       }
