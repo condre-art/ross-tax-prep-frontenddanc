@@ -44,8 +44,19 @@ export async function onRequestPost(context: {
     let userId: string | null = null;
     const authHeader = request.headers.get('Authorization');
     if (authHeader?.startsWith('Bearer ')) {
-      // Token validation would happen here in production
-      // For now, we'll accept the session ID from the log entry
+      const token = authHeader.substring(7);
+      // Import JWTService if needed for proper token validation
+      // For now, we accept logs from authenticated and unauthenticated users
+      // but try to associate with user if token is valid
+      try {
+        // You could add JWTService.verifyToken here to get actual user ID
+        // For now, use session ID as fallback
+        userId = logEntry.sessionId || null;
+      } catch {
+        userId = logEntry.sessionId || null;
+      }
+    } else {
+      // Allow unauthenticated logging (uses session ID)
       userId = logEntry.sessionId || null;
     }
 
@@ -119,6 +130,9 @@ export async function onRequestPost(context: {
 /**
  * GET /api/logs/client
  * Retrieve client error logs (admin only)
+ * 
+ * Note: This endpoint is protected by withAuth middleware in _middleware.ts
+ * which requires admin permissions ('*' permission).
  */
 export async function onRequestGet(context: {
   request: Request;

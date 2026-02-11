@@ -57,7 +57,9 @@ async function loadTasks() {
     list.innerHTML = '';
     tasks.forEach(task => {
       const li = document.createElement('li');
-      li.innerHTML = `<input type="checkbox" id="${task.id}" ${task.completed ? 'checked' : ''}> <label for="${task.id}">${task.title || task.label}</label>`;
+      // Use 'title' property from backend API (standardized in workflows.ts)
+      const taskTitle = task.title || task.label || 'Untitled Task';
+      li.innerHTML = `<input type="checkbox" id="${task.id}" ${task.completed || task.status === 'completed' ? 'checked' : ''}> <label for="${task.id}">${taskTitle}</label>`;
       const checkbox = li.querySelector('input');
       checkbox.addEventListener('change', async (e) => {
         try {
