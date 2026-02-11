@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
@@ -30,7 +30,25 @@ router.post('/login', async (req, res) => {
     if (!user) return res.json({ success: false, message: 'Invalid credentials' });
     const valid = await bcrypt.compare(password, user.passwordHash);
     if (!valid) return res.json({ success: false, message: 'Invalid credentials' });
-    res.json({ success: true, role: user.role, message: 'Login successful' });
+    
+    // Generate JWT token
+    const jwtSecret = process.env.JWT_SECRET || 'default-secret-change-in-production';
+    const token = jwt.sign(
+      { 
+        userId: user._id, 
+        email: user.email, 
+        role: user.role 
+      },
+      jwtSecret,
+      { expiresIn: '24h' }
+    );
+    
+    res.json({ 
+      success: true, 
+      role: user.role, 
+      token: token,
+      message: 'Login successful' 
+    });
   } catch (err) {
     res.json({ success: false, message: 'Login error' });
   }

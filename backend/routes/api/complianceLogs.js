@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const ComplianceLog = require('../../models/ComplianceLog');
+const { authenticateToken } = require('../../middleware/auth');
 
 
 // GET /api/compliance-logs (with optional filters)
@@ -18,7 +19,7 @@ router.get('/', async (req, res) => {
 });
 
 // POST /api/compliance-logs
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
   try {
     const log = new ComplianceLog(req.body);
     await log.save();
