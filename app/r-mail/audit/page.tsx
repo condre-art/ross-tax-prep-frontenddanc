@@ -70,27 +70,27 @@ export default function AuditPage() {
 
   const getStatusBadgeColor = (status: string) => {
     const colors: { [key: string]: string } = {
-      success: 'bg-green-100 text-green-800',
-      failure: 'bg-red-100 text-red-800',
-      warning: 'bg-yellow-100 text-yellow-800',
+      success: 'bg-green-900/20 text-green-300',
+      failure: 'bg-red-900/20 text-red-300',
+      warning: 'bg-yellow-900/20 text-yellow-300',
     };
-    return colors[status] || 'bg-gray-100 text-gray-800';
+    return colors[status] || 'bg-gray-700/20 text-gray-300';
   };
 
   return (
     <div className="space-y-6">
-      <h2 className="text-3xl font-bold text-gray-900">Audit Logs</h2>
+      <h2 className="text-3xl font-bold text-rmail-offwhite">Audit Logs</h2>
 
-      <div className="bg-white shadow rounded-lg p-4">
+      <div className="bg-rmail-mocha shadow-lg border border-rmail-ash rounded-lg p-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-rmail-taupe mb-1">
               Action
             </label>
             <select
               value={filters.action}
               onChange={(e) => setFilters({ ...filters, action: e.target.value })}
-              className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="block w-full px-3 py-2 border border-rmail-ash rounded-md shadow-sm focus:outline-none focus:ring-rmail-steel focus:border-rmail-steel bg-rmail-slate text-rmail-offwhite"
             >
               <option value="">All Actions</option>
               <option value="login">Login</option>
@@ -101,13 +101,13 @@ export default function AuditPage() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-rmail-taupe mb-1">
               Resource
             </label>
             <select
               value={filters.resource}
               onChange={(e) => setFilters({ ...filters, resource: e.target.value })}
-              className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="block w-full px-3 py-2 border border-rmail-ash rounded-md shadow-sm focus:outline-none focus:ring-rmail-steel focus:border-rmail-steel bg-rmail-slate text-rmail-offwhite"
             >
               <option value="">All Resources</option>
               <option value="email">Email</option>
@@ -117,13 +117,13 @@ export default function AuditPage() {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-rmail-taupe mb-1">
               Status
             </label>
             <select
               value={filters.status}
               onChange={(e) => setFilters({ ...filters, status: e.target.value })}
-              className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="block w-full px-3 py-2 border border-rmail-ash rounded-md shadow-sm focus:outline-none focus:ring-rmail-steel focus:border-rmail-steel bg-rmail-slate text-rmail-offwhite"
             >
               <option value="">All Statuses</option>
               <option value="success">Success</option>
@@ -135,64 +135,64 @@ export default function AuditPage() {
       </div>
 
       {loading && (
-        <div className="bg-white shadow rounded-lg p-8 text-center text-gray-500">
+        <div className="bg-rmail-mocha shadow-lg border border-rmail-ash rounded-lg p-8 text-center text-rmail-sand">
           Loading audit logs...
         </div>
       )}
 
       {error && (
-        <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <div className="bg-red-900/20 border border-red-500 text-red-300 px-4 py-3 rounded">
           {error}
         </div>
       )}
 
       {!loading && !error && logs.length === 0 && (
-        <div className="bg-white shadow rounded-lg p-8 text-center text-gray-500">
+        <div className="bg-rmail-mocha shadow-lg border border-rmail-ash rounded-lg p-8 text-center text-rmail-sand">
           No audit logs found
         </div>
       )}
 
       {!loading && !error && logs.length > 0 && (
-        <div className="bg-white shadow rounded-lg overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+        <div className="bg-rmail-mocha shadow-lg border border-rmail-ash rounded-lg overflow-hidden">
+          <table className="min-w-full divide-y divide-rmail-ash">
+            <thead className="bg-rmail-slate">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-rmail-sand uppercase tracking-wider">
                   Timestamp
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-rmail-sand uppercase tracking-wider">
                   User
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-rmail-sand uppercase tracking-wider">
                   Action
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-rmail-sand uppercase tracking-wider">
                   Resource
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-rmail-sand uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-rmail-sand uppercase tracking-wider">
                   IP Address
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-rmail-mocha divide-y divide-rmail-ash">
               {logs.map((log) => (
-                <tr key={log._id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <tr key={log._id} className="hover:bg-rmail-slate/50">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-rmail-sand">
                     {new Date(log.timestamp).toLocaleString()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">
+                    <div className="text-sm font-medium text-rmail-offwhite">
                       {log.user.firstName} {log.user.lastName}
                     </div>
-                    <div className="text-sm text-gray-500">{log.user.email}</div>
+                    <div className="text-sm text-rmail-sand">{log.user.email}</div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-rmail-offwhite">
                     {log.action}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-rmail-offwhite">
                     {log.resource}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -200,7 +200,7 @@ export default function AuditPage() {
                       {log.status}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-rmail-sand">
                     {log.ipAddress}
                   </td>
                 </tr>

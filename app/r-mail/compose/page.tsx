@@ -83,23 +83,23 @@ export default function ComposePage() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <h2 className="text-3xl font-bold text-gray-900 mb-6">Compose Email</h2>
+      <h2 className="text-3xl font-bold text-rmail-offwhite mb-6">Compose Email</h2>
       
-      <div className="bg-white shadow rounded-lg p-6">
+      <div className="bg-rmail-mocha shadow-lg border border-rmail-ash rounded-lg p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           {error && (
-            <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded">
+            <div className="bg-red-900/20 border border-red-500 text-red-300 px-4 py-3 rounded">
               {error}
             </div>
           )}
           {success && (
-            <div className="bg-green-50 border border-green-400 text-green-700 px-4 py-3 rounded">
+            <div className="bg-green-900/20 border border-green-500 text-green-300 px-4 py-3 rounded">
               Email sent successfully!
             </div>
           )}
 
           <div>
-            <label htmlFor="to" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="to" className="block text-sm font-medium text-rmail-taupe">
               To (comma-separated)
             </label>
             <input
@@ -110,12 +110,12 @@ export default function ComposePage() {
               value={formData.to}
               onChange={handleChange}
               placeholder="recipient@example.com, another@example.com"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full px-3 py-2 border border-rmail-ash bg-rmail-slate text-rmail-offwhite placeholder-rmail-sand rounded-md shadow-sm focus:outline-none focus:ring-rmail-steel focus:border-rmail-steel"
             />
           </div>
 
           <div>
-            <label htmlFor="cc" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="cc" className="block text-sm font-medium text-rmail-taupe">
               CC (optional)
             </label>
             <input
@@ -125,12 +125,12 @@ export default function ComposePage() {
               value={formData.cc}
               onChange={handleChange}
               placeholder="cc@example.com"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full px-3 py-2 border border-rmail-ash bg-rmail-slate text-rmail-offwhite placeholder-rmail-sand rounded-md shadow-sm focus:outline-none focus:ring-rmail-steel focus:border-rmail-steel"
             />
           </div>
 
           <div>
-            <label htmlFor="bcc" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="bcc" className="block text-sm font-medium text-rmail-taupe">
               BCC (optional)
             </label>
             <input
@@ -140,12 +140,12 @@ export default function ComposePage() {
               value={formData.bcc}
               onChange={handleChange}
               placeholder="bcc@example.com"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full px-3 py-2 border border-rmail-ash bg-rmail-slate text-rmail-offwhite placeholder-rmail-sand rounded-md shadow-sm focus:outline-none focus:ring-rmail-steel focus:border-rmail-steel"
             />
           </div>
 
           <div>
-            <label htmlFor="subject" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="subject" className="block text-sm font-medium text-rmail-taupe">
               Subject
             </label>
             <input
@@ -155,12 +155,12 @@ export default function ComposePage() {
               required
               value={formData.subject}
               onChange={handleChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full px-3 py-2 border border-rmail-ash bg-rmail-slate text-rmail-offwhite placeholder-rmail-sand rounded-md shadow-sm focus:outline-none focus:ring-rmail-steel focus:border-rmail-steel"
             />
           </div>
 
           <div>
-            <label htmlFor="bodyText" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="bodyText" className="block text-sm font-medium text-rmail-taupe">
               Message (Plain Text)
             </label>
             <textarea
@@ -170,12 +170,12 @@ export default function ComposePage() {
               rows={10}
               value={formData.bodyText}
               onChange={handleChange}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full px-3 py-2 border border-rmail-ash bg-rmail-slate text-rmail-offwhite placeholder-rmail-sand rounded-md shadow-sm focus:outline-none focus:ring-rmail-steel focus:border-rmail-steel"
             />
           </div>
 
           <div>
-            <label htmlFor="bodyHtml" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="bodyHtml" className="block text-sm font-medium text-rmail-taupe">
               Message (HTML - optional)
             </label>
             <textarea
@@ -185,21 +185,21 @@ export default function ComposePage() {
               value={formData.bodyHtml}
               onChange={handleChange}
               placeholder="<p>HTML content</p>"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full px-3 py-2 border border-rmail-ash bg-rmail-slate text-rmail-offwhite placeholder-rmail-sand rounded-md shadow-sm focus:outline-none focus:ring-rmail-steel focus:border-rmail-steel"
             />
           </div>
 
           <div className="flex space-x-4">
             <button
               type="submit"
-              className="flex-1 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 text-rmail-espresso bg-rmail-steel px-4 py-2 rounded-md hover:bg-rmail-azure focus:outline-none focus:ring-2 focus:ring-rmail-steel transition"
             >
               Send Email
             </button>
             <button
               type="button"
               onClick={() => window.location.href = '/r-mail/inbox'}
-              className="flex-1 bg-gray-200 text-gray-700 px-4 py-2 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
+              className="flex-1 bg-rmail-slate text-rmail-taupe px-4 py-2 rounded-md hover:bg-rmail-ash focus:outline-none focus:ring-2 focus:ring-rmail-ash transition"
             >
               Cancel
             </button>

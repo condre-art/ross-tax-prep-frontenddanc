@@ -36,22 +36,22 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-lg">
+    <div className="min-h-screen flex items-center justify-center bg-rmail-espresso">
+      <div className="max-w-md w-full space-y-8 p-8 bg-rmail-mocha rounded-lg shadow-lg border border-rmail-ash">
         <div>
-          <h2 className="text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="text-center text-3xl font-extrabold text-rmail-offwhite">
             Sign in to R-MAIL
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (
-            <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded">
+            <div className="bg-red-900/20 border border-red-500 text-red-300 px-4 py-3 rounded">
               {error}
             </div>
           )}
           <div className="space-y-4">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="email" className="block text-sm font-medium text-rmail-offwhite">
                 Email address
               </label>
               <input
@@ -61,11 +61,11 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full px-3 py-2 bg-rmail-slate border border-rmail-ash rounded-md shadow-sm text-rmail-offwhite placeholder-rmail-sand focus:outline-none focus:ring-2 focus:ring-rmail-steel focus:border-rmail-steel"
               />
             </div>
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="password" className="block text-sm font-medium text-rmail-offwhite">
                 Password
               </label>
               <input
@@ -75,7 +75,7 @@ export default function LoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full px-3 py-2 bg-rmail-slate border border-rmail-ash rounded-md shadow-sm text-rmail-offwhite placeholder-rmail-sand focus:outline-none focus:ring-2 focus:ring-rmail-steel focus:border-rmail-steel"
               />
             </div>
           </div>
@@ -83,14 +83,14 @@ export default function LoginPage() {
           <div>
             <button
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-rmail-espresso bg-rmail-steel hover:bg-rmail-azure focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rmail-steel transition"
             >
               Sign in
             </button>
           </div>
 
           <div className="text-center">
-            <a href="/r-mail/auth/register" className="text-sm text-blue-600 hover:text-blue-800">
+            <a href="/r-mail/auth/register" className="text-sm text-rmail-azure hover:text-rmail-steel transition">
               Don't have an account? Register
             </a>
           </div>

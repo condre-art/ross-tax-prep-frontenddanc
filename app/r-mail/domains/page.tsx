@@ -60,9 +60,9 @@ export default function DomainsPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold text-gray-900">Domain Management</h2>
+        <h2 className="text-3xl font-bold text-rmail-offwhite">Domain Management</h2>
         <button
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          className="bg-rmail-steel text-white px-4 py-2 rounded-md hover:bg-rmail-azure transition"
           onClick={() => alert('Create domain form would open here')}
         >
           Add Domain
@@ -70,85 +70,85 @@ export default function DomainsPage() {
       </div>
 
       {loading && (
-        <div className="bg-white shadow rounded-lg p-8 text-center text-gray-500">
+        <div className="bg-rmail-mocha shadow rounded-lg p-8 text-center text-rmail-sand">
           Loading domains...
         </div>
       )}
 
       {error && (
-        <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded">
+        <div className="bg-red-900/20 border border-red-500 text-red-300 px-4 py-3 rounded">
           {error}
         </div>
       )}
 
       {!loading && !error && domains.length === 0 && (
-        <div className="bg-white shadow rounded-lg p-8 text-center text-gray-500">
+        <div className="bg-rmail-mocha shadow rounded-lg p-8 text-center text-rmail-sand">
           No domains found
         </div>
       )}
 
       {!loading && !error && domains.length > 0 && (
-        <div className="bg-white shadow rounded-lg overflow-hidden">
+        <div className="bg-rmail-mocha shadow-lg border border-rmail-ash rounded-lg overflow-hidden">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+            <thead className="bg-rmail-slate">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-rmail-sand uppercase tracking-wider">
                   Domain Name
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-rmail-sand uppercase tracking-wider">
                   Owner
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-rmail-sand uppercase tracking-wider">
                   Status
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-rmail-sand uppercase tracking-wider">
                   Verification
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-rmail-sand uppercase tracking-wider">
                   Created
                 </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <th className="px-6 py-3 text-left text-xs font-medium text-rmail-sand uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="bg-rmail-mocha divide-y divide-gray-200">
               {domains.map((domain) => (
-                <tr key={domain._id} className="hover:bg-gray-50">
+                <tr key={domain._id} className="hover:bg-rmail-slate/50">
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">{domain.name}</div>
+                    <div className="text-sm font-medium text-rmail-offwhite">{domain.name}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
+                    <div className="text-sm text-rmail-offwhite">
                       {domain.owner.firstName} {domain.owner.lastName}
                     </div>
-                    <div className="text-sm text-gray-500">{domain.owner.email}</div>
+                    <div className="text-sm text-rmail-sand">{domain.owner.email}</div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      domain.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                      domain.isActive ? 'bg-green-900/20 text-green-300' : 'bg-red-900/20 text-red-300'
                     }`}>
                       {domain.isActive ? 'Active' : 'Inactive'}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                      domain.isVerified ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'
+                      domain.isVerified ? 'bg-green-900/20 text-green-300' : 'bg-yellow-900/20 text-yellow-300'
                     }`}>
                       {domain.isVerified ? 'Verified' : 'Pending'}
                     </span>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-rmail-sand">
                     {new Date(domain.createdAt).toLocaleDateString()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button className="text-blue-600 hover:text-blue-900 mr-3">
+                    <button className="text-rmail-azure hover:text-rmail-steel transition mr-3">
                       Verify
                     </button>
-                    <button className="text-blue-600 hover:text-blue-900 mr-3">
+                    <button className="text-rmail-azure hover:text-rmail-steel transition mr-3">
                       Edit
                     </button>
-                    <button className="text-red-600 hover:text-red-900">
+                    <button className="text-red-400 hover:text-red-300 transition">
                       Delete
                     </button>
                   </td>

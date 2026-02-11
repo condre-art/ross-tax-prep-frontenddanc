@@ -96,26 +96,26 @@ export default function InboxPage() {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-3xl font-bold text-gray-900">Email</h2>
+        <h2 className="text-3xl font-bold text-rmail-offwhite">Email</h2>
         <a
           href="/r-mail/compose"
-          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          className="bg-rmail-steel text-white px-4 py-2 rounded-md hover:bg-rmail-azure transition-colors"
         >
           Compose
         </a>
       </div>
 
-      <div className="bg-white shadow rounded-lg overflow-hidden">
-        <div className="border-b">
+      <div className="bg-rmail-mocha shadow-lg border border-rmail-ash rounded-lg overflow-hidden">
+        <div className="border-b border-rmail-ash">
           <div className="flex space-x-1 p-4">
             {['inbox', 'sent', 'drafts', 'archive', 'trash'].map((f) => (
               <button
                 key={f}
                 onClick={() => setFolder(f)}
-                className={`px-4 py-2 rounded-md capitalize ${
+                className={`px-4 py-2 rounded-md capitalize transition-colors ${
                   folder === f
-                    ? 'bg-blue-600 text-white'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                    ? 'bg-rmail-steel text-rmail-espresso'
+                    : 'bg-rmail-slate text-rmail-taupe hover:bg-rmail-ash'
                 }`}
               >
                 {f}
@@ -125,28 +125,28 @@ export default function InboxPage() {
         </div>
 
         {loading && (
-          <div className="p-8 text-center text-gray-500">Loading emails...</div>
+          <div className="p-8 text-center text-rmail-sand">Loading emails...</div>
         )}
 
         {error && (
-          <div className="p-4 bg-red-50 border border-red-400 text-red-700">
+          <div className="p-4 bg-red-900/20 border border-red-500 text-red-300">
             {error}
           </div>
         )}
 
         {!loading && !error && emails.length === 0 && (
-          <div className="p-8 text-center text-gray-500">
+          <div className="p-8 text-center text-rmail-sand">
             No emails in {folder}
           </div>
         )}
 
         {!loading && !error && emails.length > 0 && (
-          <div className="divide-y">
+          <div className="divide-y divide-rmail-ash">
             {emails.map((email) => (
               <div
                 key={email._id}
-                className={`p-4 hover:bg-gray-50 cursor-pointer ${
-                  !email.isRead ? 'bg-blue-50' : ''
+                className={`p-4 hover:bg-rmail-slate cursor-pointer transition-colors ${
+                  !email.isRead ? 'bg-rmail-ash' : ''
                 }`}
                 onClick={() => markAsRead(email._id)}
               >
@@ -162,24 +162,24 @@ export default function InboxPage() {
                       >
                         {email.isStarred ? '★' : '☆'}
                       </button>
-                      <p className={`text-sm ${!email.isRead ? 'font-bold' : 'font-medium'} text-gray-900 truncate`}>
+                      <p className={`text-sm ${!email.isRead ? 'font-bold' : 'font-medium'} text-rmail-offwhite truncate`}>
                         {email.from.name || email.from.email}
                       </p>
                       {!email.isRead && (
-                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-800">
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-rmail-steel/20 text-rmail-steel">
                           New
                         </span>
                       )}
                     </div>
-                    <p className={`mt-1 text-sm ${!email.isRead ? 'font-semibold' : ''} text-gray-900 truncate`}>
+                    <p className={`mt-1 text-sm ${!email.isRead ? 'font-semibold' : ''} text-rmail-offwhite truncate`}>
                       {email.subject}
                     </p>
-                    <p className="mt-1 text-sm text-gray-500 truncate">
+                    <p className="mt-1 text-sm text-rmail-sand truncate">
                       {email.body.text.substring(0, 100)}...
                     </p>
                   </div>
                   <div className="ml-4 flex-shrink-0">
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-rmail-sand">
                       {new Date(email.createdAt).toLocaleDateString()}
                     </p>
                   </div>

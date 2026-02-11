@@ -62,28 +62,28 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow-lg">
+    <div className="min-h-screen flex items-center justify-center bg-rmail-espresso">
+      <div className="max-w-md w-full space-y-8 p-8 bg-rmail-mocha rounded-lg shadow-lg border border-rmail-ash">
         <div>
-          <h2 className="text-center text-3xl font-extrabold text-gray-900">
+          <h2 className="text-center text-3xl font-extrabold text-rmail-offwhite">
             Create R-MAIL Account
           </h2>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           {error && (
-            <div className="bg-red-50 border border-red-400 text-red-700 px-4 py-3 rounded">
+            <div className="bg-red-900/20 border border-red-500 text-red-300 px-4 py-3 rounded">
               {error}
             </div>
           )}
           {success && (
-            <div className="bg-green-50 border border-green-400 text-green-700 px-4 py-3 rounded">
+            <div className="bg-green-900/20 border border-green-500 text-green-300 px-4 py-3 rounded">
               Registration successful! Redirecting...
             </div>
           )}
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">
+               <label htmlFor="firstName" className="block text-sm font-medium text-rmail-taupe">
                   First Name
                 </label>
                 <input
@@ -93,11 +93,11 @@ export default function RegisterPage() {
                   required
                   value={formData.firstName}
                   onChange={handleChange}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-full px-3 py-2 bg-rmail-slate text-rmail-offwhite placeholder-rmail-sand border border-rmail-ash rounded-md shadow-sm focus:outline-none focus:ring-rmail-steel focus:border-rmail-steel"
                 />
               </div>
               <div>
-                <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="lastName" className="block text-sm font-medium text-rmail-taupe">
                   Last Name
                 </label>
                 <input
@@ -107,12 +107,12 @@ export default function RegisterPage() {
                   required
                   value={formData.lastName}
                   onChange={handleChange}
-                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                  className="mt-1 block w-full px-3 py-2 bg-rmail-slate text-rmail-offwhite placeholder-rmail-sand border border-rmail-ash rounded-md shadow-sm focus:outline-none focus:ring-rmail-steel focus:border-rmail-steel"
                 />
               </div>
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="email" className="block text-sm font-medium text-rmail-taupe">
                 Email address
               </label>
               <input
@@ -122,11 +122,11 @@ export default function RegisterPage() {
                 required
                 value={formData.email}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full px-3 py-2 bg-rmail-slate text-rmail-offwhite placeholder-rmail-sand border border-rmail-ash rounded-md shadow-sm focus:outline-none focus:ring-rmail-steel focus:border-rmail-steel"
               />
             </div>
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="password" className="block text-sm font-medium text-rmail-taupe">
                 Password
               </label>
               <input
@@ -136,11 +136,11 @@ export default function RegisterPage() {
                 required
                 value={formData.password}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full px-3 py-2 bg-rmail-slate text-rmail-offwhite placeholder-rmail-sand border border-rmail-ash rounded-md shadow-sm focus:outline-none focus:ring-rmail-steel focus:border-rmail-steel"
               />
             </div>
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-rmail-taupe">
                 Confirm Password
               </label>
               <input
@@ -150,7 +150,7 @@ export default function RegisterPage() {
                 required
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full px-3 py-2 bg-rmail-slate text-rmail-offwhite placeholder-rmail-sand border border-rmail-ash rounded-md shadow-sm focus:outline-none focus:ring-rmail-steel focus:border-rmail-steel"
               />
             </div>
           </div>
@@ -158,14 +158,14 @@ export default function RegisterPage() {
           <div>
             <button
               type="submit"
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-rmail-espresso bg-rmail-steel hover:bg-rmail-azure focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rmail-steel transition"
             >
               Register
             </button>
           </div>
 
           <div className="text-center">
-            <a href="/r-mail/auth/login" className="text-sm text-blue-600 hover:text-blue-800">
+            <a href="/r-mail/auth/login" className="text-sm text-rmail-azure hover:text-rmail-steel">
               Already have an account? Sign in
             </a>
           </div>
