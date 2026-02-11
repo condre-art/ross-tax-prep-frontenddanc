@@ -1,6 +1,6 @@
 # Ross Tax Prep — Frontend
 
-**IRS e-file approved ERO tax software** with integrated backend, secure authentication, encrypted data storage, and IRS MEF integration.
+**IRS e-file approved ERO tax software** with integrated backend, secure authentication, encrypted data storage, IRS MEF integration, and **AI-powered cloud agent** for intelligent task delegation.
 
 ## Features
 
@@ -13,6 +13,7 @@
 - ✅ **Comprehensive Audit Logging** for compliance
 - ✅ **Session Management** with KV storage
 - ✅ Client-facing flows for bank products and refund allocation
+- ✅ **Cloud Agent Integration** for AI-powered workflow generation, document analysis, and return review
 
 ## Quick Start
 
@@ -71,6 +72,10 @@ See [.env.example](./.env.example) for required environment variables.
 | `/api/documents` | GET | Required | List user documents |
 | `/api/irs/transmit` | POST | ERO/Admin | Submit return to IRS |
 | `/api/irs/status` | GET | ERO/Admin | Check IRS submission status |
+| `/api/agent/delegate` | POST | Required | Delegate task to cloud agent |
+| `/api/agent/workflow-suggestions` | POST | Required | Get AI workflow suggestions |
+| `/api/agent/analyze-document` | POST | Required | Analyze document with AI |
+| `/api/agent/review-return` | POST | Required | Review return with AI |
 | `/api/health` | GET | Public | Health check |
 
 ## User Roles & Permissions
@@ -169,6 +174,7 @@ See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for the complete guide.
 
 - **[SETUP.md](./SETUP.md)** - Complete infrastructure setup guide
 - **[DEPLOYMENT.md](./DEPLOYMENT.md)** - GitHub Actions deployment guide
+- **[CLOUD-AGENT.md](./docs/CLOUD-AGENT.md)** - Cloud Agent integration guide
 - **[database/README.md](./database/README.md)** - Database setup instructions
 - **[.env.example](./.env.example)** - Environment variables reference
 
