@@ -29,6 +29,12 @@ import {
   listSubmissions,
   getSubmission,
 } from './api/efile';
+import {
+  delegateToAgent,
+  getWorkflowSuggestions,
+  analyzeDocument,
+  reviewReturn,
+} from './api/agent';
 
 interface Env {
   DB: D1Database;
@@ -40,6 +46,7 @@ interface Env {
   JWT_SECRET: string;
   ENCRYPTION_KEY: string;
   TOTP_SECRET: string;
+  MCP_SERVER_URL?: string;
 }
 
 /**
@@ -207,6 +214,23 @@ async function handleApiRequest(
   if (path.match(/^\/api\/tasks\/[^/]+\/complete$/) && request.method === 'POST') {
     const taskId = path.split('/')[3];
     return withAuth(request, env, (req, env, user) => completeTask(taskId, req, env, user), ['tasks.complete']);
+  }
+
+  // Cloud Agent endpoints
+  if (path === '/api/agent/delegate' && request.method === 'POST') {
+    return withAuth(request, env, (req, env, user) => delegateToAgent(req, env, user), ['workflows.create']);
+  }
+
+  if (path === '/api/agent/workflow-suggestions' && request.method === 'POST') {
+    return withAuth(request, env, (req, env, user) => getWorkflowSuggestions(req, env, user), ['workflows.read']);
+  }
+
+  if (path === '/api/agent/analyze-document' && request.method === 'POST') {
+    return withAuth(request, env, (req, env, user) => analyzeDocument(req, env, user), ['documents.read']);
+  }
+
+  if (path === '/api/agent/review-return' && request.method === 'POST') {
+    return withAuth(request, env, (req, env, user) => reviewReturn(req, env, user), ['returns.read']);
   }
 
   // E-File endpoints
