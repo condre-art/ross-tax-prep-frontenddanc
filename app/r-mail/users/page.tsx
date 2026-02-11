@@ -150,10 +150,20 @@ export default function UsersPage() {
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <button className="text-rmail-azure hover:text-rmail-steel mr-3">
+                    <button 
+                      className="text-rmail-azure hover:text-rmail-steel mr-3 transition"
+                      onClick={() => alert(`Edit user: ${user.email}\n\nEdit user form would open here with user ID: ${user._id}`)}
+                    >
                       Edit
                     </button>
-                    <button className="text-red-400 hover:text-red-300">
+                    <button 
+                      className="text-red-400 hover:text-red-300 transition"
+                      onClick={() => {
+                        if (confirm(`Are you sure you want to delete user ${user.firstName} ${user.lastName} (${user.email})?`)) {
+                          alert(`Delete user confirmed: ${user.email}\n\nDelete API call would be made here with user ID: ${user._id}`);
+                        }
+                      }}
+                    >
                       Delete
                     </button>
                   </td>

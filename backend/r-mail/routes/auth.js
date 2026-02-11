@@ -18,6 +18,25 @@ router.post('/register', authLimiter, async (req, res) => {
   try {
     const { email, password, firstName, lastName, role } = req.body;
 
+    // Validate password strength
+    if (!password || password.length < 8) {
+      return res.status(400).json({ 
+        error: 'Password must be at least 8 characters long' 
+      });
+    }
+
+    // Check password complexity
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (!hasUpperCase || !hasLowerCase || !hasNumber || !hasSpecialChar) {
+      return res.status(400).json({ 
+        error: 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character' 
+      });
+    }
+
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -115,7 +134,7 @@ router.post('/login', authLimiter, auditLogger('login', 'system'), async (req, r
 });
 
 // Verify token
-router.get('/verify', async (req, res) => {
+router.get('/verify', authLimiter, async (req, res) => {
   try {
     const token = req.header('Authorization')?.replace('Bearer ', '');
     

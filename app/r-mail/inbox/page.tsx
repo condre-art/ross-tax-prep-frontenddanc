@@ -26,6 +26,7 @@ export default function InboxPage() {
     const token = localStorage.getItem('token');
     if (!token) {
       setError('You must be logged in');
+      setEmails([]); // Clear stale data
       setLoading(false);
       return;
     }
@@ -43,9 +44,11 @@ export default function InboxPage() {
         setEmails(data.emails);
       } else {
         setError(data.error || 'Failed to fetch emails');
+        setEmails([]); // Clear stale data on error
       }
     } catch (err) {
       setError('Network error. Please try again.');
+      setEmails([]); // Clear stale data on error
     } finally {
       setLoading(false);
     }

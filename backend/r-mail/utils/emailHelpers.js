@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const sanitizeHtml = require('sanitize-html');
 
 const generateMessageId = () => {
   const timestamp = Date.now();
@@ -17,39 +18,33 @@ const isInternalEmail = (email, allowedDomains) => {
 };
 
 const sanitizeEmailBody = (body) => {
-  // WARNING: This is a basic sanitization implementation for scaffolding purposes.
-  // For production, MUST use a proper HTML sanitization library such as:
-  // - dompurify (with jsdom for Node.js): npm install dompurify jsdom
-  // - sanitize-html: npm install sanitize-html
-  // - xss: npm install xss
-  //
-  // Example with dompurify:
-  // const createDOMPurify = require('dompurify');
-  // const { JSDOM } = require('jsdom');
-  // const window = new JSDOM('').window;
-  // const DOMPurify = createDOMPurify(window);
-  // return DOMPurify.sanitize(body);
+  // Use sanitize-html library for production-grade HTML sanitization
+  // This prevents XSS attacks including:
+  // - Script tags and event handlers
+  // - Dangerous protocols (javascript:, data:, vbscript:)
+  // - Unquoted attributes and style-based exploits
   
-  let sanitized = body;
-  
-  // Remove script tags with variations
-  sanitized = sanitized.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script\s*>/gi, '');
-  
-  // Remove iframe tags with variations
-  sanitized = sanitized.replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe\s*>/gi, '');
-  
-  // Remove all event handlers (multiple passes to handle nested cases)
-  for (let i = 0; i < 3; i++) {
-    sanitized = sanitized.replace(/\s*on\w+\s*=\s*["'][^"']*["']/gi, '');
-    sanitized = sanitized.replace(/\s*on\w+\s*=\s*[^\s>]*/gi, '');
-  }
-  
-  // Remove dangerous protocols
-  sanitized = sanitized.replace(/javascript:/gi, '');
-  sanitized = sanitized.replace(/data:/gi, '');
-  sanitized = sanitized.replace(/vbscript:/gi, '');
-  
-  return sanitized;
+  return sanitizeHtml(body, {
+    allowedTags: [
+      'p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+      'ul', 'ol', 'li', 'blockquote', 'a', 'img', 'div', 'span', 'table',
+      'thead', 'tbody', 'tr', 'th', 'td', 'pre', 'code'
+    ],
+    allowedAttributes: {
+      'a': ['href', 'title', 'target'],
+      'img': ['src', 'alt', 'title', 'width', 'height'],
+      '*': ['class', 'id']
+    },
+    allowedSchemes: ['http', 'https', 'mailto'],
+    allowedSchemesByTag: {
+      img: ['http', 'https', 'data']
+    },
+    allowedSchemesAppliedToAttributes: ['href', 'src'],
+    // Remove all event handlers and dangerous attributes
+    disallowedTagsMode: 'discard',
+    // Remove style attributes to prevent CSS-based attacks
+    allowedStyles: {}
+  });
 };
 
 const formatEmailAddress = (email, name) => {
