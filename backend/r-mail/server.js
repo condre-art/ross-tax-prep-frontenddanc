@@ -4,12 +4,20 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const helmet = require('helmet');
 const mongoose = require('mongoose');
+const rateLimit = require('./middleware/rateLimit');
 
 const app = express();
 
 // Security middleware
 app.use(helmet());
 app.use(cors());
+
+// General rate limiting
+app.use(rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+}));
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

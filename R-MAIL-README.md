@@ -219,10 +219,23 @@ The following permissions are available:
 - Role-based access control
 - Permission-based authorization
 - Audit logging for compliance
-- HTML sanitization for email bodies
+- HTML sanitization for email bodies (production should use DOMPurify or similar)
 - Input validation
+- Rate limiting (in-memory, production should use Redis-based solution)
 - CORS protection
 - Helmet.js security headers
+
+### Security Notes
+
+**HTML Sanitization**: The current implementation uses improved regex-based sanitization. For production use, integrate a proper HTML sanitization library like:
+- `dompurify` (with jsdom for Node.js)
+- `sanitize-html`
+- `xss`
+
+**Rate Limiting**: The current implementation uses in-memory rate limiting. For production with multiple servers, use:
+- `express-rate-limit` with Redis store
+- `rate-limiter-flexible` with Redis
+- API gateway rate limiting (e.g., Cloudflare, AWS API Gateway)
 
 ## Future Enhancements
 

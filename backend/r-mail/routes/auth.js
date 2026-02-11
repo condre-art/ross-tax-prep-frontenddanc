@@ -4,9 +4,17 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const auditLogger = require('../middleware/auditLogger');
+const rateLimit = require('../middleware/rateLimit');
+
+// Rate limiting for auth endpoints
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 5, // 5 requests per window
+  message: 'Too many authentication attempts, please try again later.'
+});
 
 // Register new user
-router.post('/register', async (req, res) => {
+router.post('/register', authLimiter, async (req, res) => {
   try {
     const { email, password, firstName, lastName, role } = req.body;
 
@@ -57,7 +65,7 @@ router.post('/register', async (req, res) => {
 });
 
 // Login
-router.post('/login', auditLogger('login', 'system'), async (req, res) => {
+router.post('/login', authLimiter, auditLogger('login', 'system'), async (req, res) => {
   try {
     const { email, password } = req.body;
 
