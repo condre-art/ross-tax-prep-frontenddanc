@@ -5,9 +5,10 @@ const ComplianceLog = require('../../models/ComplianceLog');
 const { authenticateToken } = require('../../middleware/auth');
 
 // Rate limiter for log creation to prevent abuse
+// Limits requests by IP address to 100 requests per 15-minute window
 const createLogLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each user to 100 requests per windowMs
+  max: 100, // Limit each IP to 100 requests per windowMs
   message: { error: 'Too many log creation requests, please try again later' },
   standardHeaders: true,
   legacyHeaders: false,
