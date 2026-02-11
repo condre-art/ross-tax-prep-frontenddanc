@@ -40,6 +40,7 @@ preview_id = "" # Will be populated after creating preview KV
 ENVIRONMENT = "production"
 IRS_MEF_ENDPOINT = "https://prod.irs.gov/mef"
 IRS_TEST_MODE = "false"
+MCP_SERVER_URL = "" # Base URL of your deployed MCP server endpoint (e.g., "https://your-mcp-server.example.com")
 
 # Durable Objects for real-time features
 [[durable_objects.bindings]]
