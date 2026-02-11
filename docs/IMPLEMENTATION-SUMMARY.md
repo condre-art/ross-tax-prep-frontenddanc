@@ -1,7 +1,7 @@
 # Cloud Integration Implementation Summary
 
 ## Overview
-Successfully implemented comprehensive error logging and cloud integration for the Ross Tax Prep frontend repository.
+Successfully implemented comprehensive error logging and cloud integration for the Ross Tax Prep frontend repository with support for AWS CloudWatch Logs, AWS SNS, and generic MCP servers.
 
 ## Changes Made
 
@@ -24,7 +24,9 @@ Successfully implemented comprehensive error logging and cloud integration for t
 - **GET /api/logs/client** - Retrieve client logs (admin only)
 - Maps client log levels to audit severity levels
 - Captures IP address, user agent, and session information
-- Forwards critical logs to MCP server when configured
+- **AWS CloudWatch Logs integration** - Forwards critical errors to CloudWatch
+- **AWS SNS integration** - Publishes critical alerts to SNS topic
+- **MCP Server integration** - Supports generic monitoring endpoints (backward compatible)
 - Proper error handling and fallback mechanisms
 
 ### 3. Updated Portal Login (portal/login.html)
@@ -47,19 +49,27 @@ Successfully implemented comprehensive error logging and cloud integration for t
 ### 5. Middleware Routing (functions/_middleware.ts)
 **Added:**
 - Import of client-logs API handlers
-- MCP_SERVER_URL to Env interface
+- AWS environment variables to Env interface (CloudWatch, SNS, credentials)
+- MCP_SERVER_URL to Env interface (backward compatibility)
 - Routes for POST /api/logs/client (public)
 - Routes for GET /api/logs/client (admin-only)
 
-### 6. Cloud Integration Documentation (docs/CLOUD-INTEGRATION.md)
-**Created:** Comprehensive documentation including:
-- MCP_SERVER_URL configuration instructions
+### 6. Cloud Integration Documentation
+**Created/Updated:**
+- **docs/CLOUD-INTEGRATION.md** - Multi-cloud integration guide (AWS + MCP)
+- **docs/AWS-CLOUD-INTEGRATION.md** - Comprehensive AWS setup guide with:
+  - AWS CloudWatch Logs setup instructions
+  - AWS SNS configuration for real-time alerts
+  - IAM policy examples with least privilege
+  - Cost optimization strategies
+  - CloudWatch Insights queries for analytics
+  - Troubleshooting common AWS issues
+  - Security best practices
 - Client-side error logging usage examples
 - Backend audit logging details
 - Security considerations
 - Monitoring best practices
 - Troubleshooting guide
-- Related files reference
 
 ### 7. Integration Test (tests/integration-test.js)
 **Created:** Validation test that verifies:

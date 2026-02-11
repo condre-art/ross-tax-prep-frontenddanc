@@ -12,6 +12,8 @@
 - ✅ **IRS MEF Integration** for e-file transmission
 - ✅ **Comprehensive Audit Logging** for compliance
 - ✅ **Session Management** with KV storage
+- ✅ **AWS Cloud Integration** - CloudWatch Logs & SNS alerts
+- ✅ **Client-Side Error Logging** with automatic cloud forwarding
 - ✅ Client-facing flows for bank products and refund allocation
 
 ## Quick Start
@@ -169,6 +171,8 @@ See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for the complete guide.
 
 - **[SETUP.md](./SETUP.md)** - Complete infrastructure setup guide
 - **[DEPLOYMENT.md](./DEPLOYMENT.md)** - GitHub Actions deployment guide
+- **[docs/AWS-CLOUD-INTEGRATION.md](./docs/AWS-CLOUD-INTEGRATION.md)** - AWS CloudWatch & SNS integration guide
+- **[docs/CLOUD-INTEGRATION.md](./docs/CLOUD-INTEGRATION.md)** - Cloud monitoring configuration
 - **[database/README.md](./database/README.md)** - Database setup instructions
 - **[.env.example](./.env.example)** - Environment variables reference
 

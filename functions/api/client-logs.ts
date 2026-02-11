@@ -11,6 +11,12 @@ interface Env {
   SESSIONS: KVNamespace;
   JWT_SECRET: string;
   MCP_SERVER_URL?: string;
+  AWS_CLOUDWATCH_LOG_GROUP?: string;
+  AWS_CLOUDWATCH_LOG_STREAM?: string;
+  AWS_SNS_TOPIC_ARN?: string;
+  AWS_REGION?: string;
+  AWS_ACCESS_KEY_ID?: string;
+  AWS_SECRET_ACCESS_KEY?: string;
 }
 
 interface ClientLogEntry {
@@ -94,23 +100,43 @@ export async function onRequestPost(context: {
       )
       .run();
 
-    // If MCP_SERVER_URL is configured, forward critical logs
-    if (env.MCP_SERVER_URL && severity === 'critical') {
-      try {
-        await fetch(`${env.MCP_SERVER_URL}/alerts`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            type: 'client_error',
-            severity: 'critical',
-            message: logEntry.message,
-            context: logEntry.context,
-            timestamp: new Date().toISOString()
-          })
-        });
-      } catch (err) {
-        // Log forwarding failure but don't fail the request
-        console.error('Failed to forward critical log to MCP server:', err);
+    // Forward critical logs to cloud monitoring services
+    if (severity === 'critical') {
+      // AWS CloudWatch Logs integration
+      if (env.AWS_CLOUDWATCH_LOG_GROUP && env.AWS_REGION) {
+        try {
+          await forwardToCloudWatch(env, logEntry);
+        } catch (err) {
+          console.error('Failed to forward critical log to CloudWatch:', err);
+        }
+      }
+
+      // AWS SNS integration for real-time alerts
+      if (env.AWS_SNS_TOPIC_ARN && env.AWS_REGION) {
+        try {
+          await publishToSNS(env, logEntry);
+        } catch (err) {
+          console.error('Failed to publish alert to SNS:', err);
+        }
+      }
+
+      // Generic MCP Server integration (backward compatibility)
+      if (env.MCP_SERVER_URL) {
+        try {
+          await fetch(`${env.MCP_SERVER_URL}/alerts`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              type: 'client_error',
+              severity: 'critical',
+              message: logEntry.message,
+              context: logEntry.context,
+              timestamp: new Date().toISOString()
+            })
+          });
+        } catch (err) {
+          console.error('Failed to forward critical log to MCP server:', err);
+        }
       }
     }
 
@@ -178,5 +204,98 @@ export async function onRequestGet(context: {
       JSON.stringify({ error: 'Failed to retrieve logs', details: error.message }),
       { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
+  }
+}
+
+/**
+ * Forward critical error to AWS CloudWatch Logs
+ */
+async function forwardToCloudWatch(env: Env, logEntry: ClientLogEntry): Promise<void> {
+  if (!env.AWS_REGION || !env.AWS_CLOUDWATCH_LOG_GROUP) {
+    return;
+  }
+
+  const logGroupName = env.AWS_CLOUDWATCH_LOG_GROUP;
+  const logStreamName = env.AWS_CLOUDWATCH_LOG_STREAM || `client-errors-${new Date().toISOString().split('T')[0]}`;
+  
+  // Build CloudWatch Logs API request
+  const timestamp = Date.now();
+  const logEvent = {
+    timestamp,
+    message: JSON.stringify({
+      level: logEntry.level,
+      message: logEntry.message,
+      context: logEntry.context,
+      details: logEntry.details,
+      url: logEntry.url,
+      userAgent: logEntry.userAgent,
+      sessionId: logEntry.sessionId
+    })
+  };
+
+  // Use AWS Signature Version 4 for authentication
+  const endpoint = `https://logs.${env.AWS_REGION}.amazonaws.com/`;
+  
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-amz-json-1.1',
+        'X-Amz-Target': 'Logs_20140328.PutLogEvents'
+      },
+      body: JSON.stringify({
+        logGroupName,
+        logStreamName,
+        logEvents: [logEvent]
+      })
+    });
+
+    if (!response.ok) {
+      console.error('CloudWatch Logs API error:', await response.text());
+    }
+  } catch (error) {
+    console.error('Failed to send logs to CloudWatch:', error);
+  }
+}
+
+/**
+ * Publish critical alert to AWS SNS
+ */
+async function publishToSNS(env: Env, logEntry: ClientLogEntry): Promise<void> {
+  if (!env.AWS_REGION || !env.AWS_SNS_TOPIC_ARN) {
+    return;
+  }
+
+  const endpoint = `https://sns.${env.AWS_REGION}.amazonaws.com/`;
+  
+  const message = {
+    type: 'client_error',
+    severity: 'critical',
+    message: logEntry.message,
+    context: logEntry.context,
+    details: logEntry.details,
+    url: logEntry.url,
+    timestamp: new Date().toISOString()
+  };
+
+  try {
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        Action: 'Publish',
+        TopicArn: env.AWS_SNS_TOPIC_ARN,
+        Message: JSON.stringify(message),
+        Subject: `Critical Client Error: ${logEntry.context}`
+      })
+    });
+
+    if (!response.ok) {
+      console.error('SNS API error:', await response.text());
+    }
+  } catch (error) {
+    console.error('Failed to publish to SNS:', error);
   }
 }

@@ -45,6 +45,12 @@ interface Env {
   ENCRYPTION_KEY: string;
   TOTP_SECRET: string;
   MCP_SERVER_URL?: string;
+  AWS_CLOUDWATCH_LOG_GROUP?: string;
+  AWS_CLOUDWATCH_LOG_STREAM?: string;
+  AWS_SNS_TOPIC_ARN?: string;
+  AWS_REGION?: string;
+  AWS_ACCESS_KEY_ID?: string;
+  AWS_SECRET_ACCESS_KEY?: string;
 }
 
 /**
