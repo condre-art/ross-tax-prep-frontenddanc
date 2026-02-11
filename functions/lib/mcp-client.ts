@@ -67,8 +67,9 @@ export class MCPClient {
         }
 
         // Wait before retrying with exponential backoff
-        // After initial attempt fails (attempt 0): wait 1s before retry 1
-        // After retry 1 fails (attempt 1): wait 2s before retry 2
+        // After initial attempt fails (attempt 0): wait 2^0 * 1s = 1s before retry 1
+        // After retry 1 fails (attempt 1): wait 2^1 * 1s = 2s before retry 2
+        // Pattern continues exponentially if more retries configured
         const delayMs = Math.pow(2, attempt) * BACKOFF_BASE_MS;
         await new Promise(resolve => setTimeout(resolve, delayMs));
       }
