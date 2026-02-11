@@ -9,3 +9,5 @@ out/
 node_modules/@cloudflare/workerd-linux-64/bin/workerd
 # Ignore Wrangler temporary files
 .wrangler/
+# TypeScript build info
+tsconfig.tsbuildinfo
