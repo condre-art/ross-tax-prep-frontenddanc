@@ -17,8 +17,19 @@ const isInternalEmail = (email, allowedDomains) => {
 };
 
 const sanitizeEmailBody = (body) => {
-  // Basic HTML sanitization - in production, use a library like DOMPurify
-  // This is a placeholder - use proper HTML sanitization library in production
+  // WARNING: This is a basic sanitization implementation for scaffolding purposes.
+  // For production, MUST use a proper HTML sanitization library such as:
+  // - dompurify (with jsdom for Node.js): npm install dompurify jsdom
+  // - sanitize-html: npm install sanitize-html
+  // - xss: npm install xss
+  //
+  // Example with dompurify:
+  // const createDOMPurify = require('dompurify');
+  // const { JSDOM } = require('jsdom');
+  // const window = new JSDOM('').window;
+  // const DOMPurify = createDOMPurify(window);
+  // return DOMPurify.sanitize(body);
+  
   let sanitized = body;
   
   // Remove script tags with variations
@@ -33,8 +44,10 @@ const sanitizeEmailBody = (body) => {
     sanitized = sanitized.replace(/\s*on\w+\s*=\s*[^\s>]*/gi, '');
   }
   
-  // Remove javascript: protocol
+  // Remove dangerous protocols
   sanitized = sanitized.replace(/javascript:/gi, '');
+  sanitized = sanitized.replace(/data:/gi, '');
+  sanitized = sanitized.replace(/vbscript:/gi, '');
   
   return sanitized;
 };
