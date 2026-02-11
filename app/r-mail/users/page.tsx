@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { API_ENDPOINTS } from '@/lib/config';
 
 interface User {
   _id: string;
@@ -30,7 +31,7 @@ export default function UsersPage() {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/users', {
+      const response = await fetch(API_ENDPOINTS.USERS, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },

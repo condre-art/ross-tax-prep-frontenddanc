@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { API_ENDPOINTS } from '@/lib/config';
 
 interface AuditLog {
   _id: string;
@@ -43,7 +44,7 @@ export default function AuditPage() {
     if (filters.status) queryParams.append('status', filters.status);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/audit?${queryParams}`, {
+      const response = await fetch(`${API_ENDPOINTS.AUDIT}?${queryParams}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },

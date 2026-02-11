@@ -1,3 +1,5 @@
+import { API_BASE_URL } from '@/lib/config';
+
 export default function AdminPage() {
   return (
     <div className="space-y-6">
@@ -56,7 +58,7 @@ export default function AdminPage() {
         <dl className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <dt className="text-sm font-medium text-gray-500">Backend API</dt>
-            <dd className="text-lg text-gray-900">http://localhost:5000</dd>
+            <dd className="text-lg text-gray-900">{API_BASE_URL}</dd>
           </div>
           <div>
             <dt className="text-sm font-medium text-gray-500">Database</dt>

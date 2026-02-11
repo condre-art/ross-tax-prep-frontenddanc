@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { API_ENDPOINTS } from '@/lib/config';
 
 interface Email {
   _id: string;
@@ -30,7 +31,7 @@ export default function InboxPage() {
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/api/emails?folder=${folder}`, {
+      const response = await fetch(`${API_ENDPOINTS.EMAILS.LIST}?folder=${folder}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
         },
@@ -58,7 +59,7 @@ export default function InboxPage() {
     const token = localStorage.getItem('token');
     
     try {
-      await fetch(`http://localhost:5000/api/emails/${emailId}`, {
+      await fetch(API_ENDPOINTS.EMAILS.UPDATE(emailId), {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -77,7 +78,7 @@ export default function InboxPage() {
     const token = localStorage.getItem('token');
     
     try {
-      await fetch(`http://localhost:5000/api/emails/${emailId}`, {
+      await fetch(API_ENDPOINTS.EMAILS.UPDATE(emailId), {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

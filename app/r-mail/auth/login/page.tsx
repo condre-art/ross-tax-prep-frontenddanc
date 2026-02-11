@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { API_ENDPOINTS } from '@/lib/config';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
@@ -12,7 +13,7 @@ export default function LoginPage() {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
+      const response = await fetch(API_ENDPOINTS.AUTH.LOGIN, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

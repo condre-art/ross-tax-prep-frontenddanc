@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { API_ENDPOINTS } from '@/lib/config';
 
 export default function ComposePage() {
   const [formData, setFormData] = useState({
@@ -42,7 +43,7 @@ export default function ComposePage() {
     };
 
     try {
-      const response = await fetch('http://localhost:5000/api/emails', {
+      const response = await fetch(API_ENDPOINTS.EMAILS.SEND, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

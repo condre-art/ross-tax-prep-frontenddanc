@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { API_ENDPOINTS } from '@/lib/config';
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -30,7 +31,7 @@ export default function RegisterPage() {
     }
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/register', {
+      const response = await fetch(API_ENDPOINTS.AUTH.REGISTER, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
