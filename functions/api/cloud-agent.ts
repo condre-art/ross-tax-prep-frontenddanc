@@ -60,6 +60,10 @@ export async function delegateToCloudAgent(
       );
     }
 
+    // Note: Permission check is done at middleware level
+    // The general delegation endpoint requires 'returns.read' permission
+    // which is appropriate since cloud agent tasks are primarily tax-related
+
     // Create MCP client
     const mcpClient = createMCPClient(env.MCP_SERVER_URL);
 
@@ -224,6 +228,18 @@ export async function handleSpecializedTask(
 
     switch (taskType) {
       case 'document_analysis':
+        if (!body.document || !body.documentType) {
+          return new Response(
+            JSON.stringify({
+              error: 'Invalid request',
+              message: 'document and documentType are required',
+            }),
+            {
+              status: 400,
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
+        }
         result = await mcpClient.analyzeDocument(
           body.document,
           body.documentType
@@ -231,10 +247,34 @@ export async function handleSpecializedTask(
         break;
 
       case 'tax_calculation':
+        if (!body.taxData) {
+          return new Response(
+            JSON.stringify({
+              error: 'Invalid request',
+              message: 'taxData is required',
+            }),
+            {
+              status: 400,
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
+        }
         result = await mcpClient.calculateTax(body.taxData);
         break;
 
       case 'form_validation':
+        if (!body.formType || !body.formData) {
+          return new Response(
+            JSON.stringify({
+              error: 'Invalid request',
+              message: 'formType and formData are required',
+            }),
+            {
+              status: 400,
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
+        }
         result = await mcpClient.validateForm(
           body.formType,
           body.formData
@@ -242,6 +282,18 @@ export async function handleSpecializedTask(
         break;
 
       case 'compliance_check':
+        if (!body.returnData) {
+          return new Response(
+            JSON.stringify({
+              error: 'Invalid request',
+              message: 'returnData is required',
+            }),
+            {
+              status: 400,
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
+        }
         result = await mcpClient.checkCompliance(body.returnData);
         break;
 
