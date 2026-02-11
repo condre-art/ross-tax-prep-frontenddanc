@@ -32,7 +32,13 @@ router.post('/login', async (req, res) => {
     if (!valid) return res.json({ success: false, message: 'Invalid credentials' });
     
     // Generate JWT token
-    const jwtSecret = process.env.JWT_SECRET || 'default-secret-change-in-production';
+    const jwtSecret = process.env.JWT_SECRET;
+    
+    if (!jwtSecret) {
+      console.error('FATAL: JWT_SECRET environment variable is not set');
+      return res.status(500).json({ success: false, message: 'Server configuration error' });
+    }
+    
     const token = jwt.sign(
       { 
         userId: user._id, 

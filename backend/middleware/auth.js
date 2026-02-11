@@ -12,10 +12,19 @@ const authenticateToken = (req, res, next) => {
     return res.status(401).json({ error: 'Unauthorized - No token provided' });
   }
 
-  const jwtSecret = process.env.JWT_SECRET || 'default-secret-change-in-production';
+  const jwtSecret = process.env.JWT_SECRET;
+  
+  if (!jwtSecret) {
+    console.error('FATAL: JWT_SECRET environment variable is not set');
+    return res.status(500).json({ error: 'Server configuration error' });
+  }
 
   jwt.verify(token, jwtSecret, (err, user) => {
     if (err) {
+      // Provide specific error messages for better debugging
+      if (err.name === 'TokenExpiredError') {
+        return res.status(401).json({ error: 'Unauthorized - Token has expired' });
+      }
       return res.status(401).json({ error: 'Unauthorized - Invalid token' });
     }
 
