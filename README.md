@@ -12,6 +12,7 @@
 - ✅ **IRS MEF Integration** for e-file transmission
 - ✅ **Comprehensive Audit Logging** for compliance
 - ✅ **Session Management** with KV storage
+- ✅ **Cloud Agent Integration** (MCP) for AI-powered tax assistance
 - ✅ Client-facing flows for bank products and refund allocation
 
 ## Quick Start
@@ -71,6 +72,11 @@ See [.env.example](./.env.example) for required environment variables.
 | `/api/documents` | GET | Required | List user documents |
 | `/api/irs/transmit` | POST | ERO/Admin | Submit return to IRS |
 | `/api/irs/status` | GET | ERO/Admin | Check IRS submission status |
+| `/api/cloud-agent/delegate` | POST | Required | Delegate task to cloud agent |
+| `/api/cloud-agent/analyze-document` | POST | Required | Analyze document with AI |
+| `/api/cloud-agent/calculate-tax` | POST | Required | AI-powered tax calculation |
+| `/api/cloud-agent/validate-form` | POST | Required | Validate tax form with AI |
+| `/api/cloud-agent/check-compliance` | POST | Required | Check IRS compliance with AI |
 | `/api/health` | GET | Public | Health check |
 
 ## User Roles & Permissions
@@ -169,6 +175,7 @@ See **[DEPLOYMENT.md](./DEPLOYMENT.md)** for the complete guide.
 
 - **[SETUP.md](./SETUP.md)** - Complete infrastructure setup guide
 - **[DEPLOYMENT.md](./DEPLOYMENT.md)** - GitHub Actions deployment guide
+- **[docs/CLOUD-AGENT.md](./docs/CLOUD-AGENT.md)** - Cloud agent (MCP) integration guide
 - **[database/README.md](./database/README.md)** - Database setup instructions
 - **[.env.example](./.env.example)** - Environment variables reference
 

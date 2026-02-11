@@ -29,6 +29,10 @@ import {
   listSubmissions,
   getSubmission,
 } from './api/efile';
+import {
+  delegateToCloudAgent,
+  handleSpecializedTask,
+} from './api/cloud-agent';
 
 interface Env {
   DB: D1Database;
@@ -40,6 +44,7 @@ interface Env {
   JWT_SECRET: string;
   ENCRYPTION_KEY: string;
   TOTP_SECRET: string;
+  MCP_SERVER_URL?: string;
 }
 
 /**
@@ -225,6 +230,27 @@ async function handleApiRequest(
   if (path.match(/^\/api\/efile\/submissions\/[^/]+$/) && request.method === 'GET') {
     const submissionId = path.split('/').pop()!;
     return withAuth(request, env, (req, env, user) => getSubmission(submissionId, env, user), ['returns.read']);
+  }
+
+  // Cloud Agent endpoints
+  if (path === '/api/cloud-agent/delegate' && request.method === 'POST') {
+    return withAuth(request, env, (req, env, user) => delegateToCloudAgent(req, env, user), ['returns.read']);
+  }
+
+  if (path === '/api/cloud-agent/analyze-document' && request.method === 'POST') {
+    return withAuth(request, env, (req, env, user) => handleSpecializedTask(req, env, user, 'document_analysis'), ['documents.read']);
+  }
+
+  if (path === '/api/cloud-agent/calculate-tax' && request.method === 'POST') {
+    return withAuth(request, env, (req, env, user) => handleSpecializedTask(req, env, user, 'tax_calculation'), ['returns.read']);
+  }
+
+  if (path === '/api/cloud-agent/validate-form' && request.method === 'POST') {
+    return withAuth(request, env, (req, env, user) => handleSpecializedTask(req, env, user, 'form_validation'), ['returns.read']);
+  }
+
+  if (path === '/api/cloud-agent/check-compliance' && request.method === 'POST') {
+    return withAuth(request, env, (req, env, user) => handleSpecializedTask(req, env, user, 'compliance_check'), ['returns.read']);
   }
 
   // Health check
