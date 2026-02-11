@@ -44,7 +44,22 @@ export async function delegateToCloudAgent(
     }
 
     // Parse request body
-    const body = await request.json() as CloudAgentRequest;
+    let body: CloudAgentRequest;
+    
+    try {
+      body = await request.json() as CloudAgentRequest;
+    } catch (jsonError) {
+      return new Response(
+        JSON.stringify({
+          error: 'Invalid JSON',
+          message: 'Request body must be valid JSON',
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
 
     // Validate request
     if (!body.task_type || !body.prompt) {
@@ -223,7 +238,23 @@ export async function handleSpecializedTask(
   }
 
   try {
-    const body = await request.json();
+    let body: any;
+    
+    try {
+      body = await request.json();
+    } catch (jsonError) {
+      return new Response(
+        JSON.stringify({
+          error: 'Invalid JSON',
+          message: 'Request body must be valid JSON',
+        }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+    }
+
     let result: any;
 
     switch (taskType) {
