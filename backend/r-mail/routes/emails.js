@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Email = require('../models/Email');
+const Domain = require('../models/Domain');
 const auth = require('../middleware/auth');
 const { checkPermission } = require('../middleware/permissions');
 const auditLogger = require('../middleware/auditLogger');
@@ -82,6 +83,26 @@ router.get('/:id', auth, checkPermission('receive'), async (req, res) => {
 router.post('/', auth, checkPermission('send'), auditLogger('send_email', 'email'), async (req, res) => {
   try {
     const { to, cc, bcc, subject, body, attachments } = req.body;
+
+    // Validate domain ownership - extract domain from user's email and verify they own it
+    const userEmailDomain = req.user.email.split('@')[1];
+    const userDomain = await Domain.findOne({ 
+      name: userEmailDomain,
+      isActive: true,
+      isVerified: true
+    });
+
+    if (!userDomain) {
+      return res.status(403).json({ error: 'User domain is not verified or active. Cannot send emails.' });
+    }
+
+    // Verify user is associated with this domain
+    const isOwner = userDomain.owner.toString() === req.user._id.toString();
+    const isAssignedUser = req.user.domain && req.user.domain.toString() === userDomain._id.toString();
+
+    if (!isOwner && !isAssignedUser) {
+      return res.status(403).json({ error: 'Not authorized to send emails from this domain.' });
+    }
 
     // Validate recipients
     const allRecipients = [...to, ...(cc || []), ...(bcc || [])];
