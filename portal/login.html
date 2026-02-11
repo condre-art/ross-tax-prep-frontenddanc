@@ -53,7 +53,9 @@ document.getElementById('loginForm').appendChild(testLoginBtn);
 </div>
             <div class="dc-watermark">D&amp;C TAXATION LLC</div>
 
-<script>
+<script type="module">
+import { logAuthError } from '../lib/client-logger.js';
+
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const form = e.target;
@@ -70,6 +72,10 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     });
     if (!res.ok) {
       document.getElementById('loginMessage').textContent = 'Server error. Please try again.';
+      await logAuthError('login', new Error(`HTTP ${res.status}`), { 
+        email,
+        statusCode: res.status 
+      });
       return;
     }
     const result = await res.json();
@@ -90,6 +96,10 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
           });
           if (!mfaRes.ok) {
             document.getElementById('loginMessage').textContent = 'MFA server error.';
+            await logAuthError('mfa_verification', new Error(`HTTP ${mfaRes.status}`), {
+              email,
+              statusCode: mfaRes.status
+            });
             return;
           }
           const mfaResult = await mfaRes.json();
@@ -102,6 +112,10 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
         }
         if (!mfaSuccess) {
           document.getElementById('loginMessage').textContent = 'MFA failed. Please contact support.';
+          await logAuthError('mfa_verification', new Error('MFA verification failed after 3 attempts'), {
+            email,
+            attempts
+          });
           return;
         }
       }
@@ -111,13 +125,17 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
       return;
     } else {
       document.getElementById('loginMessage').textContent = result.message || 'Login failed.';
+      await logAuthError('login', new Error(result.message || 'Login failed'), { 
+        email 
+      });
     }
   } catch (err) {
     document.getElementById('loginMessage').textContent = 'Error connecting to authentication service.';
-    // Log error for backend monitoring
-    // TODO: Send error details to backend for audit
+    await logAuthError('login', err, { 
+      email,
+      errorType: 'connection_error'
+    });
   }
-  // TODO: Integrate with backend user management, logging, and security monitoring
 });
 document.getElementById("enrollMFA").addEventListener("click", async () => {
   const email = document.querySelector("input[name='email']").value;

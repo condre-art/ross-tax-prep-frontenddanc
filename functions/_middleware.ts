@@ -29,6 +29,10 @@ import {
   listSubmissions,
   getSubmission,
 } from './api/efile';
+import {
+  onRequestPost as handleClientLogPost,
+  onRequestGet as handleClientLogGet,
+} from './api/client-logs';
 
 interface Env {
   DB: D1Database;
@@ -40,6 +44,7 @@ interface Env {
   JWT_SECRET: string;
   ENCRYPTION_KEY: string;
   TOTP_SECRET: string;
+  MCP_SERVER_URL?: string;
 }
 
 /**
@@ -225,6 +230,15 @@ async function handleApiRequest(
   if (path.match(/^\/api\/efile\/submissions\/[^/]+$/) && request.method === 'GET') {
     const submissionId = path.split('/').pop()!;
     return withAuth(request, env, (req, env, user) => getSubmission(submissionId, env, user), ['returns.read']);
+  }
+
+  // Client logs endpoint
+  if (path === '/api/logs/client' && request.method === 'POST') {
+    return handleClientLogPost({ request, env, params: {} });
+  }
+
+  if (path === '/api/logs/client' && request.method === 'GET') {
+    return withAuth(request, env, (req, env, user) => handleClientLogGet({ request: req, env, params: {} }), ['*']);
   }
 
   // Health check
