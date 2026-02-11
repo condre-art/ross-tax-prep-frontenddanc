@@ -199,7 +199,13 @@ export async function delegateToCloudAgent(
 }
 
 /**
- * Get specialized task handlers
+ * Handle specialized cloud agent tasks
+ * 
+ * @param request - HTTP request
+ * @param env - Environment bindings
+ * @param user - Authenticated user
+ * @param taskType - Type of specialized task to perform
+ * @returns Response with task result
  */
 export async function handleSpecializedTask(
   request: Request,
@@ -251,7 +257,7 @@ export async function handleSpecializedTask(
       );
     }
 
-    let result: any;
+    let result: any = null;
 
     switch (taskType) {
       case 'document_analysis':
