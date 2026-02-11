@@ -6,6 +6,13 @@
 
 import type { MCPRequest, MCPMessage, CloudAgentTaskType } from '../../types';
 
+// Configuration constants
+const DEFAULT_TIMEOUT_MS = 30000; // 30 seconds
+const DEFAULT_RETRIES = 2;
+const BACKOFF_BASE_MS = 1000; // Base delay for exponential backoff
+const DEFAULT_MAX_TOKENS = 2000;
+const DEFAULT_TEMPERATURE = 0.3; // Lower temperature for more deterministic results
+
 export interface MCPClientConfig {
   serverUrl: string;
   timeout?: number;
@@ -19,8 +26,8 @@ export class MCPClient {
 
   constructor(config: MCPClientConfig) {
     this.serverUrl = config.serverUrl;
-    this.timeout = config.timeout || 30000; // 30 seconds default
-    this.retries = config.retries || 2;
+    this.timeout = config.timeout || DEFAULT_TIMEOUT_MS;
+    this.retries = config.retries || DEFAULT_RETRIES;
   }
 
   /**
@@ -59,7 +66,7 @@ export class MCPClient {
         }
 
         // Wait before retrying (exponential backoff)
-        await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
+        await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * BACKOFF_BASE_MS));
       }
     }
 
@@ -83,8 +90,8 @@ export class MCPClient {
 
     const request: MCPRequest = {
       messages,
-      max_tokens: 2000,
-      temperature: 0.3, // Lower temperature for more deterministic results
+      max_tokens: DEFAULT_MAX_TOKENS,
+      temperature: DEFAULT_TEMPERATURE,
     };
 
     return this.sendRequest(request);
@@ -174,7 +181,7 @@ export function createMCPClient(serverUrl?: string): MCPClient | null {
 
   return new MCPClient({
     serverUrl,
-    timeout: 30000,
-    retries: 2,
+    timeout: DEFAULT_TIMEOUT_MS,
+    retries: DEFAULT_RETRIES,
   });
 }
